@@ -11,7 +11,7 @@ const { href, title, body, homepage, topics } = Astro.props;
 ---
 
 <li class="link-card">
-	<a href={href}>
+	<a href={href} target="_blank" rel="noopener">
 		<h2>
 			{title}
 			<!--<span>&rarr;</span>-->
@@ -22,22 +22,22 @@ const { href, title, body, homepage, topics } = Astro.props;
 		<div class="topics-list">
 			{
 				topics?.map((topic: string) => (
-					<div class="topic pill">
+					<div class="topic pill center-text">
 						<span>{topic}</span>
 					</div>
 				))
 			}
 		</div>
-		{homepage ?
-			<div class="homepage-link pill">
-			<a href={homepage} target="_blank" rel="noopener">
-				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-globe" viewBox="0 0 16 16">
-				  <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m7.5-6.923c-.67.204-1.335.82-1.887 1.855A8 8 0 0 0 5.145 4H7.5zM4.09 4a9.3 9.3 0 0 1 .64-1.539 7 7 0 0 1 .597-.933A7.03 7.03 0 0 0 2.255 4zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a7 7 0 0 0-.656 2.5zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5zM8.5 5v2.5h2.99a12.5 12.5 0 0 0-.337-2.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5zM5.145 12q.208.58.468 1.068c.552 1.035 1.218 1.65 1.887 1.855V12zm.182 2.472a7 7 0 0 1-.597-.933A9.3 9.3 0 0 1 4.09 12H2.255a7 7 0 0 0 3.072 2.472M3.82 11a13.7 13.7 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5zm6.853 3.472A7 7 0 0 0 13.745 12H11.91a9.3 9.3 0 0 1-.64 1.539 7 7 0 0 1-.597.933M8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855q.26-.487.468-1.068zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.7 13.7 0 0 1-.312 2.5m2.802-3.5a7 7 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7 7 0 0 0-3.072-2.472c.218.284.418.598.597.933M10.855 4a8 8 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4z"/>
-				</svg>
-			</a>
-			</div>
-		: <></>}
 	</a>
+	{homepage ?
+		<div class="homepage-link pill">
+		<a class="center-text" href={homepage} target="_blank" rel="noopener">
+			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-globe" viewBox="0 0 16 16">
+			  <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m7.5-6.923c-.67.204-1.335.82-1.887 1.855A8 8 0 0 0 5.145 4H7.5zM4.09 4a9.3 9.3 0 0 1 .64-1.539 7 7 0 0 1 .597-.933A7.03 7.03 0 0 0 2.255 4zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a7 7 0 0 0-.656 2.5zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5zM8.5 5v2.5h2.99a12.5 12.5 0 0 0-.337-2.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5zM5.145 12q.208.58.468 1.068c.552 1.035 1.218 1.65 1.887 1.855V12zm.182 2.472a7 7 0 0 1-.597-.933A9.3 9.3 0 0 1 4.09 12H2.255a7 7 0 0 0 3.072 2.472M3.82 11a13.7 13.7 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5zm6.853 3.472A7 7 0 0 0 13.745 12H11.91a9.3 9.3 0 0 1-.64 1.539 7 7 0 0 1-.597.933M8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855q.26-.487.468-1.068zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.7 13.7 0 0 1-.312 2.5m2.802-3.5a7 7 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7 7 0 0 0-3.072-2.472c.218.284.418.598.597.933M10.855 4a8 8 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4z"/>
+			</svg>
+		</a>
+		</div>
+	: <></>}
 </li>
 <style>
 	.link-card {
@@ -49,10 +49,13 @@ const { href, title, body, homepage, topics } = Astro.props;
 		background-size: 400%;
 		border-radius: 7px;
 		background-position: 100%;
-		transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
 		cursor: pointer;
 		position: relative;
+		scale: 100%;
+		transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+			background-size 1s cubic-bezier(0.22, 1, 0.36, 1),
+			scale 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 	}
 	.link-card > a {
 		width: 100%;
@@ -76,9 +79,19 @@ const { href, title, body, homepage, topics } = Astro.props;
 	.link-card:is(:hover, :focus-within) {
 		background-position: 0;
 		background-image: var(--accent-gradient);
+		scale: 102%;
 	}
 	.link-card:is(:hover, :focus-within) h2 {
 		color: rgb(var(--accent-light));
+	}
+	.link-card:is(:hover, :focus-within) p,
+	.link-card:is(:hover, :focus-within) .homepage-link:not(:is(:hover, :focus-within)) svg,
+	.link-card:is(:hover, :focus-within) span {
+		color: rgb(var(--accent-light-dimmed));
+	}
+	.link-card:is(:hover, :focus-within) .pill:not(.homepage-link),
+	.link-card:is(:hover, :focus-within) .homepage-link:not(:is(:hover, :focus-within)) {
+		background-color: rgb(var(--accent-light-dimmed), 0.2);
 	}
 	.topics-list {
 		display: flex;
@@ -89,26 +102,39 @@ const { href, title, body, homepage, topics } = Astro.props;
 	.pill {
 		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
 		padding: 0.375rem 0.75rem;
-		margin: 0 0.25rem;
+		margin: 0 0.125rem;
 		border-radius: 5rem;
-		display: flex;
-		justify-content: center;
-		align-items: center;
 	}
 	.pill > * {
 		margin: 0;
 		padding: 0;
 		color: grey;
 		font-size: 0.875rem;
+		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 	}
 	.homepage-link {
 		position: absolute;
-		right: 7px;
+		right: 10px;
 		top: 10px;
-		padding: 0.75rem;
+		padding: 0;
+		margin: 0;
+		scale: 100%;
+		transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+			scale 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+	.pill > a {
+		padding: 0.5rem;
+	}
+	.link-card:has(.homepage-link:is(:hover, :focus-within)) {
+		background-size: 200%;
+	}
+	.center-text {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 	.homepage-link:is(:hover, :focus-within) {
 		background-color: white;
-		transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		scale: 110%;
 	}
 </style>
