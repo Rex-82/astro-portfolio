@@ -1,4 +1,5 @@
 ---
+import Navbar from '../components/Navbar.astro';
 interface Props {
 	title: string;
 }
@@ -17,6 +18,7 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
+		<Navbar />
 		<slot />
 	</body>
 </html>
@@ -24,6 +26,7 @@ const { title } = Astro.props;
 	:root {
 		--accent: 136, 58, 234;
 		--accent-light: 224, 204, 250;
+		--accent-light-dimmed: 204, 184, 230;
 		--accent-dark: 49, 10, 101;
 		--accent-gradient: linear-gradient(
 			45deg,
@@ -35,6 +38,9 @@ const { title } = Astro.props;
 	html {
 		font-family: system-ui, sans-serif;
 		background: #13151a;
+	}
+	body {
+		margin: 0;
 	}
 	code {
 		font-family:
