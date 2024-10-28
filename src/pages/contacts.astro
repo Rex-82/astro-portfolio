@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactsCard from '../components/ContactsCard.astro';
+---
+
+<Layout title="Simone Ferretti">
+	<main>
+		<p id="cta"><span class="">Let's make great things</span></p>
+		<p><span class="text-gradient">Together</span></p>
+		<ContactsCard />
+	</main>
+</Layout>
+
+<style>
+	main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: rgb(var(--accent));
+		line-height: 1.6;
+	}
+	#cta {
+		font-size: 2rem;
+		font-weight: 300;
+		line-height: 0;
+		text-align: center;
+		position: fixed;
+		left: 0;
+		right: 0;
+	}
+	#cta + p {
+		font-size: 4rem;
+		font-weight: 700;
+		line-height: 1;
+		text-align: center;
+		margin-top: 0.67em;
+		margin-bottom: 1em;
+	}
+
+	@media screen and (max-width: 750px) {
+		#cta {
+			font-size: 1.5rem;
+		}
+
+		#cta + p {
+			font-size: 3rem;
+		}
+	}
+
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+	.link-card-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(35ch, 1fr));
+		gap: 2rem;
+		padding: 0;
+	}
+</style>
