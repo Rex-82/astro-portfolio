@@ -1,15 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageTitle from '../components/PageTitle.astro';
 ---
 
 <Layout title="Simone Ferretti">
 	<main>
-		<h1><span class="text-gradient">Simone Ferretti</span></h1>
-		<p class="instructions">
-			These are some projects I worked on
-			<br />
-			<strong>Note:</strong> click on a card to view the source code.
-		</p>
+		<PageTitle title="Simone Ferretti" />
 	</main>
 </Layout>
 
@@ -29,31 +25,12 @@ import Layout from '../layouts/Layout.astro';
 		line-height: 1;
 		text-align: center;
 		margin-bottom: 1em;
+		text-wrap: nowrap;
 	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		margin-bottom: 2rem;
-		border: 1px solid rgba(var(--accent-light), 25%);
-		background: linear-gradient(
-			rgba(var(--accent-dark), 66%),
-			rgba(var(--accent-dark), 33%)
-		);
-		padding: 1.5rem;
-		border-radius: 8px;
-	}
-	.instructions strong {
-		color: rgb(var(--accent-light));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 2rem;
-		padding: 0;
+
+	@media screen and (max-width: 750px) {
+		h1 {
+			font-size: 3rem;
+		}
 	}
 </style>

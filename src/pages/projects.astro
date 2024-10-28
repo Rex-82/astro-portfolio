@@ -1,21 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
-//import data from '../../public/repoData.json';
+import data from '../../public/repoData.json';
 import type { Repository } from '../interfaces/github';
+import PageTitle from '../components/PageTitle.astro';
 
-const response = await fetch('https://api.github.com/users/Rex-82/repos');
-const data = await response.json();
+//const response = await fetch('https://api.github.com/users/Rex-82/repos');
+//const data = await response.json();
 ---
 
 <Layout title="Simone Ferretti">
 	<main>
-		<h1><span class="text-gradient">Projects</span></h1>
-		<p class="instructions">
-			These are some projects I worked on
-			<br />
-			<strong>Note:</strong> click on a card to view the source code.
-		</p>
+		<PageTitle title="Projects" />
 		<ul role="list" class="link-card-grid">
 			{
 				data
@@ -46,7 +42,7 @@ const data = await response.json();
 		padding: 1rem;
 		width: 800px;
 		max-width: calc(100% - 2rem);
-		color: white;
+		color: #dddddd;
 		line-height: 1.6;
 	}
 	h1 {
@@ -62,19 +58,6 @@ const data = await response.json();
 		-webkit-text-fill-color: transparent;
 		background-size: 400%;
 		background-position: 0%;
-	}
-	.instructions {
-		margin-bottom: 2rem;
-		border: 1px solid rgba(var(--accent-light), 25%);
-		background: linear-gradient(
-			rgba(var(--accent-dark), 66%),
-			rgba(var(--accent-dark), 33%)
-		);
-		padding: 1.5rem;
-		border-radius: 8px;
-	}
-	.instructions strong {
-		color: rgb(var(--accent-light));
 	}
 	.link-card-grid {
 		display: grid;
