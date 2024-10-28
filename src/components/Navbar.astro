@@ -1,20 +1,28 @@
 ---
 const currentPath = Astro.url.pathname;
+
+const links = [
+	{ path: '/', label: 'Home' },
+	{ path: '/projects', label: 'Projects' },
+	{ path: '/contacts', label: 'Contacts' },
+];
+
+const isSelected = (path) => currentPath === path;
 ---
 
 <nav>
 	<main>
 		<span>Simone Ferretti</span>
 		<ul>
-			<li class={currentPath == '/' ? 'pill selected' : 'pill'}>
-				<a href="/"><div>Home</div> </a>
-			</li>
-			<li class={currentPath == '/projects' ? 'pill selected' : 'pill'}>
-				<a href="/projects"><div>Projects</div> </a>
-			</li>
-			<li class={currentPath == '/contacts' ? 'pill selected' : 'pill'}>
-				<a href="/contacts"><div>Contacts</div></a>
-			</li>
+			{
+				links.map((link) => (
+					<li class={`pill ${isSelected(link.path) ? 'selected' : ''}`}>
+						<a href={isSelected(link.path) ? undefined : link.path}>
+							<div>{link.label}</div>
+						</a>
+					</li>
+				))
+			}
 		</ul>
 	</main>
 </nav>
@@ -35,13 +43,67 @@ const currentPath = Astro.url.pathname;
 	ul {
 		display: flex;
 		list-style: none;
-		margin: 0.75rem 0;
+		margin: 0.5rem 0;
 		padding: 0;
 	}
-	li {
-		background-color: grey;
-		margin: 0 0.5rem;
+
+	.pill {
+		border-top: 1px solid rgba(255, 255, 255, 0.2);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+		margin: 0;
+		padding: 0.125em 0;
+		background-color: transparent;
+		height: 1.75em;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
+	.pill:first-of-type {
+		border-radius: 2em;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+		border-left: 1px solid rgba(255, 255, 255, 0.2);
+	}
+	.pill:last-of-type {
+		border-radius: 2em;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+		border-right: 1px solid rgba(255, 255, 255, 0.2);
+	}
+	.pill:first-of-type a {
+		padding-right: 0.5em;
+	}
+	.pill:last-of-type a {
+		padding-left: 0.5em;
+	}
+	.pill div {
+		position: relative;
+	}
+	.pill.selected a {
+		color: var(--accent);
+	}
+	.pill.selected div::after {
+		content: '';
+		background-color: rgba(var(--accent-light), 0.1);
+		position: absolute;
+		left: -0.5em;
+		right: -0.5em;
+		top: -0.325em;
+		bottom: -0.325em;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: 2rem;
+	}
+	.pill a {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-decoration: none;
+		color: grey;
+		font-size: 0.875rem;
+		padding: 0.75em;
+		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
 	@media screen and (max-width: 750px) {
 		nav {
 			position: sticky;
@@ -49,73 +111,20 @@ const currentPath = Astro.url.pathname;
 			z-index: 1;
 			background-color: #13131355;
 			backdrop-filter: blur(15px);
+			padding-right: 0;
 		}
-		li.pill a {
-			height: 44px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			width: 100%;
-			font-size: 1rem;
-		}
-		li.pill.selected {
-			background-color: rgba(255, 255, 255, 0.2);
-		}
-	}
-	.pill {
-		border-top: 1px solid rgba(255, 255, 255, 0.2);
-		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-		margin: 0;
-		background-color: transparent;
-		height: 1.75rem;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-	.pill:first-of-type {
-		border-radius: 1rem;
-		border-top-right-radius: 0;
-		border-bottom-right-radius: 0;
-		border-left: 1px solid rgba(255, 255, 255, 0.2);
-	}
-	.pill:last-of-type {
-		border-radius: 1rem;
-		border-top-left-radius: 0;
-		border-bottom-left-radius: 0;
-		border-right: 1px solid rgba(255, 255, 255, 0.2);
-	}
-	.pill:first-of-type a {
-		padding-right: 0.5rem;
-	}
-	.pill:last-of-type a {
-		padding-left: 0.5rem;
-	}
-	.pill div {
-		position: relative;
-	}
-	.pill.selected a {
-		color: #dddddd;
-	}
-	.pill.selected div::after {
-		content: '';
-		background-color: rgba(255, 255, 255, 0.1);
-		position: absolute;
-		left: -10px;
-		right: -10px;
-		top: -4px;
-		bottom: -3px;
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		border-radius: 1rem;
-	}
-	.pill a {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 100%;
-		text-decoration: none;
-		color: grey;
-		font-size: 0.875rem;
-		padding: 0.75rem;
-		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		/*	nav ul {*/
+		/*		font-size: 2rem;*/
+		/*		padding: 0;*/
+		/*	}*/
+		/**/
+		/*	.pill {*/
+		/*		height: 1em;*/
+		/*	}*/
+		/**/
+		/*	.pill a {*/
+		/*		padding: 1em;*/
+		/*		font-size: 1rem;*/
+		/*	}*/
 	}
 </style>
