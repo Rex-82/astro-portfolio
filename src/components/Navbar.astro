@@ -1,13 +1,20 @@
 ---
-
+const currentPath = Astro.url.pathname;
 ---
 
 <nav>
 	<main>
 		<span>Simone Ferretti</span>
 		<ul>
-			<li><a href="/">Home</a></li>
-			<li><a href="/projects">Projects</a></li>
+			<li class={currentPath == '/' ? 'pill selected' : 'pill'}>
+				<a href="/"><div>Home</div> </a>
+			</li>
+			<li class={currentPath == '/projects' ? 'pill selected' : 'pill'}>
+				<a href="/projects"><div>Projects</div> </a>
+			</li>
+			<li class={currentPath == '/contacts' ? 'pill selected' : 'pill'}>
+				<a href="/contacts"><div>Contacts</div></a>
+			</li>
 		</ul>
 	</main>
 </nav>
@@ -32,11 +39,83 @@
 		padding: 0;
 	}
 	li {
-		padding: 0.25rem 0.5rem;
 		background-color: grey;
 		margin: 0 0.5rem;
 	}
-	a {
+	@media screen and (max-width: 750px) {
+		nav {
+			position: sticky;
+			top: 0;
+			z-index: 1;
+			background-color: #13131355;
+			backdrop-filter: blur(15px);
+		}
+		li.pill a {
+			height: 44px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			font-size: 1rem;
+		}
+		li.pill.selected {
+			background-color: rgba(255, 255, 255, 0.2);
+		}
+	}
+	.pill {
+		border-top: 1px solid rgba(255, 255, 255, 0.2);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+		margin: 0;
+		background-color: transparent;
+		height: 1.75rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.pill:first-of-type {
+		border-radius: 1rem;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+		border-left: 1px solid rgba(255, 255, 255, 0.2);
+	}
+	.pill:last-of-type {
+		border-radius: 1rem;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+		border-right: 1px solid rgba(255, 255, 255, 0.2);
+	}
+	.pill:first-of-type a {
+		padding-right: 0.5rem;
+	}
+	.pill:last-of-type a {
+		padding-left: 0.5rem;
+	}
+	.pill div {
+		position: relative;
+	}
+	.pill.selected a {
+		color: #dddddd;
+	}
+	.pill.selected div::after {
+		content: '';
+		background-color: rgba(255, 255, 255, 0.1);
+		position: absolute;
+		left: -10px;
+		right: -10px;
+		top: -4px;
+		bottom: -3px;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: 1rem;
+	}
+	.pill a {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
 		text-decoration: none;
+		color: grey;
+		font-size: 0.875rem;
+		padding: 0.75rem;
+		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 	}
 </style>
