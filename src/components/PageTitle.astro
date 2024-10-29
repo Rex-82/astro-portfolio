@@ -7,6 +7,7 @@ const { title } = Astro.props;
 ---
 
 <h1><span class="text-gradient">{title}</span></h1>
+
 <style>
 	h1 {
 		font-size: 4rem;
@@ -17,7 +18,7 @@ const { title } = Astro.props;
 		text-wrap: nowrap;
 	}
 
-	@media screen and (max-width: 750px) {
+	@media screen and (max-width: 768px) {
 		h1 {
 			font-size: 3rem;
 		}
