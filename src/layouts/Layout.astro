@@ -1,5 +1,6 @@
 ---
 import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
 interface Props {
 	title: string;
 }
@@ -22,6 +23,7 @@ const { title } = Astro.props;
 			<Navbar />
 		</header>
 		<slot />
+		<Footer />
 	</body>
 </html>
 <style is:global>
@@ -61,5 +63,9 @@ const { title } = Astro.props;
 			Bitstream Vera Sans Mono,
 			Courier New,
 			monospace;
+	}
+	Footer {
+		justify-self: center;
+		align-self: self-end;
 	}
 </style>
