@@ -31,6 +31,7 @@ const isSelected = (path) => currentPath === path;
 		color: white;
 		padding: 0 1rem;
 	}
+
 	main {
 		display: flex;
 		align-items: center;
@@ -40,6 +41,7 @@ const isSelected = (path) => currentPath === path;
 		max-width: calc(100% - 2rem);
 		color: white;
 	}
+
 	ul {
 		display: flex;
 		list-style: none;
@@ -58,30 +60,37 @@ const isSelected = (path) => currentPath === path;
 		justify-content: center;
 		align-items: center;
 	}
+
 	.pill:first-of-type {
 		border-radius: 2em;
 		border-top-right-radius: 0;
 		border-bottom-right-radius: 0;
 		border-left: 1px solid rgba(255, 255, 255, 0.2);
 	}
+
 	.pill:last-of-type {
 		border-radius: 2em;
 		border-top-left-radius: 0;
 		border-bottom-left-radius: 0;
 		border-right: 1px solid rgba(255, 255, 255, 0.2);
 	}
+
 	.pill:first-of-type a {
 		padding-right: 0.5em;
 	}
+
 	.pill:last-of-type a {
 		padding-left: 0.5em;
 	}
+
 	.pill div {
 		position: relative;
 	}
+
 	.pill.selected a {
 		color: var(--accent);
 	}
+
 	.pill.selected div::after {
 		content: '';
 		background-color: rgba(var(--accent-light), 0.1);
@@ -93,6 +102,7 @@ const isSelected = (path) => currentPath === path;
 		border: 1px solid rgba(255, 255, 255, 0.2);
 		border-radius: 2rem;
 	}
+
 	.pill a {
 		display: flex;
 		justify-content: center;
@@ -113,19 +123,6 @@ const isSelected = (path) => currentPath === path;
 			backdrop-filter: blur(15px);
 			padding-right: 0;
 		}
-		/*	nav ul {*/
-		/*		font-size: 2rem;*/
-		/*		padding: 0;*/
-		/*	}*/
-		/**/
-		/*	.pill {*/
-		/*		height: 1em;*/
-		/*	}*/
-		/**/
-		/*	.pill a {*/
-		/*		padding: 1em;*/
-		/*		font-size: 1rem;*/
-		/*	}*/
 
 		.pill a {
 			height: 44px;
