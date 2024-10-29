@@ -3,27 +3,25 @@ const currentPath = Astro.url.pathname;
 
 const links = [
 	{ path: '/', label: 'Home' },
-	{ path: '/projects', label: 'Projects' },
-	{ path: '/contacts', label: 'Contacts' },
+	{ path: '/projects/', label: 'Projects' },
+	{ path: '/contacts/', label: 'Contacts' },
 ];
-
-const isSelected = (path) => currentPath === path;
 ---
 
 <nav>
 	<main>
-		<span>Simone Ferretti</span>
 		<ul>
 			{
 				links.map((link) => (
-					<li class={`pill ${isSelected(link.path) ? 'selected' : ''}`}>
-						<a href={isSelected(link.path) ? undefined : link.path}>
+					<li class={`pill ${link.path === currentPath ? 'selected' : ''}`}>
+						<a href={link.path === currentPath ? undefined : link.path}>
 							<div>{link.label}</div>
 						</a>
 					</li>
 				))
 			}
 		</ul>
+		<span>Simone Ferretti</span>
 	</main>
 </nav>
 <style>
