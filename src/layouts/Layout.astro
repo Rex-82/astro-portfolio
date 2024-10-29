@@ -44,6 +44,12 @@ const { title } = Astro.props;
 	}
 	body {
 		margin: 0;
+		display: grid;
+		grid-template-columns: 100%;
+		grid-template-rows: auto auto 1fr;
+		min-height: 100vh;
+		justify-content: center;
+		align-content: start;
 	}
 	code {
 		font-family:
