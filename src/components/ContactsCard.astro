@@ -55,7 +55,7 @@ const socialIcons = [GithubIcon, DiscordIcon, LinkedinIcon, EmailIcon];
 		margin: 0 0.125rem;
 		border-radius: 5rem;
 	}
-	.pill > * {
+	.pill > a {
 		margin: 0;
 		padding: 0;
 		color: grey;
@@ -82,5 +82,8 @@ const socialIcons = [GithubIcon, DiscordIcon, LinkedinIcon, EmailIcon];
 	.social-link:is(:hover) {
 		background-color: #dddddd;
 		scale: 110%;
+	}
+	.social-link:is(:hover) > a {
+		color: #222222;
 	}
 </style>
