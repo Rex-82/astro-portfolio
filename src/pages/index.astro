@@ -1,6 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageTitle from '../components/PageTitle.astro';
+
+const know = ['Javascript', 'React', 'Node', 'SQL'];
+const learning = ['Typescript', 'Rust'];
+const like = ['Linux', 'Docker', 'Neovim', 'Lists'];
 ---
 
 <Layout
@@ -8,7 +12,36 @@ import PageTitle from '../components/PageTitle.astro';
 	description="Full-Stack Web Developer skilled in React, Node.js, Go, Rust, JavaScript, TypeScript, and SQL. Crafting web applications and CLI tools."
 >
 	<main>
-		<PageTitle title="Simone Ferretti" />
+		<header>
+			<PageTitle title="Simone Ferretti" />
+			<p id="cta"><span>web developer</span></p>
+		</header>
+		<div>
+			<section id="presentation">
+				I don't like introductions. Let what I do speak for myself.
+			</section>
+			<section>
+				<h2>What I know</h2>
+				<ul>
+					{know.map((e) => <li>{e}</li>)}
+				</ul>
+			</section>
+			<section>
+				<h2>What I am learning</h2>
+				<ul>
+					{learning.map((e) => <li>{e}</li>)}
+				</ul>
+			</section>
+			<section>
+				<h2>More things I like</h2>
+				<ul>
+					{like.map((e) => <li>{e}</li>)}
+				</ul>
+			</section>
+		</div>
+		<div class="button" role="button">
+			<a href="/projects/">Projects</a>
+		</div>
 	</main>
 </Layout>
 
@@ -18,22 +51,120 @@ import PageTitle from '../components/PageTitle.astro';
 		padding: 1rem;
 		width: 800px;
 		max-width: calc(100% - 2rem);
-		color: white;
-		font-size: 20px;
+		font-size: 16px;
+		color: rgb(var(--accent));
 		line-height: 1.6;
-	}
-	h1 {
-		font-size: 4rem;
-		font-weight: 700;
-		line-height: 1;
-		text-align: center;
-		margin-bottom: 1em;
-		text-wrap: nowrap;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 	}
 
-		h1 {
+	header {
+		position: relative;
+		width: fit-content;
+		height: fit-content;
+	}
+
+	#cta {
+		font-size: 2rem;
+		font-weight: 300;
+		line-height: 0;
+		margin-top: -1.75em;
+		position: absolute;
+		right: 0;
+	}
+
 	@media screen and (max-width: 768px) {
+		#cta {
+			font-size: 1.5rem;
+		}
+
+		#cta + p {
 			font-size: 3rem;
 		}
+	}
+
+	section {
+		display: flex;
+		flex-direction: column;
+		padding: 1rem;
+	}
+
+	#presentation {
+		grid-area: pres;
+		align-self: center;
+	}
+
+	section:nth-of-type(2) {
+		grid-area: sec2;
+	}
+
+	section:nth-of-type(3) {
+		grid-area: sec3;
+	}
+
+	section:nth-of-type(4) {
+		grid-area: sec4;
+	}
+
+	section h2 {
+		font-size: 1rem;
+		margin: 0;
+		padding: 0;
+		color: rgb(var(--accent-light), 0.7);
+	}
+
+	section ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		margin-left: 0.5rem;
+		padding-left: 0.5rem;
+		border-left: 1px solid rgb(var(--accent-light), 0.7);
+	}
+
+	div {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: 1fr 2fr;
+		grid-template-areas: 'pres pres pres' 'sec2 sec3 sec4';
+		justify-items: space-evenly;
+		justify-items: center;
+		border-radius: 7px;
+		width: 100%;
+	}
+
+	.button {
+		border: 1px solid rgba(var(--accent-light), 0.2);
+		border-radius: 8px;
+		margin: 2.5rem;
+		padding: 0.5em 2em;
+		background-color: rgba(var(--accent-light), 0.1);
+		height: 1.75em;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: fit-content;
+		scale: 100%;
+		transition:
+			scale 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+			background-color 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.button:hover {
+		background-color: rgba(var(--accent-light), 0.3);
+		scale: 105%;
+		cursor: pointer;
+	}
+
+	.button a {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-decoration: none;
+		color: rgb(var(--accent-light));
+		font-size: 1rem;
+		padding: 0.75em;
+		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 	}
 </style>
