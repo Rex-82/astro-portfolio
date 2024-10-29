@@ -1,8 +1,12 @@
 import { defineConfig } from 'astro/config';
 
-import compress from "astro-compress";
+import compress from 'astro-compress';
+
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [compress()]
+	site: 'https://simoneferretti.dev',
+	integrations: [compress(), sitemap()],
 });
+
