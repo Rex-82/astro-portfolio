@@ -30,6 +30,12 @@ const links = [
 		padding: 0 1rem;
 	}
 
+	@media screen and (max-width: 768px) {
+		nav {
+			padding-left: 0;
+		}
+	}
+
 	main {
 		display: flex;
 		align-items: center;
@@ -113,15 +119,6 @@ const links = [
 	}
 
 	@media screen and (max-width: 768px) {
-		nav {
-			position: sticky;
-			top: 0;
-			z-index: 1;
-			background-color: #13131355;
-			backdrop-filter: blur(15px);
-			padding-right: 0;
-		}
-
 		.pill a {
 			height: 44px;
 		}
