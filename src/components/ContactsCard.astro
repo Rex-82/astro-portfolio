@@ -55,6 +55,7 @@ const socials = [
 		display: flex;
 		flex-direction: column;
 		padding: 1rem;
+		padding-bottom: 1.5rem;
 		border-radius: 7px;
 		border: 1px solid rgba(var(--accent-light), 0.2);
 	}
@@ -93,7 +94,7 @@ const socials = [
 		border-radius: 5rem;
 		transition:
 			background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-			scale 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+			transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 	}
 
 	.social-link > a {
@@ -102,15 +103,6 @@ const socials = [
 		color: grey;
 		font-size: 0.875rem;
 		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-	}
-
-	.social-link:is(:hover) {
-		background-color: #dddddd;
-		scale: 110%;
-	}
-
-	.social-link:is(:hover) > a {
-		color: #222222;
 	}
 
 	.center-content {
@@ -129,8 +121,36 @@ const socials = [
 			bottom 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 	}
 
-	.social-link:hover ~ .social-name {
-		opacity: 100;
-		bottom: -1.875em;
+	@media screen and (max-width: 768px) {
+		.social-link {
+			background-image: var(--accent-gradient);
+			background-size: 300%;
+		}
+
+		.social-link > a {
+			color: var(--background-color);
+		}
+
+		.social-name {
+			opacity: 100;
+			bottom: -1.875em;
+		}
+	}
+
+	@media screen and (min-width: 768px) {
+		.social-link:hover {
+			background-image: var(--accent-gradient);
+			background-size: 300%;
+			transform: scale(1.1);
+		}
+
+		.social-link:hover > a {
+			color: #222222;
+		}
+
+		.social-link:hover ~ .social-name {
+			opacity: 100;
+			bottom: -1.875em;
+		}
 	}
 </style>
