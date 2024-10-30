@@ -7,6 +7,7 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+const ogImageUrl = `${Astro.url.origin}/api/og`;
 ---
 
 <!doctype html>
@@ -19,6 +20,13 @@ const { title, description } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		<title>{title}</title>
+		<meta property="og:title" content={title} />
+		<meta property="og:image" content={ogImageUrl} />
+		<meta property="og:type" content="website" />
+		<meta
+			property="og:description"
+			content="Full-Stack Web Developer passionate about React, JavaScript, Node.js, Rust, Go, TypeScript, and SQL. Crafting web applications and CLI tools."
+		/>
 	</head>
 	<body>
 		<header id="site-header">
