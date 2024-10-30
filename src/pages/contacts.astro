@@ -25,7 +25,10 @@ import ContactsCard from '../components/ContactsCard.astro';
 		max-width: calc(100% - 2rem);
 		color: rgb(var(--accent));
 		line-height: 1.6;
+		display: flex;
+		flex-direction: column;
 	}
+
 	#cta {
 		font-size: 2rem;
 		font-weight: 300;
@@ -35,6 +38,7 @@ import ContactsCard from '../components/ContactsCard.astro';
 		left: 0;
 		right: 0;
 	}
+
 	#cta + p {
 		font-size: 4rem;
 		font-weight: 700;
@@ -49,6 +53,10 @@ import ContactsCard from '../components/ContactsCard.astro';
 	}
 
 	@media screen and (max-width: 768px) {
+		main {
+			place-self: stretch;
+		}
+
 		#cta {
 			font-size: 1.5rem;
 		}
@@ -65,10 +73,8 @@ import ContactsCard from '../components/ContactsCard.astro';
 		background-size: 400%;
 		background-position: 0%;
 	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(35ch, 1fr));
-		gap: 2rem;
-		padding: 0;
+
+	section {
+		flex-grow: 1;
 	}
 </style>
