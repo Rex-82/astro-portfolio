@@ -16,9 +16,10 @@ const like = ['Linux', 'Docker', 'Neovim', 'Lists'];
 			<PageTitle title="Simone Ferretti" />
 			<p id="cta"><span>web developer</span></p>
 		</header>
-		<div>
+		<div id="about">
 			<section id="presentation">
-				I don't like introductions. Let what I do speak for myself.
+				<span>I don't like introductions.</span>
+				<span>Let what I do speak for myself.</span>
 			</section>
 			<section>
 				<h2>What I know</h2>
@@ -92,6 +93,14 @@ const like = ['Linux', 'Docker', 'Neovim', 'Lists'];
 	#presentation {
 		grid-area: pres;
 		align-self: center;
+		flex-direction: row;
+		column-gap: 0.325em;
+		flex-flow: wrap;
+		justify-content: center;
+	}
+
+	#presentation > span {
+		text-wrap: nowrap;
 	}
 
 	section:nth-of-type(2) {
@@ -122,15 +131,53 @@ const like = ['Linux', 'Docker', 'Neovim', 'Lists'];
 		border-left: 1px solid rgb(var(--accent-light), 0.7);
 	}
 
-	div {
+	#about {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		grid-template-rows: 1fr 2fr;
 		grid-template-areas: 'pres pres pres' 'sec2 sec3 sec4';
-		justify-items: space-evenly;
 		justify-items: center;
 		border-radius: 7px;
 		width: 100%;
+		margin-top: -1em;
+	}
+
+	@media screen and (max-width: 768px) {
+		#about {
+			grid-template-columns: 1fr;
+			grid-template-rows: 1fr repeat(3, auto);
+			grid-template-areas: 'pres' 'sec2' 'sec3' 'sec4';
+			justify-items: center;
+			row-gap: 1em;
+			margin-bottom: 2rem;
+		}
+
+		#presentation {
+			justify-self: center;
+		}
+
+		section:nth-of-type(n + 2) {
+			padding-bottom: 0;
+		}
+
+		section > h2 {
+			font-size: 1.5rem;
+			font-weight: 500;
+		}
+
+		section {
+			align-items: center;
+		}
+
+		section ul {
+			display: flex;
+			align-items: center;
+			column-gap: 1em;
+			height: 2em;
+			border-left: none;
+			margin: 0;
+			padding: 0;
+		}
 	}
 
 	.button {
