@@ -145,16 +145,16 @@ const like = ['Linux', 'Docker', 'Neovim', 'Lists'];
 		justify-content: center;
 		align-items: center;
 		width: fit-content;
-		scale: 100%;
+		transform: scale(1);
 		transition:
-			scale 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+			transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
 			background-color 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 	}
 
 	.button:hover {
 		background-color: rgba(var(--accent-light), 0.3);
-		scale: 105%;
 		cursor: pointer;
+			transform: scale(1.05);
 	}
 
 	.button a {
