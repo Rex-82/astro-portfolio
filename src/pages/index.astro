@@ -151,10 +151,12 @@ const like = ['Linux', 'Docker', 'Neovim', 'Lists'];
 			background-color 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 	}
 
-	.button:hover {
-		background-color: rgba(var(--accent-light), 0.3);
-		cursor: pointer;
+	@media screen and (min-width: 768px) {
+		.button:hover {
+			background-color: rgba(var(--accent-light), 0.3);
 			transform: scale(1.05);
+			cursor: pointer;
+		}
 	}
 
 	.button a {
