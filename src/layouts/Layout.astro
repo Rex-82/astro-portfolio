@@ -21,7 +21,7 @@ const { title, description } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
-		<header>
+		<header id="site-header">
 			<Navbar />
 		</header>
 		<slot />
@@ -42,27 +42,32 @@ const { title, description } = Astro.props;
 		);
 		--background-color: #131313;
 	}
+
 	html {
 		font-family: system-ui, sans-serif;
 		letter-spacing: 0.025rem;
 		background: var(--background-color);
 	}
-	header {
+
+	#site-header {
 		position: sticky;
 		top: 0;
 		z-index: 1;
 		background-color: #13131355;
 		backdrop-filter: blur(15px);
+		width: auto;
+		place-self: start stretch;
 	}
+
 	body {
 		margin: 0;
 		display: grid;
 		grid-template-columns: 100%;
-		grid-template-rows: auto auto 1fr;
+		grid-template-rows: auto 1fr auto;
 		min-height: 100vh;
-		justify-content: center;
-		align-content: start;
+		place-items: start center;
 	}
+
 	code {
 		font-family:
 			Menlo,
@@ -74,6 +79,7 @@ const { title, description } = Astro.props;
 			Courier New,
 			monospace;
 	}
+
 	Footer {
 		justify-self: center;
 		align-self: self-end;
