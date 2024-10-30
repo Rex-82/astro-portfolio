@@ -28,12 +28,12 @@ const socials = [
 ];
 ---
 
-<li class="contacts-card">
+<ul id="contacts-card">
 	<h1 class="center-content">Contact informations</h1>
 	<div class="socials-grid">
 		{
 			socials.map((social) => (
-				<div class="social-container center-content">
+				<li class="social-container center-content">
 					<div class="social-link center-content">
 						<a
 							class="center-content"
@@ -45,13 +45,13 @@ const socials = [
 						</a>
 					</div>
 					<span class="social-name">{social.name}</span>
-				</div>
+				</li>
 			))
 		}
 	</div>
-</li>
+</ul>
 <style>
-	.contacts-card {
+	#contacts-card {
 		display: flex;
 		flex-direction: column;
 		padding: 1rem;
