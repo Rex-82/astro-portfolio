@@ -21,7 +21,7 @@ const links = [
 				))
 			}
 		</ul>
-		<span>Simone Ferretti</span>
+		<span id="nav-name">Simone Ferretti</span>
 	</main>
 </nav>
 <style>
@@ -30,9 +30,21 @@ const links = [
 		padding: 0 1rem;
 	}
 
-	@media screen and (max-width: 768px) {
+	@media screen and (max-width: 340px) {
 		nav {
-			padding-left: 0;
+			padding: 0;
+		}
+
+		nav main {
+			justify-content: center;
+		}
+
+		#nav-name {
+			display: none;
+		}
+
+		ul {
+			align-self: center;
 		}
 	}
 
@@ -40,10 +52,8 @@ const links = [
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		margin: auto;
-		width: 1000px;
-		max-width: calc(100% - 2rem);
-		color: white;
+		max-width: 1000px;
+		margin: 0 auto;
 	}
 
 	ul {
