@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
+import CtaButton from '../components/CtaButton.astro';
 // import data from '../../public/repoData.json';
 import type { Repository } from '../interfaces/github';
 import PageTitle from '../components/PageTitle.astro';
@@ -36,6 +37,7 @@ const data = await response.json();
 					))
 			}
 		</ul>
+		<CtaButton label="Contact" destination="/contacts/" />
 	</main>
 </Layout>
 
