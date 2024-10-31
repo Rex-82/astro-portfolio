@@ -1,6 +1,7 @@
 import { html } from 'satori-html';
 import satori from 'satori';
 import { readFileSync } from 'node:fs';
+import { Resvg } from '@resvg/resvg-js';
 
 export async function GET() {
 	const markup = html(`
@@ -21,8 +22,8 @@ export async function GET() {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background-color: #131313;
-      color: #dddddd;
+      background-color: #101010;
+      color: #a0a0a0;
 	}
 
     #image-container div {
@@ -43,12 +44,14 @@ export async function GET() {
 	}
 
 	#cta {
-      font-size: 4rem;
+      font-size: 2.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.125em;
       position: absolute;
       right: 0;
       font-weight: 200;
       color: grey;
-      top: 6rem;
+      top: 6.5rem;
 	}
 
 	.text-gradient {
@@ -84,10 +87,18 @@ export async function GET() {
 		],
 	});
 
-	return new Response(svg, {
-		status: 200,
+	const resvg = new Resvg(svg, {
+		fitTo: {
+			mode: 'width',
+			value: 1200,
+		},
+	});
+	const image = resvg.render();
+
+	return new Response(image.asPng(), {
 		headers: {
-			'Content-Type': 'image/svg+xml',
+			'Content-Type': 'image/png',
+			'Cache-Control': 'public, max-age=31536000, immutable',
 		},
 	});
 }
