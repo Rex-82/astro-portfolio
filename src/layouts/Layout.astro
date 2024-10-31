@@ -1,13 +1,24 @@
 ---
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
-interface Props {
-	title: string;
-	description: string;
-}
+import { getImage } from 'astro:assets';
+import faviconSrc from '../../public/static/favicon/favicon.png';
+import faviconSvgSrc from '../../public/static/favicon/favicon.svg';
 
 const { title, description } = Astro.props;
+
 const ogImageUrl = `${Astro.url.origin}/api/og`;
+
+const appleTouchIcon = await getImage({
+	src: faviconSrc,
+	width: 180,
+	height: 180,
+	format: 'png',
+});
+const faviconSvg = await getImage({ src: faviconSvgSrc, format: 'svg' });
+
+const faviconUrl = `${Astro.url.origin}/api/favicon.ico`;
+const manifestUrl = `${Astro.url.origin}/api/manifest.json`;
 ---
 
 <!doctype html>
@@ -18,8 +29,15 @@ const ogImageUrl = `${Astro.url.origin}/api/og`;
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+
 		<link rel="sitemap" href="/sitemap-index.xml" />
+
 		<title>{title}</title>
+
+		<link rel="icon" href={faviconUrl} sizes="32x32" />
+		<link rel="icon" href={faviconSvg.src} type="image/svg+xml" />
+		<link rel="apple-touch-icon" href={appleTouchIcon.src} />
+
 		<meta property="og:title" content={title} />
 		<meta property="og:image" content={ogImageUrl} />
 		<meta property="og:type" content="website" />
