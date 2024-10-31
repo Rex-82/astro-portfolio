@@ -14,7 +14,10 @@ const links = [
 			{
 				links.map((link) => (
 					<li class={`pill ${link.path === currentPath ? 'selected' : ''}`}>
-						<a href={link.path === currentPath ? undefined : link.path}>
+						<a
+							href={link.path === currentPath ? '#' : link.path}
+							aria-disabled={link.path === currentPath ? 'true' : 'false'}
+						>
 							<div>{link.label}</div>
 						</a>
 					</li>
@@ -103,6 +106,7 @@ const links = [
 
 	.pill.selected a {
 		color: var(--accent);
+		pointer-events: none;
 	}
 
 	.pill.selected div::after {
