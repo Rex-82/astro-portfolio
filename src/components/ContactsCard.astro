@@ -28,9 +28,9 @@ const socials = [
 ];
 ---
 
-<ul id="contacts-card">
+<div id="contacts-card">
 	<h1 class="center-content">Contact informations</h1>
-	<div class="socials-grid">
+	<ul class="socials-grid">
 		{
 			socials.map((social) => (
 				<li class="social-container center-content">
@@ -40,16 +40,19 @@ const socials = [
 							target="_blank"
 							rel="noopener"
 							href={social.url}
+							
+							role="link"
+							aria-labelledby=`${social.name}-label`
 						>
 							<social.icon />
 						</a>
 					</div>
-					<span class="social-name">{social.name}</span>
+					<span id=`${social.name}-label` class="social-name">{social.name}</span>
 				</li>
 			))
 		}
-	</div>
-</ul>
+	</ul>
+</div>
 <style>
 	#contacts-card {
 		display: flex;
