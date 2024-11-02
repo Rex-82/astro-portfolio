@@ -16,13 +16,12 @@ const { label, destination } = Astro.props;
 		border-radius: 8px;
 
 		margin: 2.5rem auto;
-		padding: 0.5em 2em;
 
 		background-color: rgba(var(--accent-light), 0.1);
 		background-position: 50%;
 		background-size: 110%;
 
-		height: 1.75em;
+		height: fit-content;
 		width: fit-content;
 
 		transform: scale(1);
@@ -81,7 +80,7 @@ const { label, destination } = Astro.props;
 		text-decoration: none;
 		font-size: 1rem;
 
-		padding: 0.75em;
+		padding: 0.75em 2em;
 		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 	}
 </style>
