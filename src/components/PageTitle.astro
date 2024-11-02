@@ -11,20 +11,12 @@ const { title } = Astro.props;
 		line-height: 1;
 		text-align: center;
 		margin-bottom: 1em;
-		text-wrap: nowrap;
+		white-space: nowrap;
 	}
 
 	@media screen and (max-width: 768px) {
 		h1 {
 			font-size: 3rem;
 		}
-	}
-
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
 	}
 </style>

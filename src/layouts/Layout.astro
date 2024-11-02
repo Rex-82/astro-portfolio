@@ -65,12 +65,8 @@ const manifestUrl = `${Astro.url.origin}/manifest.json`;
 		--accent-light: 230, 250, 250;
 		--accent-light-dimmed: 210, 230, 230;
 		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
+		--accent-gradient-values: 45deg, rgb(var(--accent)),
+			rgb(var(--accent-light)) 30%, white 60%;
 		--background-color: #101010;
 	}
 
@@ -88,6 +84,24 @@ const manifestUrl = `${Astro.url.origin}/manifest.json`;
 		backdrop-filter: blur(15px);
 		width: auto;
 		place-self: start stretch;
+	}
+
+	.text-gradient {
+		background-image: -ms-linear-gradient(var(--accent-gradient-values));
+		background-image: -webkit-linear-gradient(var(--accent-gradient-values));
+		background-image: -moz-linear-gradient(var(--accent-gradient-values));
+		background-image: -o-linear-gradient(var(--accent-gradient-values));
+		background-image: linear-gradient(var(--accent-gradient-values));
+
+		-webkit-background-clip: text;
+		-moz-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+		-moz-text-fill-color: transparent;
+		text-fill-color: transparent;
+		background-color: rgb(var(--accent-light));
+		background-size: 400%;
+		background-position: 0%;
 	}
 
 	body {
