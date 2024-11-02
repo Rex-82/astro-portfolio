@@ -16,6 +16,8 @@
 		"@resvg/resvg-js": "^2.6.2",
 		"astro": "^4.16.8",
 		"astro-compress": "^2.3.5",
+		"autoprefixer": "^10.4.20",
+		"cssnano": "^7.0.6",
 		"satori": "^0.11.2",
 		"satori-html": "^0.3.2",
 		"sharp-ico": "^0.1.5",
