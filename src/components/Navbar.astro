@@ -9,7 +9,7 @@ const links = [
 ---
 
 <nav>
-	<main>
+	<div class="list-container">
 		<ul>
 			{
 				links.map((link) => (
@@ -25,7 +25,7 @@ const links = [
 			}
 		</ul>
 		<span id="nav-name">Simone Ferretti</span>
-	</main>
+	</div>
 </nav>
 <style>
 	nav {
@@ -38,7 +38,7 @@ const links = [
 			padding: 0;
 		}
 
-		nav main {
+		nav .list-container {
 			justify-content: center;
 		}
 
@@ -51,7 +51,7 @@ const links = [
 		}
 	}
 
-	main {
+	.list-container {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
