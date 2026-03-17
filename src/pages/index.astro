@@ -3,19 +3,19 @@ import Layout from '../layouts/Layout.astro';
 import PageTitle from '../components/PageTitle.astro';
 import CtaButton from '../components/CtaButton.astro';
 
-const know = ['Javascript', 'React', 'Node', 'SQL'];
-const learning = ['Typescript', 'Rust'];
+const workWith = ['TypeScript', 'Next.js', 'NestJS', 'PostgreSQL'];
+const learning = ['Rust', 'Go'];
 const like = ['Linux', 'Docker', 'Neovim', 'Lists'];
 ---
 
 <Layout
 	title="Simone Ferretti"
-	description="Full-Stack Web Developer passionate about React, JavaScript, Node.js, Rust, Go, TypeScript, and SQL. Crafting web applications and CLI tools."
+	description="Full-Stack Developer building products end to end. TypeScript, Next.js, NestJS, PostgreSQL, GCP."
 >
 	<main>
 		<header>
 			<PageTitle title="Simone Ferretti" />
-			<p id="cta"><span>web developer</span></p>
+			<p id="cta"><span>full-stack developer</span></p>
 		</header>
 		<div id="about">
 			<section id="presentation">
@@ -23,9 +23,9 @@ const like = ['Linux', 'Docker', 'Neovim', 'Lists'];
 				<span>Let what I do speak for myself.</span>
 			</section>
 			<section>
-				<h2>What I know</h2>
+				<h2>What I work with</h2>
 				<ul>
-					{know.map((e) => <li>{e}</li>)}
+					{workWith.map((e) => <li>{e}</li>)}
 				</ul>
 			</section>
 			<section>

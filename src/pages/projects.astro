@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 import CtaButton from '../components/CtaButton.astro';
-// import data from '../../public/repoData.json';
 import type { Repository } from '../interfaces/github';
 import PageTitle from '../components/PageTitle.astro';
 
@@ -12,7 +11,7 @@ const data = await response.json();
 
 <Layout
 	title="Simone Ferretti"
-	description="Explore projects by a Full-Stack Developer proficient in React, Angular, Node.js, Go, Rust, JavaScript, TypeScript, SQL, and CLI tools. See my work in action."
+	description="Projects by a Full-Stack Developer. TypeScript, Next.js, NestJS, Go, Rust. Open source tools and experiments."
 >
 	<main>
 		<PageTitle title="Projects" />
