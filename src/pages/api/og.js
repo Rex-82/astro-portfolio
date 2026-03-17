@@ -10,7 +10,7 @@ export async function GET() {
       <h1>
         <span class="text-gradient">Simone Ferretti</span>
       </h1>
-      <p id="cta"><span>web developer</span></p>
+      <p id="cta"><span>full-stack developer</span></p>
     </div>
   </div>
 
