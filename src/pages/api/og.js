@@ -64,8 +64,8 @@ export async function GET() {
   `);
 
 	const fontFiles = [
-		readFileSync(`${process.cwd()}/public/static/Inter_18pt-Light.ttf`),
-		readFileSync(`${process.cwd()}/public/static/Inter_18pt-SemiBold.ttf`),
+		readFileSync(`${process.cwd()}/public/assets/Inter_18pt-Light.ttf`),
+		readFileSync(`${process.cwd()}/public/assets/Inter_18pt-SemiBold.ttf`),
 	];
 
 	const svg = await satori(markup, {

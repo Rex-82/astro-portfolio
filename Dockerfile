@@ -1,10 +1,13 @@
 FROM node:lts AS runtime
 WORKDIR /app
 
-COPY . .
+RUN corepack enable
 
-RUN npm install
-RUN npm run build
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+
+COPY . .
+RUN pnpm run build
 
 ENV HOST=0.0.0.0
 ENV PORT=4321
