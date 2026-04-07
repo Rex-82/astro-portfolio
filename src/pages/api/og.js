@@ -3,8 +3,75 @@ import satori from 'satori';
 import { readFileSync } from 'node:fs';
 import { Resvg } from '@resvg/resvg-js';
 
-export async function GET() {
-	const markup = html(`
+export async function GET({ url }) {
+	const rawTitle = url.searchParams.get('title');
+	const title = rawTitle
+		? rawTitle
+				.replace(/&/g, '&amp;')
+				.replace(/</g, '&lt;')
+				.replace(/>/g, '&gt;')
+				.replace(/"/g, '&quot;')
+				.slice(0, 100)
+		: null;
+
+	const markup = title
+		? html(`
+  <div id="image-container">
+    <div>
+      <h1>
+        <span class="text-gradient">${title}</span>
+      </h1>
+      <p id="cta"><span>simoneferretti.dev</span></p>
+    </div>
+  </div>
+
+  <style>
+    #image-container {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #101010;
+      color: #a0a0a0;
+    }
+
+    #image-container div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-top: 2rem;
+    }
+
+    h1 {
+      font-size: 5rem;
+      line-height: 1.1;
+      text-align: center;
+      margin-bottom: 1em;
+      padding: 0 2rem;
+    }
+
+    #cta {
+      font-size: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.125em;
+      position: absolute;
+      font-weight: 200;
+      color: grey;
+      bottom: -1rem;
+    }
+
+    .text-gradient {
+      background-image: linear-gradient(45deg,rgb(136, 136, 136), rgb(230, 250, 250) 30%, rgb(255, 255, 255) 60% );
+      background-clip: text;
+      color: transparent;
+    }
+  </style>
+  `)
+		: html(`
   <div id="image-container">
     <div>
       <h1>

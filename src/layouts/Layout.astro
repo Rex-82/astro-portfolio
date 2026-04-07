@@ -6,9 +6,34 @@ import { getImage } from 'astro:assets';
 import faviconSrc from '../../public/assets/favicon/favicon.png';
 import faviconSvgSrc from '../../public/assets/favicon/favicon.svg';
 
-const { title, description } = Astro.props;
+interface Props {
+	title: string;
+	description: string;
+	ogType?: string;
+	ogDescription?: string;
+	ogImage?: string;
+	canonicalUrl?: string;
+	jsonLd?: Record<string, unknown>;
+	articleMeta?: {
+		publishedTime: string;
+		modifiedTime?: string;
+		tags?: string[];
+		author?: string;
+	};
+}
 
-const ogImageUrl = `${Astro.url.origin}/api/og`;
+const {
+	title,
+	description,
+	ogType = 'website',
+	ogDescription = 'Full-Stack Developer building products end to end. TypeScript, Next.js, NestJS, PostgreSQL, GCP.',
+	ogImage,
+	canonicalUrl,
+	jsonLd,
+	articleMeta,
+} = Astro.props;
+
+const ogImageUrl = ogImage ?? `${Astro.url.origin}/api/og`;
 
 const appleTouchIcon = await getImage({
 	src: faviconSrc,
@@ -32,8 +57,11 @@ const manifestUrl = `${Astro.url.origin}/manifest.json`;
 		<meta name="generator" content={Astro.generator} />
 
 		<link rel="sitemap" href="/sitemap-index.xml" />
+		<link rel="alternate" type="application/rss+xml" title="Simone Ferretti's Blog" href="/rss.xml" />
 
 		<title>{title}</title>
+
+		{canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
 
 		<link rel="icon" href={faviconUrl} sizes="32x32" />
 		<link rel="icon" href={faviconSvg.src} type="image/svg+xml" />
@@ -41,11 +69,19 @@ const manifestUrl = `${Astro.url.origin}/manifest.json`;
 
 		<meta property="og:title" content={title} />
 		<meta property="og:image" content={ogImageUrl} />
-		<meta property="og:type" content="website" />
-		<meta
-			property="og:description"
-			content="Full-Stack Developer building products end to end. TypeScript, Next.js, NestJS, PostgreSQL, GCP."
-		/>
+		<meta property="og:type" content={ogType} />
+		<meta property="og:description" content={ogDescription} />
+
+		{articleMeta && (
+			<>
+				<meta property="article:published_time" content={articleMeta.publishedTime} />
+				{articleMeta.modifiedTime && <meta property="article:modified_time" content={articleMeta.modifiedTime} />}
+				{articleMeta.author && <meta property="article:author" content={articleMeta.author} />}
+				{articleMeta.tags?.map((tag) => <meta property="article:tag" content={tag} />)}
+			</>
+		)}
+
+		{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 
 		<script
 			defer
