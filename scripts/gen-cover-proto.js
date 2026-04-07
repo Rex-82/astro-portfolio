@@ -108,45 +108,69 @@ function elevLine(x1, y1, x2, y2, width, peak) {
 // Compose elevation sources based on seed
 // ============================================================
 
-const sources = [];
-const shapeCount = randInt(3, 7);
+// Position helpers
+// "anchor": center guaranteed inside viewport (partially or fully)
+const anchorPos = () => ({
+	cx: randRange(COLS * 0.1, COLS * 0.9),
+	cy: randRange(ROWS * 0.1, ROWS * 0.9),
+});
+// "edge": center snapped near one of the 4 edges, extends inward
+const edgePos = () => {
+	const side = randInt(0, 4);
+	if (side === 0) return { cx: randRange(-COLS * 0.1, COLS * 0.3), cy: randRange(ROWS * -0.2, ROWS * 1.2) };  // left
+	if (side === 1) return { cx: randRange(COLS * 0.7, COLS * 1.1), cy: randRange(ROWS * -0.2, ROWS * 1.2) };  // right
+	if (side === 2) return { cx: randRange(COLS * -0.2, COLS * 1.2), cy: randRange(ROWS * -0.1, ROWS * 0.3) }; // top
+	return              { cx: randRange(COLS * -0.2, COLS * 1.2), cy: randRange(ROWS * 0.7, ROWS * 1.1) };    // bottom
+};
 
-// Shapes can extend well beyond the viewport for natural clipping
-for (let i = 0; i < shapeCount; i++) {
+function makeShape(cx, cy, peak, sign) {
 	const type = rand();
-	const peak = randRange(0.4, 1.0);
-	const negative = rand() > 0.8;
-	const sign = negative ? -1 : 1;
-
-	// Position allows shapes to extend past edges but stay partially visible
-	const cx = randRange(COLS * -0.2, COLS * 1.2);
-	const cy = randRange(ROWS * -0.2, ROWS * 1.2);
-
-	if (type < 0.3) {
-		const r = randRange(ROWS * 0.25, ROWS * 0.8);
-		sources.push({ fn: elevCircle(cx, cy, r, peak * sign) });
-	} else if (type < 0.5) {
-		const r = randRange(ROWS * 0.3, ROWS * 0.9);
-		const w = randRange(ROWS * 0.06, ROWS * 0.15);
-		sources.push({ fn: elevRing(cx, cy, r, w, peak * sign) });
-	} else if (type < 0.7) {
-		const rw = randRange(COLS * 0.15, COLS * 0.5);
-		const rh = randRange(ROWS * 0.15, ROWS * 0.6);
-		const angle = randRange(-1.0, 1.0);
-		sources.push({ fn: elevRect(cx - rw / 2, cy - rh / 2, rw, rh, peak * sign, angle) });
-	} else if (type < 0.85) {
+	if (type < 0.40) {
+		// Circle — most common, large enough to always leave contours visible
+		const r = randRange(ROWS * 0.5, ROWS * 1.1);
+		return elevCircle(cx, cy, r, peak * sign);
+	} else if (type < 0.58) {
+		// Ring — large, wide
+		const r = randRange(ROWS * 0.5, ROWS * 1.1);
+		const w = randRange(ROWS * 0.08, ROWS * 0.18);
+		return elevRing(cx, cy, r, w, peak * sign);
+	} else if (type < 0.78) {
+		// Polygon — organic blob, bigger
 		const sides = randInt(3, 7);
-		const r = randRange(ROWS * 0.2, ROWS * 0.6);
-		sources.push({ fn: elevPolygon(cx, cy, sides, r, peak * sign) });
+		const r = randRange(ROWS * 0.45, ROWS * 0.9);
+		return elevPolygon(cx, cy, sides, r, peak * sign);
 	} else {
-		// Ridge — endpoints anywhere, can cross viewport at any angle
-		const x1 = randRange(COLS * -0.3, COLS * 1.3);
-		const y1 = randRange(ROWS * -0.3, ROWS * 1.3);
-		const x2 = randRange(COLS * -0.3, COLS * 1.3);
-		const y2 = randRange(ROWS * -0.3, ROWS * 1.3);
-		const w = randRange(ROWS * 0.05, ROWS * 0.15);
-		sources.push({ fn: elevLine(x1, y1, x2, y2, w, peak * sign) });
+		// Ridge line — long diagonal ridge
+		const angle = randRange(0, Math.PI * 2);
+		const len = randRange(COLS * 0.6, COLS * 1.4);
+		const x2 = cx + Math.cos(angle) * len;
+		const y2 = cy + Math.sin(angle) * len;
+		const w = randRange(ROWS * 0.08, ROWS * 0.18);
+		return elevLine(cx, cy, x2, y2, w, peak * sign);
 	}
+}
+
+const sources = [];
+
+// 1. Always 1-2 anchor shapes with strong positive peak — guaranteed visible
+const anchorCount = randInt(1, 3);
+for (let i = 0; i < anchorCount; i++) {
+	const { cx, cy } = anchorPos();
+	sources.push({ fn: makeShape(cx, cy, randRange(0.7, 1.0), 1) });
+}
+
+// 2. 1-3 edge shapes — enter from a border
+const edgeCount = randInt(1, 4);
+for (let i = 0; i < edgeCount; i++) {
+	const { cx, cy } = edgePos();
+	const sign = rand() > 0.85 ? -1 : 1; // mostly positive, occasional valley
+	sources.push({ fn: makeShape(cx, cy, randRange(0.4, 0.9), sign) });
+}
+
+// 3. Optionally 1 valley anywhere for terrain interest
+if (rand() > 0.5) {
+	const { cx, cy } = rand() > 0.5 ? anchorPos() : edgePos();
+	sources.push({ fn: makeShape(cx, cy, randRange(0.3, 0.6), -1) });
 }
 
 // ============================================================
