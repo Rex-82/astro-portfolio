@@ -1,0 +1,548 @@
+---
+import Layout from './Layout.astro';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+	title: string;
+	description: string;
+	pubDate: Date;
+	updatedDate?: Date;
+	tags: string[];
+	id: string;
+	coverImage?: ImageMetadata;
+}
+
+const { title, description, pubDate, updatedDate, tags, id, coverImage } = Astro.props;
+
+const canonicalUrl = `${Astro.url.origin}/blog/${id}/`;
+const ogImage = coverImage
+	? `${Astro.url.origin}${coverImage.src}`
+	: `${Astro.url.origin}/api/og?title=${encodeURIComponent(title)}`;
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'BlogPosting',
+	headline: title,
+	description,
+	datePublished: pubDate.toISOString(),
+	...(updatedDate && { dateModified: updatedDate.toISOString() }),
+	author: {
+		'@type': 'Person',
+		name: 'Simone Ferretti',
+		url: 'https://simoneferretti.dev',
+	},
+	image: ogImage,
+	url: canonicalUrl,
+	keywords: tags.join(', '),
+};
+
+const articleMeta = {
+	publishedTime: pubDate.toISOString(),
+	...(updatedDate && { modifiedTime: updatedDate.toISOString() }),
+	tags,
+	author: 'Simone Ferretti',
+};
+
+const formattedDate = pubDate.toLocaleDateString('en-US', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+
+const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+---
+
+<Layout
+	title={`${title} — Simone Ferretti`}
+	description={description}
+	ogType="article"
+	ogDescription={description}
+	ogImage={ogImage}
+	canonicalUrl={canonicalUrl}
+	jsonLd={jsonLd}
+	articleMeta={articleMeta}
+>
+	<main>
+		<div class="reading-progress" id="reading-progress"></div>
+		<nav class="back-link">
+			<a href="/blog/"><span class="back-arrow">&larr;</span> Blog</a>
+		</nav>
+		<article>
+			{coverImage ? (
+				<header class="header--hero">
+					<div class="hero-image-wrapper">
+						<Image
+							src={coverImage}
+							alt={`Cover image for ${title}`}
+							class="cover-image"
+							widths={[400, 800, 1200]}
+							sizes="(max-width: 800px) 100vw, 800px"
+						/>
+						<div class="hero-overlay"></div>
+						<div class="hero-content">
+							{tags.length > 0 && (
+								<div class="tags">
+									{tags.map((tag) => (
+										<span class="tag">{tag}</span>
+									))}
+								</div>
+							)}
+							<h1><span class="text-gradient">{title}</span></h1>
+							<div class="meta">
+								<time datetime={pubDate.toISOString()}>{formattedDate}</time>
+								{formattedUpdatedDate && (
+									<span class="updated">(updated {formattedUpdatedDate})</span>
+								)}
+							</div>
+						</div>
+					</div>
+				</header>
+			) : (
+				<header class="header--simple">
+					{tags.length > 0 && (
+						<div class="tags">
+							{tags.map((tag) => (
+								<span class="tag">{tag}</span>
+							))}
+						</div>
+					)}
+					<h1><span class="text-gradient">{title}</span></h1>
+					<div class="meta">
+						<time datetime={pubDate.toISOString()}>{formattedDate}</time>
+						{formattedUpdatedDate && (
+							<span class="updated">(updated {formattedUpdatedDate})</span>
+						)}
+					</div>
+				</header>
+			)}
+			<hr class="header-separator" />
+			<div class="prose">
+				<slot />
+			</div>
+		</article>
+	</main>
+</Layout>
+
+<script>
+	const bar = document.getElementById('reading-progress');
+	if (bar) {
+		const update = () => {
+			const { scrollTop, scrollHeight, clientHeight } =
+				document.documentElement;
+			const progress =
+				scrollHeight <= clientHeight
+					? 0
+					: (scrollTop / (scrollHeight - clientHeight)) * 100;
+			bar.style.width = `${progress}%`;
+		};
+		window.addEventListener('scroll', update, { passive: true });
+		update();
+	}
+</script>
+
+<style>
+	/* ===== READING PROGRESS BAR ===== */
+	.reading-progress {
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 2px;
+		width: 0%;
+		background: linear-gradient(
+			to right,
+			rgb(var(--accent)),
+			rgb(var(--accent-light))
+		);
+		z-index: 10;
+		pointer-events: none;
+		transition: width 0.15s linear;
+	}
+
+	main {
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: #dddddd;
+		line-height: 1.6;
+	}
+
+	/* ===== BACK LINK ===== */
+	.back-link {
+		margin-bottom: 1.5rem;
+	}
+
+	.back-link a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		color: grey;
+		text-decoration: none;
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		transition: color 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.back-arrow {
+		display: inline-block;
+		transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.back-link a:hover {
+		color: rgb(var(--accent-light));
+	}
+
+	.back-link a:hover .back-arrow {
+		transform: translateX(-3px);
+	}
+
+	/* ===== ARTICLE ENTRANCE ===== */
+	@keyframes articleReveal {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	article {
+		padding-bottom: 2rem;
+		animation: articleReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+	}
+
+	/* ===== HERO HEADER (with cover image) ===== */
+	.header--hero {
+		margin-bottom: 2rem;
+	}
+
+	/*
+	 * CSS Grid stacking: all children occupy the same grid cell.
+	 * This reliably overlays content on the image regardless of
+	 * whether Astro's <Image> generates a <picture> wrapper.
+	 */
+	.hero-image-wrapper {
+		display: grid;
+		grid-template: 1fr / 1fr;
+		border-radius: 12px;
+		overflow: hidden;
+		height: clamp(300px, 45vh, 480px);
+	}
+
+	/* Target the <picture> generated by Astro's <Image> component */
+	.hero-image-wrapper :global(picture) {
+		grid-column: 1 / -1;
+		grid-row: 1 / -1;
+		min-width: 0;
+		min-height: 0;
+	}
+
+	/* Fallback: if <Image> renders a bare <img> without <picture> */
+	.cover-image {
+		grid-column: 1 / -1;
+		grid-row: 1 / -1;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	@keyframes heroSettle {
+		from {
+			transform: scale(1.06);
+		}
+		to {
+			transform: scale(1);
+		}
+	}
+
+	.hero-image-wrapper :global(picture img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	.hero-image-wrapper :global(picture) {
+		animation: heroSettle 1.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+	}
+
+	.hero-overlay {
+		grid-column: 1 / -1;
+		grid-row: 1 / -1;
+		background: linear-gradient(
+			to bottom,
+			rgba(16, 16, 16, 0.25) 0%,
+			transparent 25%,
+			transparent 40%,
+			rgba(16, 16, 16, 0.75) 70%,
+			#101010 100%
+		);
+		z-index: 1;
+		pointer-events: none;
+	}
+
+	.hero-content {
+		grid-column: 1 / -1;
+		grid-row: 1 / -1;
+		align-self: end;
+		z-index: 2;
+		padding: 2rem;
+	}
+
+	.hero-content h1 {
+		font-size: 2.75rem;
+		font-weight: 700;
+		line-height: 1.1;
+		margin-bottom: 0.5em;
+	}
+
+	.hero-content .tags {
+		margin-bottom: 0.75rem;
+	}
+
+	.hero-content .tag {
+		background: rgba(255, 255, 255, 0.1);
+		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+		color: rgb(var(--accent-light));
+	}
+
+	/* ===== SIMPLE HEADER (no cover) ===== */
+	.header--simple {
+		text-align: center;
+		padding-top: 1rem;
+		margin-bottom: 2rem;
+	}
+
+	.header--simple .tags {
+		margin-bottom: 1rem;
+		justify-content: center;
+	}
+
+	.header--simple h1 {
+		font-size: 2.75rem;
+		font-weight: 700;
+		line-height: 1.1;
+		margin-bottom: 0.5em;
+	}
+
+	@media screen and (max-width: 768px) {
+		.hero-image-wrapper {
+			height: clamp(220px, 35vh, 320px);
+			border-radius: 8px;
+		}
+
+		.hero-content {
+			padding: 1.25rem;
+		}
+
+		.hero-content h1,
+		.header--simple h1 {
+			font-size: 1.75rem;
+		}
+	}
+
+	/* ===== SHARED META ===== */
+	.meta {
+		color: grey;
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+	}
+
+	.updated {
+		margin-left: 0.5rem;
+		font-style: italic;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.tag {
+		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+		background: rgba(255, 255, 255, 0.06);
+		padding: 0.25rem 0.75rem;
+		border-radius: 5rem;
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: rgb(var(--accent));
+	}
+
+	/* ===== HEADER SEPARATOR ===== */
+	.header-separator {
+		border: none;
+		height: 1px;
+		background: linear-gradient(
+			to right,
+			transparent,
+			rgba(var(--accent), 0.4),
+			transparent
+		);
+		max-width: 65ch;
+		margin: 0 auto 2.5rem;
+	}
+
+	/* ===== PROSE ===== */
+	.prose {
+		max-width: 65ch;
+		margin: 0 auto;
+	}
+
+	.prose :global(h2) {
+		font-size: 1.75rem;
+		font-weight: 600;
+		margin-top: 2.5rem;
+		margin-bottom: 0.75rem;
+		color: rgb(var(--accent-light));
+		padding-left: 0.75rem;
+		border-left: 3px solid rgba(var(--accent-light), 0.4);
+	}
+
+	.prose :global(h3) {
+		font-size: 1.375rem;
+		font-weight: 600;
+		margin-top: 1.75rem;
+		margin-bottom: 0.5rem;
+		color: rgb(var(--accent-light));
+	}
+
+	.prose :global(p) {
+		margin-bottom: 1.25rem;
+	}
+
+	/* Animated underline that grows left-to-right on hover */
+	.prose :global(a) {
+		color: rgb(var(--accent-light));
+		text-decoration: none;
+		background-image: linear-gradient(
+			rgb(var(--accent-light)),
+			rgb(var(--accent-light))
+		);
+		background-position: 0% 100%;
+		background-repeat: no-repeat;
+		background-size: 0% 1px;
+		transition:
+			background-size 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+			color 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.prose :global(a:hover) {
+		color: #ffffff;
+		background-size: 100% 1px;
+	}
+
+	.prose :global(strong) {
+		color: #eeeeee;
+	}
+
+	.prose :global(code) {
+		background: rgba(255, 255, 255, 0.1);
+		padding: 0.125rem 0.375rem;
+		border-radius: 4px;
+		font-size: 0.875em;
+	}
+
+	/* Code blocks with gradient top accent bar */
+	.prose :global(pre) {
+		position: relative;
+		background: #1a1a1e;
+		padding: 1.75rem 1.25rem 1.25rem;
+		border-radius: 8px;
+		overflow-x: auto;
+		margin-bottom: 1.5rem;
+		border: 1px solid rgba(255, 255, 255, 0.06);
+	}
+
+	.prose :global(pre::before) {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 2px;
+		background: linear-gradient(
+			to right,
+			rgb(var(--accent)),
+			rgb(var(--accent-light)),
+			transparent
+		);
+		border-radius: 8px 8px 0 0;
+	}
+
+	.prose :global(pre code) {
+		background: none;
+		padding: 0;
+		border-radius: 0;
+		font-size: 0.875rem;
+	}
+
+	/* Blockquotes with decorative quotation mark */
+	.prose :global(blockquote) {
+		position: relative;
+		border-left: 3px solid rgba(var(--accent), 0.5);
+		padding: 1rem 1.25rem;
+		margin-left: 0;
+		margin-bottom: 1.5rem;
+		color: #aaaaaa;
+		font-style: italic;
+		background: rgba(255, 255, 255, 0.02);
+		border-radius: 0 8px 8px 0;
+	}
+
+	.prose :global(blockquote::before) {
+		content: '\201C';
+		position: absolute;
+		top: -0.5rem;
+		left: 0.75rem;
+		font-size: 3rem;
+		color: rgba(var(--accent), 0.15);
+		font-style: normal;
+		line-height: 1;
+		font-family: Georgia, 'Times New Roman', serif;
+	}
+
+	.prose :global(ul),
+	.prose :global(ol) {
+		padding-left: 1.5rem;
+		margin-bottom: 1.25rem;
+	}
+
+	.prose :global(li) {
+		margin-bottom: 0.375rem;
+	}
+
+	.prose :global(li::marker) {
+		color: rgba(var(--accent-light), 0.5);
+	}
+
+	/* Gradient HR matching header separator */
+	.prose :global(hr) {
+		border: none;
+		height: 1px;
+		background: linear-gradient(
+			to right,
+			transparent,
+			rgba(var(--accent), 0.3),
+			transparent
+		);
+		margin: 2.5rem auto;
+		max-width: 200px;
+	}
+
+	.prose :global(img) {
+		max-width: 100%;
+		border-radius: 8px;
+		box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+	}
+</style>

@@ -1,0 +1,245 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageTitle from '../../components/PageTitle.astro';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+
+const posts = (await getCollection('blog'))
+	.filter((post) => !post.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Layout
+	title="Blog — Simone Ferretti"
+	description="Thoughts on web development, tools, and side projects by Simone Ferretti."
+>
+	<main>
+		<PageTitle title="Blog" />
+		<p class="blog-intro">
+			Thoughts on web development, tools, and side projects.
+		</p>
+		{posts.length === 0 ? (
+			<p class="empty">No posts yet. Check back soon.</p>
+		) : (
+			<ul class="post-list">
+				{posts.map((post, index) => (
+					<li
+						class:list={['post-card', { 'post-card--featured': index === 0 }]}
+						style={`animation-delay: ${index * 0.1}s`}
+					>
+						<a href={`/blog/${post.id}/`}>
+							{post.data.coverImage && (
+								<div class="post-cover-wrapper">
+									<Image
+										src={post.data.coverImage}
+										alt={`Cover image for ${post.data.title}`}
+										class="post-cover"
+										widths={[400, 800]}
+										sizes="(max-width: 800px) 100vw, 800px"
+									/>
+								</div>
+							)}
+							<h2>{post.data.title}</h2>
+							<p class="description">{post.data.description}</p>
+							<div class="post-meta">
+								<time datetime={post.data.pubDate.toISOString()}>
+									{post.data.pubDate.toLocaleDateString('en-US', {
+										year: 'numeric',
+										month: 'long',
+										day: 'numeric',
+									})}
+								</time>
+								{post.data.tags.length > 0 && (
+									<div class="tags">
+										{post.data.tags.map((tag) => (
+											<span class="tag">{tag}</span>
+										))}
+									</div>
+								)}
+							</div>
+						</a>
+					</li>
+				))}
+			</ul>
+		)}
+	</main>
+</Layout>
+
+<style>
+	main {
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: #dddddd;
+		line-height: 1.6;
+	}
+
+	.blog-intro {
+		color: grey;
+		text-align: center;
+		margin-top: -1rem;
+		margin-bottom: 2.5rem;
+		font-size: 0.9375rem;
+	}
+
+	.empty {
+		text-align: center;
+		color: grey;
+	}
+
+	.post-list {
+		list-style: none;
+		padding: 0;
+		display: grid;
+		gap: 2rem;
+	}
+
+	@keyframes fadeInUp {
+		from {
+			opacity: 0;
+			transform: translateY(16px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.post-card {
+		border-radius: 8px;
+		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+		transition:
+			background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+			box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+			transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		background-size: 400%;
+		background-position: 100%;
+		animation: fadeInUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+	}
+
+	.post-card--featured {
+		box-shadow:
+			inset 0 0 0 1px rgba(var(--accent-light), 0.12),
+			0 0 40px rgba(var(--accent), 0.04);
+	}
+
+	.post-card a {
+		display: block;
+		text-decoration: none;
+		color: inherit;
+		border-radius: 8px;
+		background: var(--background-color);
+		overflow: hidden;
+	}
+
+	.post-cover-wrapper {
+		overflow: hidden;
+	}
+
+	.post-cover {
+		width: 100%;
+		max-height: 200px;
+		object-fit: cover;
+		display: block;
+		transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.post-card--featured .post-cover {
+		max-height: 320px;
+	}
+
+	.post-card a:has(.post-cover-wrapper) h2 {
+		padding: 1rem 1.5rem 0;
+	}
+
+	.post-card a:has(.post-cover-wrapper) .description {
+		padding: 0 1.5rem;
+	}
+
+	.post-card a:has(.post-cover-wrapper) .post-meta {
+		padding: 0 1.5rem 1.5rem;
+	}
+
+	.post-card a:not(:has(.post-cover-wrapper)) {
+		padding: 1.5rem;
+	}
+
+	.post-card h2 {
+		margin: 0 0 0.5rem;
+		font-size: 1.25rem;
+		color: #cccccc;
+		transition:
+			color 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+			transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.post-card--featured h2 {
+		font-size: 1.75rem;
+	}
+
+	.post-card--featured .description {
+		font-size: 1.0625rem;
+	}
+
+	.description {
+		margin: 0 0 0.75rem;
+		color: grey;
+	}
+
+	.post-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	time {
+		font-size: 0.75rem;
+		color: grey;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.375rem;
+	}
+
+	.tag {
+		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+		background: rgba(255, 255, 255, 0.06);
+		padding: 0.25rem 0.625rem;
+		border-radius: 5rem;
+		font-size: 0.75rem;
+		color: rgb(var(--accent));
+		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	@media screen and (min-width: 768px) {
+		.post-card:hover {
+			background-position: 0;
+			background-image: var(--accent-gradient);
+			transform: scale(1.02);
+		}
+
+		.post-card:hover .post-cover {
+			transform: scale(1.05);
+		}
+
+		.post-card:hover h2 {
+			color: rgb(var(--accent-light));
+			transform: translateX(4px);
+		}
+
+		.post-card:hover .description,
+		.post-card:hover time,
+		.post-card:hover .tag {
+			color: rgb(var(--accent-light-dimmed));
+		}
+
+		.post-card:hover .tag {
+			background-color: rgba(var(--accent-light-dimmed), 0.2);
+		}
+	}
+</style>
