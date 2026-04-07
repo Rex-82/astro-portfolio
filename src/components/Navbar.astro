@@ -3,6 +3,7 @@ const currentPath = Astro.url.pathname;
 
 const links = [
 	{ path: '/', label: 'Home' },
+	{ path: '/blog/', label: 'Blog' },
 	{ path: '/projects/', label: 'Projects' },
 	{ path: '/contacts/', label: 'Contacts' },
 ];
@@ -12,16 +13,19 @@ const links = [
 	<div class="list-container">
 		<ul>
 			{
-				links.map((link) => (
-					<li class={`pill ${link.path === currentPath ? 'selected' : ''}`}>
-						<a
-							href={link.path === currentPath ? '#' : link.path}
-							aria-disabled={link.path === currentPath ? 'true' : 'false'}
-						>
-							<div>{link.label}</div>
-						</a>
-					</li>
-				))
+				links.map((link) => {
+					const isActive = link.path === '/' ? currentPath === '/' : currentPath.startsWith(link.path);
+					return (
+						<li class={`pill ${isActive ? 'selected' : ''}`}>
+							<a
+								href={isActive ? '#' : link.path}
+								aria-disabled={isActive ? 'true' : 'false'}
+							>
+								<div>{link.label}</div>
+							</a>
+						</li>
+					);
+				})
 			}
 		</ul>
 		<span id="nav-name">Simone Ferretti</span>
