@@ -18,6 +18,12 @@ export default defineConfig({
     mode: 'standalone',
   }),
 
+  markdown: {
+    shikiConfig: {
+      theme: 'github-dark',
+    },
+  },
+
   vite: {
     plugins: [tailwindcss()],
   },
