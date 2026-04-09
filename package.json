@@ -24,6 +24,8 @@
 		"tailwindcss": "^4.2.1"
 	},
 	"devDependencies": {
+		"@types/d3-contour": "^3.0.6",
+		"@types/d3-geo": "^3.1.0",
 		"alea": "^1.0.1",
 		"d3-contour": "^4.0.2",
 		"d3-geo": "^3.1.1",
