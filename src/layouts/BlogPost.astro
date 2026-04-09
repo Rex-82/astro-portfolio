@@ -2,6 +2,7 @@
 import Layout from './Layout.astro';
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import { generateCover } from '../lib/generate-cover';
 
 interface Props {
 	title: string;
@@ -14,6 +15,7 @@ interface Props {
 }
 
 const { title, description, pubDate, updatedDate, tags, id, coverImage } = Astro.props;
+const generatedCover = !coverImage ? generateCover(id) : null;
 
 const canonicalUrl = `${Astro.url.origin}/blog/${id}/`;
 const ogImage = coverImage
@@ -73,9 +75,9 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 			<a href="/blog/"><span class="back-arrow">&larr;</span> Blog</a>
 		</nav>
 		<article>
-			{coverImage ? (
-				<header class="header--hero">
-					<div class="hero-image-wrapper">
+			<header class="header--hero">
+				<div class="hero-image-wrapper">
+					{coverImage ? (
 						<Image
 							src={coverImage}
 							alt={`Cover image for ${title}`}
@@ -83,43 +85,28 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 							widths={[400, 800, 1200]}
 							sizes="(max-width: 800px) 100vw, 800px"
 						/>
-						<div class="hero-overlay"></div>
-						<div class="hero-content">
-							{tags.length > 0 && (
-								<div class="tags">
-									{tags.map((tag) => (
-										<span class="tag">{tag}</span>
-									))}
-								</div>
-							)}
-							<h1><span class="text-gradient">{title}</span></h1>
-							<div class="meta">
-								<time datetime={pubDate.toISOString()}>{formattedDate}</time>
-								{formattedUpdatedDate && (
-									<span class="updated">(updated {formattedUpdatedDate})</span>
-								)}
-							</div>
-						</div>
-					</div>
-				</header>
-			) : (
-				<header class="header--simple">
-					{tags.length > 0 && (
-						<div class="tags">
-							{tags.map((tag) => (
-								<span class="tag">{tag}</span>
-							))}
-						</div>
+					) : (
+						<div class="generated-cover" set:html={generatedCover} />
 					)}
-					<h1><span class="text-gradient">{title}</span></h1>
-					<div class="meta">
-						<time datetime={pubDate.toISOString()}>{formattedDate}</time>
-						{formattedUpdatedDate && (
-							<span class="updated">(updated {formattedUpdatedDate})</span>
+					<div class="hero-overlay"></div>
+					<div class="hero-content">
+						{tags.length > 0 && (
+							<div class="tags">
+								{tags.map((tag) => (
+									<span class="tag">{tag}</span>
+								))}
+							</div>
 						)}
+						<h1><span class="text-gradient">{title}</span></h1>
+						<div class="meta">
+							<time datetime={pubDate.toISOString()}>{formattedDate}</time>
+							{formattedUpdatedDate && (
+								<span class="updated">(updated {formattedUpdatedDate})</span>
+							)}
+						</div>
 					</div>
-				</header>
-			)}
+				</div>
+			</header>
 			<hr class="header-separator" />
 			<div class="prose">
 				<slot />
@@ -252,6 +239,22 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		height: 100%;
 		object-fit: cover;
 		display: block;
+	}
+
+	.generated-cover {
+		grid-column: 1 / -1;
+		grid-row: 1 / -1;
+		width: 100%;
+		height: 100%;
+		min-width: 0;
+		min-height: 0;
+	}
+
+	.generated-cover :global(svg) {
+		width: 100%;
+		height: 100%;
+		display: block;
+		object-fit: cover;
 	}
 
 	@keyframes heroSettle {

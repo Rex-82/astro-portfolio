@@ -4,7 +4,6 @@ description: 'My first blog post — a quick intro to this new section of my sit
 pubDate: 2026-03-17
 tags: ['personal', 'meta']
 draft: false
-coverImage: ./cover.png
 ---
 
 ## Welcome
