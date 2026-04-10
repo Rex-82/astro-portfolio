@@ -75,12 +75,12 @@ const posts = (await getCollection('blog'))
 		padding: 1rem;
 		width: 800px;
 		max-width: calc(100% - 2rem);
-		color: #dddddd;
+		color: var(--color-text-primary);
 		line-height: 1.6;
 	}
 
 	.blog-intro {
-		color: grey;
+		color: var(--color-text-secondary);
 		text-align: center;
 		margin-top: -1rem;
 		margin-bottom: 2.5rem;
@@ -89,7 +89,7 @@ const posts = (await getCollection('blog'))
 
 	.empty {
 		text-align: center;
-		color: grey;
+		color: var(--color-text-secondary);
 	}
 
 	.post-list {
@@ -112,22 +112,22 @@ const posts = (await getCollection('blog'))
 
 	.post-card {
 		border-radius: 8px;
-		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+		box-shadow: inset 0 0 0 1px var(--color-border-mid);
 		transition:
-			background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-			box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-			transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+			background-position 0.6s var(--ease-out-expo),
+			box-shadow 0.6s var(--ease-out-expo),
+			transform 0.6s var(--ease-out-expo);
 		background-size: 400%;
 		background-position: 100%;
-		animation: fadeInUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+		animation: fadeInUp 0.5s var(--ease-out-expo) both;
 	}
 
-.post-card a {
+	.post-card a {
 		display: flex;
 		text-decoration: none;
 		color: inherit;
 		border-radius: 8px;
-		background: var(--background-color);
+		background: var(--color-bg);
 		overflow: hidden;
 	}
 
@@ -142,13 +142,13 @@ const posts = (await getCollection('blog'))
 		height: 100%;
 		object-fit: cover;
 		display: block;
-		transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		transition: transform 0.6s var(--ease-out-expo);
 	}
 
 	.post-cover-generated {
 		height: 100%;
 		overflow: hidden;
-		transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		transition: transform 0.6s var(--ease-out-expo);
 	}
 
 	.post-cover-generated :global(svg) {
@@ -169,15 +169,15 @@ const posts = (await getCollection('blog'))
 	.post-card h2 {
 		margin: 0 0 0.5rem;
 		font-size: 1.25rem;
-		color: #cccccc;
+		color: var(--color-text-primary);
 		transition:
-			color 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-			transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+			color 0.6s var(--ease-out-expo),
+			transform 0.3s var(--ease-out-expo);
 	}
 
 	.description {
 		margin: 0 0 0.75rem;
-		color: grey;
+		color: var(--color-text-secondary);
 	}
 
 	@media screen and (max-width: 600px) {
@@ -200,7 +200,7 @@ const posts = (await getCollection('blog'))
 
 	time {
 		font-size: 0.75rem;
-		color: grey;
+		color: var(--color-text-secondary);
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
 	}
@@ -212,13 +212,13 @@ const posts = (await getCollection('blog'))
 	}
 
 	.tag {
-		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+		box-shadow: inset 0 0 0 1px var(--color-border-subtle);
 		background: rgba(255, 255, 255, 0.06);
 		padding: 0.25rem 0.625rem;
 		border-radius: 5rem;
 		font-size: 0.75rem;
-		color: rgb(var(--accent));
-		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		color: var(--color-accent);
+		transition: color 0.6s var(--ease-out-expo);
 	}
 
 	@media screen and (min-width: 768px) {
