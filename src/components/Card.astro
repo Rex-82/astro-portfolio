@@ -23,7 +23,7 @@ const { href, title, body, homepage, topics } = Astro.props;
 		<div class="topics-list">
 			{
 				topics?.map((topic: string) => (
-					<div class="pill center-content">
+					<div class="pill flex items-center justify-center">
 						<span>{topic}</span>
 					</div>
 				))
@@ -32,9 +32,9 @@ const { href, title, body, homepage, topics } = Astro.props;
 	</a>
 	{homepage ?
 	<div id="homepage-container">
-		<a role="button" aria-labelledby="homepage-label" class="center-content" href={homepage} target="_blank" rel="noopener">
+		<a role="button" aria-labelledby="homepage-label" class="flex items-center justify-center" href={homepage} target="_blank" rel="noopener">
 			<span id="homepage-label">Live Demo</span>
-			<div id="homepage-link" class="pill center-content">
+			<div id="homepage-link" class="pill flex items-center justify-center">
 				<GlobeIcon/>
 			</div>
 		</a>
@@ -50,13 +50,13 @@ const { href, title, body, homepage, topics } = Astro.props;
 		background-size: 400%;
 		border-radius: 8px;
 		background-position: 100%;
-		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+		box-shadow: inset 0 0 0 1px var(--color-border);
 		cursor: pointer;
 		position: relative;
 		transform: scale(1);
-		transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-			background-size 1s cubic-bezier(0.22, 1, 0.36, 1),
-			transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		transition: background-position 0.6s var(--ease-out-expo),
+			background-size 1s var(--ease-out-expo),
+			transform 0.6s var(--ease-out-expo);
 	}
 
 	.link-card > a {
@@ -64,8 +64,8 @@ const { href, title, body, homepage, topics } = Astro.props;
 		line-height: 1.4;
 		padding: calc(1.5rem - 1px);
 		border-radius: 8px;
-		color: #cccccc;
-		background: var(--background-color);
+		color: var(--color-text-primary);
+		background: var(--color-bg);
 	}
 
 	a {
@@ -75,7 +75,7 @@ const { href, title, body, homepage, topics } = Astro.props;
 	h2 {
 		margin: 0;
 		font-size: 1.25rem;
-		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		transition: color 0.6s var(--ease-out-expo);
 		text-decoration: underline;
 		text-decoration-thickness: 1px;
 	}
@@ -83,7 +83,7 @@ const { href, title, body, homepage, topics } = Astro.props;
 	p {
 		margin-top: 0.5rem;
 		margin-bottom: 0;
-		color: grey;
+		color: var(--color-text-secondary);
 	}
 
 	.topics-list {
@@ -94,7 +94,7 @@ const { href, title, body, homepage, topics } = Astro.props;
 	}
 
 	.pill {
-		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+		box-shadow: inset 0 0 0 1px var(--color-border);
 		padding: 0.375rem 0.75rem;
 		margin: 0 0.125rem;
 		border-radius: 5rem;
@@ -103,9 +103,9 @@ const { href, title, body, homepage, topics } = Astro.props;
 	.pill > span, #homepage-link, #homepage-label {
 		margin: 0;
 		padding: 0;
-		color: rgb(var(--accent));
+		color: var(--color-accent);
 		font-size: 0.875rem;
-		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		transition: color 0.6s var(--ease-out-expo);
 	}
 
 	#homepage-container {
@@ -124,15 +124,15 @@ const { href, title, body, homepage, topics } = Astro.props;
 		z-index: 0;
 		padding-right: 15px;
 		padding-left: 10px;
-		color: rgb(var(--accent));
-		border: 1px solid rgb(255,255,255,0.2);
+		color: var(--color-accent);
+		border: 1px solid var(--color-border);
 		border-top-left-radius: 8px;
 		border-bottom-left-radius: 8px;
-		transition: 
-			opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-			color 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-			border-color 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-			right 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		transition:
+			opacity 0.3s var(--ease-out-expo),
+			color 0.3s var(--ease-out-expo),
+			border-color 0.3s var(--ease-out-expo),
+			right 0.6s var(--ease-out-expo);
 	}
 
 	#homepage-link {
@@ -143,19 +143,13 @@ const { href, title, body, homepage, topics } = Astro.props;
 		transform: scale(1);
 		width: 44px;
 		height: 44px;
-		background-color: var(--background-color);
-		transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-			transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		background-color: var(--color-bg);
+		transition: background-color 0.6s var(--ease-out-expo),
+			transform 0.6s var(--ease-out-expo);
 	}
 
 	.pill > a {
 		padding: 0.5rem;
-	}
-
-	.center-content {
-		display: flex;
-		justify-content: center;
-		align-items: center;
 	}
 
 	@media screen and (min-width: 768px) {
@@ -186,16 +180,16 @@ const { href, title, body, homepage, topics } = Astro.props;
 		}
 
 		#homepage-label:hover ~ #homepage-link, #homepage-link:hover {
-			background-color: #dddddd;
+			background-color: var(--color-text-primary);
 		}
 
 		#homepage-link:hover {
-			transform: scale(1.1); 
+			transform: scale(1.1);
 		}
 
 		#homepage-label:hover, #homepage-label:has(~ #homepage-link:hover) {
-			color: #dddddd;
-			border-color: #dddddd;
+			color: var(--color-text-primary);
+			border-color: var(--color-text-primary);
 		}
 
 		.link-card:has(#homepage-container:hover) {

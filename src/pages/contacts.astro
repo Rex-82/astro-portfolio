@@ -23,7 +23,7 @@ import ContactsCard from '../components/ContactsCard.astro';
 		padding: 1rem;
 		width: 800px;
 		max-width: calc(100% - 2rem);
-		color: rgb(var(--accent));
+		color: var(--color-accent);
 		line-height: 1.6;
 		display: flex;
 		flex-direction: column;
@@ -32,11 +32,8 @@ import ContactsCard from '../components/ContactsCard.astro';
 	#cta {
 		font-size: 2rem;
 		font-weight: 300;
-		line-height: 0;
 		text-align: center;
-		position: absolute;
-		left: 0;
-		right: 0;
+		margin-bottom: 0;
 	}
 
 	#cta + p {
@@ -44,7 +41,7 @@ import ContactsCard from '../components/ContactsCard.astro';
 		font-weight: 700;
 		line-height: 1;
 		text-align: center;
-		margin-top: 0.67em;
+		margin-top: 0;
 		margin-bottom: 1em;
 	}
 

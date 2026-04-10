@@ -154,7 +154,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		padding: 1rem;
 		width: 800px;
 		max-width: calc(100% - 2rem);
-		color: #dddddd;
+		color: var(--color-text-primary);
 		line-height: 1.6;
 	}
 
@@ -167,17 +167,17 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.25rem;
-		color: grey;
+		color: var(--color-text-secondary);
 		text-decoration: none;
 		font-size: 0.75rem;
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
-		transition: color 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+		transition: color 0.3s var(--ease-out-expo);
 	}
 
 	.back-arrow {
 		display: inline-block;
-		transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+		transition: transform 0.3s var(--ease-out-expo);
 	}
 
 	.back-link a:hover {
@@ -202,7 +202,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 
 	article {
 		padding-bottom: 2rem;
-		animation: articleReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+		animation: articleReveal 0.8s var(--ease-out-expo) 0.1s both;
 	}
 
 	/* ===== HERO HEADER (with cover image) ===== */
@@ -274,7 +274,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 	}
 
 	.hero-image-wrapper :global(picture) {
-		animation: heroSettle 1.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+		animation: heroSettle 1.5s var(--ease-out-expo) both;
 	}
 
 	.hero-overlay {
@@ -286,7 +286,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 			transparent 25%,
 			transparent 40%,
 			rgba(16, 16, 16, 0.75) 70%,
-			#101010 100%
+			var(--color-bg) 100%
 		);
 		z-index: 1;
 		pointer-events: none;
@@ -312,8 +312,8 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 	}
 
 	.hero-content .tag {
-		background: rgba(255, 255, 255, 0.1);
-		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+		background: var(--color-border-subtle);
+		box-shadow: inset 0 0 0 1px var(--color-border-mid);
 		color: rgb(var(--accent-light));
 	}
 
@@ -354,7 +354,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 
 	/* ===== SHARED META ===== */
 	.meta {
-		color: grey;
+		color: var(--color-text-secondary);
 		font-size: 0.75rem;
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
@@ -372,7 +372,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 	}
 
 	.tag {
-		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+		box-shadow: inset 0 0 0 1px var(--color-border-subtle);
 		background: rgba(255, 255, 255, 0.06);
 		padding: 0.25rem 0.75rem;
 		border-radius: 5rem;
@@ -436,8 +436,8 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		background-repeat: no-repeat;
 		background-size: 0% 1px;
 		transition:
-			background-size 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-			color 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+			background-size 0.3s var(--ease-out-expo),
+			color 0.3s var(--ease-out-expo);
 	}
 
 	.prose :global(a:hover) {
@@ -446,11 +446,11 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 	}
 
 	.prose :global(strong) {
-		color: #eeeeee;
+		color: var(--color-text-bright);
 	}
 
 	.prose :global(code) {
-		background: rgba(255, 255, 255, 0.1);
+		background: var(--color-border-subtle);
 		padding: 0.125rem 0.375rem;
 		border-radius: 4px;
 		font-size: 0.875em;
@@ -459,7 +459,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 	/* Code blocks with gradient top accent bar */
 	.prose :global(pre) {
 		position: relative;
-		background: #1a1a1e;
+		background: var(--color-surface);
 		padding: 1.75rem 1.25rem 1.25rem;
 		border-radius: 8px;
 		overflow-x: auto;
@@ -497,7 +497,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		padding: 1rem 1.25rem;
 		margin-left: 0;
 		margin-bottom: 1.5rem;
-		color: #aaaaaa;
+		color: var(--color-text-muted);
 		font-style: italic;
 		background: rgba(255, 255, 255, 0.02);
 		border-radius: 0 8px 8px 0;
