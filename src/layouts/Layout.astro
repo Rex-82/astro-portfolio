@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import { getImage } from 'astro:assets';
+import { ClientRouter } from 'astro:transitions';
 import faviconSrc from '../../public/assets/favicon/favicon.png';
 import faviconSvgSrc from '../../public/assets/favicon/favicon.svg';
 
@@ -55,6 +56,8 @@ const manifestUrl = `${Astro.url.origin}/manifest.json`;
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href={faviconSvg.src} />
 		<meta name="generator" content={Astro.generator} />
+
+		<ClientRouter />
 
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		<link rel="alternate" type="application/rss+xml" title="Simone Ferretti's Blog" href="/rss.xml" />
