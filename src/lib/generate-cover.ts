@@ -16,17 +16,17 @@ const COLS = 160;
 const ROWS = Math.round(COLS * (H / W));
 const THRESHOLDS = 8;
 
-const SLATE = [
-	'#0f172a',
-	'#1e293b',
-	'#334155',
-	'#475569',
-	'#64748b',
-	'#94a3b8',
-	'#cbd5e1',
-	'#e2e8f0',
+const STONE = [
+	'#221f1e', // stone-850 (min elevation)
+	'#292524', // stone-800
+	'#3c3834', // stone-750
+	'#44403c', // stone-700
+	'#78716c', // stone-500
+	'#a8a29e', // stone-400  (~--color-accent)
+	'#d6d3d1', // stone-300  (~--color-text-primary)
+	'#e7e5e4', // stone-200  (~--color-text-bright)
 ];
-const BG = '#0f172a';
+const BG = '#0c0a09'; // stone-950
 
 // --- Elevation primitives ---
 
@@ -219,22 +219,22 @@ export function generateCover(seed: string): string {
 
 	for (let i = 0; i < bands.length; i++) {
 		const t = i / (bands.length - 1);
-		const ci = Math.min(Math.floor(t * SLATE.length), SLATE.length - 1);
+		const ci = Math.min(Math.floor(t * STONE.length), STONE.length - 1);
 		const d = path(bands[i]);
 		if (!d) continue;
-		els.push(`  <path d="${d}" fill="${SLATE[ci]}" opacity="0.55"/>`);
+		els.push(`  <path d="${d}" fill="${STONE[ci]}" opacity="0.55"/>`);
 	}
 
 	for (let i = 0; i < bands.length; i++) {
 		const t = i / (bands.length - 1);
 		const ci = Math.min(
-			Math.floor(t * SLATE.length * 0.8) + 2,
-			SLATE.length - 1,
+			Math.floor(t * STONE.length * 0.8) + 2,
+			STONE.length - 1,
 		);
 		const d = path(bands[i]);
 		if (!d) continue;
 		els.push(
-			`  <path d="${d}" fill="none" stroke="${SLATE[ci]}" stroke-width="0.8" opacity="0.35"/>`,
+			`  <path d="${d}" fill="none" stroke="${STONE[ci]}" stroke-width="0.8" opacity="0.35"/>`,
 		);
 	}
 
