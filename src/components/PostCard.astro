@@ -27,7 +27,7 @@ const { id, title, description, pubDate, tags, coverImage, animationDelay = 0 } 
 >
 	<a
 		href={`/blog/${id}/`}
-		class="flex no-underline [color:inherit] rounded-lg bg-[var(--color-bg)] overflow-hidden"
+		class="flex max-[600px]:flex-col no-underline [color:inherit] rounded-lg bg-[var(--color-bg)] overflow-hidden"
 	>
 		<div class="shrink-0 w-[240px] overflow-hidden max-[600px]:w-full max-[600px]:h-[180px]">
 			{coverImage ? (
