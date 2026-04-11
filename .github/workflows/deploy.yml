@@ -1,0 +1,45 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          port: ${{ secrets.VPS_PORT }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: REPO_TOKEN
+          command_timeout: 10m
+          script: |
+            set -e
+            DEPLOY_DIR="/opt/astro-portfolio"
+            REPO="https://x-access-token:${REPO_TOKEN}@github.com/${{ github.repository }}.git"
+
+            if [ ! -d "$DEPLOY_DIR/.git" ]; then
+              git clone --branch main "$REPO" "$DEPLOY_DIR"
+            else
+              cd "$DEPLOY_DIR"
+              git remote set-url origin "$REPO"
+              git fetch origin main
+              git reset --hard origin/main
+            fi
+
+            cd "$DEPLOY_DIR"
+            git remote set-url origin "https://github.com/${{ github.repository }}.git"
+
+            docker compose up -d --build --force-recreate
+            docker image prune -f
+        env:
+          REPO_TOKEN: ${{ github.token }}
