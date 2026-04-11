@@ -1,190 +1,176 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageTitle from '../components/PageTitle.astro';
-import CtaButton from '../components/CtaButton.astro';
+import Card from '../components/Card.astro';
+import PostCard from '../components/PostCard.astro';
+import { CURRENT_STATUS } from 'astro:env/server';
+import { getFeaturedProjects } from '../lib/github';
+import { getCollection } from 'astro:content';
 
 const workWith = ['TypeScript', 'Next.js', 'NestJS', 'PostgreSQL'];
 const learning = ['Rust', 'Go'];
 const like = ['Linux', 'Docker', 'Neovim', 'Lists'];
+
+const allPosts = await getCollection('blog');
+const latestPost = allPosts
+	.filter((p) => !p.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())[0];
+
+// Featured project slug — must match GitHub repo `name` exactly.
+const [featuredProject] = await getFeaturedProjects(['nvim-config']);
 ---
 
 <Layout
-	title="Simone Ferretti"
-	description="Full-Stack Developer building products end to end. TypeScript, Next.js, NestJS, PostgreSQL, GCP."
+	title="Simone Ferretti — Full-Stack Developer"
+	description="Full-Stack Developer building products end to end. TypeScript, Next.js, NestJS, PostgreSQL."
 >
-	<main>
-		<header>
+	<main class="p-4 w-[800px] max-w-[calc(100%-2rem)] text-[16px] text-accent leading-[1.6] flex flex-col items-center">
+		<header class="flex flex-col items-center w-fit tracking-[0.125em]">
 			<PageTitle title="Simone Ferretti" />
-			<p id="cta"><span>full-stack developer</span></p>
+			<p class="text-[1.5rem] uppercase tracking-[0.125em] self-end -mt-[2.5em] m-0 max-[768px]:text-[1.125rem] max-[400px]:text-[1rem]">
+				<span>full-stack developer</span>
+			</p>
 		</header>
-		<div id="about">
-			<section id="presentation">
-				<span>I don't like introductions.</span>
-				<span>Let what I do speak for myself.</span>
-			</section>
-			<section>
-				<h2>What I work with</h2>
-				<ul>
+
+		<div
+			class="grid grid-cols-3 grid-rows-[auto_2fr]
+			       [grid-template-areas:'status_status_status'_'sec2_sec3_sec4']
+			       justify-items-center rounded-[7px] w-full mt-2
+			       max-[768px]:grid-cols-1 max-[768px]:grid-rows-[auto_repeat(3,auto)]
+			       max-[768px]:[grid-template-areas:'status'_'sec2'_'sec3'_'sec4']
+			       max-[768px]:gap-y-[1em] max-[768px]:mb-8"
+		>
+			{CURRENT_STATUS && (
+				<p
+					class="[grid-area:status] text-center text-[0.75rem] uppercase tracking-[0.1em]
+					       [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]
+					       mb-2 mx-0 p-0"
+				>
+					{CURRENT_STATUS}
+				</p>
+			)}
+
+			<section
+				class="[grid-area:sec2] flex flex-col p-4
+				       max-[768px]:pt-0 max-[768px]:border-b max-[768px]:border-border max-[768px]:items-center"
+			>
+				<h2
+					class="text-[0.875rem] uppercase tracking-[0.125em] m-0 p-0
+					       [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]
+					       max-[768px]:text-[1rem]"
+				>
+					What I work with
+				</h2>
+				<ul
+					class="list-none m-0 p-0 ml-2 pl-2 border-l
+					       [border-color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]
+					       max-[768px]:flex max-[768px]:items-center max-[768px]:gap-x-[1em]
+					       max-[768px]:h-8 max-[768px]:border-l-0 max-[768px]:m-0 max-[768px]:p-0"
+				>
 					{workWith.map((e) => <li>{e}</li>)}
 				</ul>
 			</section>
-			<section>
-				<h2>What I am learning</h2>
-				<ul>
+
+			<section
+				class="[grid-area:sec3] flex flex-col p-4
+				       max-[768px]:pt-0 max-[768px]:border-b max-[768px]:border-border max-[768px]:items-center"
+			>
+				<h2
+					class="text-[0.875rem] uppercase tracking-[0.125em] m-0 p-0
+					       [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]
+					       max-[768px]:text-[1rem]"
+				>
+					What I am learning
+				</h2>
+				<ul
+					class="list-none m-0 p-0 ml-2 pl-2 border-l
+					       [border-color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]
+					       max-[768px]:flex max-[768px]:items-center max-[768px]:gap-x-[1em]
+					       max-[768px]:h-8 max-[768px]:border-l-0 max-[768px]:m-0 max-[768px]:p-0"
+				>
 					{learning.map((e) => <li>{e}</li>)}
 				</ul>
 			</section>
-			<section>
-				<h2>More things I like</h2>
-				<ul>
+
+			<section
+				class="[grid-area:sec4] flex flex-col p-4
+				       max-[768px]:pt-0 max-[768px]:border-b max-[768px]:border-border max-[768px]:items-center"
+			>
+				<h2
+					class="text-[0.875rem] uppercase tracking-[0.125em] m-0 p-0
+					       [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]
+					       max-[768px]:text-[1rem]"
+				>
+					More things I like
+				</h2>
+				<ul
+					class="list-none m-0 p-0 ml-2 pl-2 border-l
+					       [border-color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]
+					       max-[768px]:flex max-[768px]:items-center max-[768px]:gap-x-[1em]
+					       max-[768px]:h-8 max-[768px]:border-l-0 max-[768px]:m-0 max-[768px]:p-0"
+				>
 					{like.map((e) => <li>{e}</li>)}
 				</ul>
 			</section>
 		</div>
-		<CtaButton label="Projects" destination="/projects/" />
+
+		<section class="w-full mt-8 flex flex-col gap-10">
+			{latestPost && (
+				<div class="flex flex-col gap-3">
+					<h2
+						class="text-[0.875rem] uppercase tracking-[0.125em] m-0 p-0
+						       [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]"
+					>
+						Latest post
+					</h2>
+					<ul class="list-none p-0 m-0">
+						<PostCard
+							id={latestPost.id}
+							title={latestPost.data.title}
+							description={latestPost.data.description}
+							pubDate={latestPost.data.pubDate}
+							tags={latestPost.data.tags}
+							coverImage={latestPost.data.coverImage}
+						/>
+					</ul>
+					<a
+						href="/blog/"
+						class="text-[0.75rem] uppercase tracking-[0.1em] text-[var(--color-text-secondary)]
+						       no-underline self-start transition-colors duration-300 ease-[var(--ease-out-expo)]
+						       hover:text-[var(--color-accent-light)]"
+					>
+						Read more on the Blog →
+					</a>
+				</div>
+			)}
+
+			{featuredProject && (
+				<div class="flex flex-col gap-3">
+					<h2
+						class="text-[0.875rem] uppercase tracking-[0.125em] m-0 p-0
+						       [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]"
+					>
+						Featured project
+					</h2>
+					<ul class="list-none p-0 m-0">
+						<Card
+							title={featuredProject.name}
+							body={featuredProject.description ?? ''}
+							homepage={featuredProject.homepage}
+							href={featuredProject.html_url}
+							topics={featuredProject.topics}
+						/>
+					</ul>
+					<a
+						href="/projects/"
+						class="text-[0.75rem] uppercase tracking-[0.1em] text-[var(--color-text-secondary)]
+						       no-underline self-start transition-colors duration-300 ease-[var(--ease-out-expo)]
+						       hover:text-[var(--color-accent-light)]"
+					>
+						All projects →
+					</a>
+				</div>
+			)}
+		</section>
 	</main>
 </Layout>
-
-<style>
-	main {
-		padding: 1rem;
-		width: 800px;
-		max-width: calc(100% - 2rem);
-		font-size: 16px;
-		color: var(--color-accent);
-		line-height: 1.6;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-
-	header {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		width: fit-content;
-		letter-spacing: 0.125em;
-	}
-
-	#cta {
-		font-size: 1.5rem;
-		text-transform: uppercase;
-		letter-spacing: 0.125em;
-		align-self: flex-end;
-		margin-top: -2.5em;
-	}
-
-	@media screen and (max-width: 768px) {
-		#cta {
-			font-size: 1.125rem;
-		}
-
-		#cta + p {
-			font-size: 3rem;
-		}
-	}
-
-	@media screen and (max-width: 400px) {
-		#cta {
-			font-size: 1rem;
-		}
-	}
-
-	section {
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
-	}
-
-	#presentation {
-		grid-area: pres;
-		align-self: center;
-		flex-direction: row;
-		column-gap: 0.325em;
-		flex-flow: wrap;
-		justify-content: center;
-	}
-
-	#presentation > span {
-		text-wrap: nowrap;
-	}
-
-	section:nth-of-type(2) {
-		grid-area: sec2;
-	}
-
-	section:nth-of-type(3) {
-		grid-area: sec3;
-	}
-
-	section:nth-of-type(4) {
-		grid-area: sec4;
-	}
-
-	section h2 {
-		font-size: 0.875rem;
-		text-transform: uppercase;
-		letter-spacing: 0.125em;
-		margin: 0;
-		padding: 0;
-		color: color-mix(in srgb, var(--color-accent-light) 70%, transparent);
-	}
-
-	section ul {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		margin-left: 0.5rem;
-		padding-left: 0.5rem;
-		border-left: 1px solid color-mix(in srgb, var(--color-accent-light) 70%, transparent);
-	}
-
-	#about {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		grid-template-rows: 1fr 2fr;
-		grid-template-areas: 'pres pres pres' 'sec2 sec3 sec4';
-		justify-items: center;
-		border-radius: 7px;
-		width: 100%;
-		margin-top: -1em;
-	}
-
-	@media screen and (max-width: 768px) {
-		#about {
-			grid-template-columns: 1fr;
-			grid-template-rows: 1fr repeat(3, auto);
-			grid-template-areas: 'pres' 'sec2' 'sec3' 'sec4';
-			justify-items: center;
-			row-gap: 1em;
-			margin-bottom: 2rem;
-		}
-
-		#presentation {
-			justify-self: center;
-		}
-
-		section:nth-of-type(n + 2) {
-			padding-top: 0;
-			border-bottom: 1px solid var(--color-border);
-		}
-
-		section > h2 {
-			font-size: 1rem;
-		}
-
-		section {
-			align-items: center;
-		}
-
-		section ul {
-			display: flex;
-			align-items: center;
-			column-gap: 1em;
-			height: 2em;
-			border-left: none;
-			margin: 0;
-			padding: 0;
-		}
-	}
-</style>

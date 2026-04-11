@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 
 import compress from 'astro-compress';
 
@@ -23,6 +23,22 @@ export default defineConfig({
   markdown: {
     shikiConfig: {
       theme: 'github-dark',
+    },
+  },
+
+  env: {
+    schema: {
+      CURRENT_STATUS: envField.string({
+        context: 'server',
+        access: 'public',
+        optional: true,
+      }),
+      GITHUB_USERNAME: envField.string({
+        context: 'server',
+        access: 'public',
+        optional: true,
+        default: 'Rex-82',
+      }),
     },
   },
 
