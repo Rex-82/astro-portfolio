@@ -30,6 +30,7 @@
     letter-spacing: 0.025rem;
     background: var(--color-bg);
     scrollbar-gutter: stable;
+    overflow-x: clip;
   }
 
   body {
