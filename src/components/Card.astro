@@ -155,23 +155,23 @@ const { href, title, body, homepage, topics } = Astro.props;
 	@media screen and (min-width: 768px) {
 		.link-card:hover {
 			background-position: 0;
-			background-image: var(--accent-gradient);
+			background-image: var(--color-accent-gradient);
 			transform: scale(1.02);
 		}
 
 		.link-card:hover h2 {
-			color: rgb(var(--accent-light));
+			color: var(--color-accent-light);
 		}
 
 		.link-card:hover p,
 		.link-card:hover #homepage-link:not(:hover) svg,
 		.link-card:hover span {
-			color: rgb(var(--accent-light-dimmed));
+			color: var(--color-accent-light-dimmed);
 		}
 
 		.link-card:hover .pill:not(.homepage-link),
 		.link-card:hover .homepage-link:not(:hover) {
-			background-color: rgb(var(--accent-light-dimmed), 0.2);
+			background-color: color-mix(in srgb, var(--color-accent-light-dimmed) 20%, transparent);
 		}
 
 		.link-card:hover #homepage-label {

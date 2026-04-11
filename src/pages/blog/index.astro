@@ -213,7 +213,7 @@ const posts = (await getCollection('blog'))
 
 	.tag {
 		box-shadow: inset 0 0 0 1px var(--color-border-subtle);
-		background: rgba(255, 255, 255, 0.06);
+		background: var(--color-surface-tag);
 		padding: 0.25rem 0.625rem;
 		border-radius: 5rem;
 		font-size: 0.75rem;
@@ -224,7 +224,7 @@ const posts = (await getCollection('blog'))
 	@media screen and (min-width: 768px) {
 		.post-card:hover {
 			background-position: 0;
-			background-image: var(--accent-gradient);
+			background-image: var(--color-accent-gradient);
 			transform: scale(1.02);
 		}
 
@@ -234,18 +234,18 @@ const posts = (await getCollection('blog'))
 		}
 
 		.post-card:hover h2 {
-			color: rgb(var(--accent-light));
+			color: var(--color-accent-light);
 			transform: translateX(4px);
 		}
 
 		.post-card:hover .description,
 		.post-card:hover time,
 		.post-card:hover .tag {
-			color: rgb(var(--accent-light-dimmed));
+			color: var(--color-accent-light-dimmed);
 		}
 
 		.post-card:hover .tag {
-			background-color: rgba(var(--accent-light-dimmed), 0.2);
+			background-color: color-mix(in srgb, var(--color-accent-light-dimmed) 20%, transparent);
 		}
 	}
 </style>

@@ -7,59 +7,15 @@ import ContactsCard from '../components/ContactsCard.astro';
 	title="Simone Ferretti"
 	description="Get in touch with a Full-Stack Developer. TypeScript, Next.js, NestJS, PostgreSQL, GCP. Available for freelance work."
 >
-	<main>
-		<p id="cta">
-			<span>Let's make <span class="underline">great things</span></span>
+	<main class="page-main text-accent flex flex-col">
+		<p class="text-[2rem] font-light text-center mb-0 max-[768px]:text-[1.5rem]">
+			<span>Let's make <span class="underline font-medium">great things</span></span>
 		</p>
-		<p><span class="text-gradient">Together</span></p>
-		<section>
+		<p class="text-[4rem] font-bold leading-none text-center mt-0 mb-[1em] max-[768px]:text-[3rem]">
+			<span class="text-gradient">Together</span>
+		</p>
+		<section class="max-[768px]:grid">
 			<ContactsCard />
 		</section>
 	</main>
 </Layout>
-
-<style>
-	main {
-		padding: 1rem;
-		width: 800px;
-		max-width: calc(100% - 2rem);
-		color: var(--color-accent);
-		line-height: 1.6;
-		display: flex;
-		flex-direction: column;
-	}
-
-	#cta {
-		font-size: 2rem;
-		font-weight: 300;
-		text-align: center;
-		margin-bottom: 0;
-	}
-
-	#cta + p {
-		font-size: 4rem;
-		font-weight: 700;
-		line-height: 1;
-		text-align: center;
-		margin-top: 0;
-		margin-bottom: 1em;
-	}
-
-	span.underline {
-		font-weight: 500;
-	}
-
-	@media screen and (max-width: 768px) {
-		section {
-			display: grid;
-		}
-
-		#cta {
-			font-size: 1.5rem;
-		}
-
-		#cta + p {
-			font-size: 3rem;
-		}
-	}
-</style>

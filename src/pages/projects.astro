@@ -13,9 +13,9 @@ const data = await response.json();
 	title="Simone Ferretti"
 	description="Projects by a Full-Stack Developer. TypeScript, Next.js, NestJS, Go, Rust. Open source tools and experiments."
 >
-	<main>
+	<main class="page-main text-text-primary">
 		<PageTitle title="Projects" />
-		<ul role="list" class="link-card-grid">
+		<ul role="list" class="grid grid-cols-[repeat(auto-fit,minmax(35ch,1fr))] gap-8 p-0 list-none max-md:gap-y-4">
 			{
 				data
 					?.filter(
@@ -39,25 +39,3 @@ const data = await response.json();
 		<CtaButton label="Contact" destination="/contacts/" />
 	</main>
 </Layout>
-
-<style>
-	main {
-		padding: 1rem;
-		width: 800px;
-		max-width: calc(100% - 2rem);
-		color: var(--color-text-primary);
-		line-height: 1.6;
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(35ch, 1fr));
-		gap: 2rem;
-		padding: 0;
-	}
-
-	@media screen and (max-width: 768px) {
-		.link-card-grid {
-			row-gap: 1rem;
-		}
-	}
-</style>

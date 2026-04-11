@@ -2,22 +2,4 @@
 const { title } = Astro.props;
 ---
 
-<h1 class="font-bold leading-none text-center mb-[1em] whitespace-nowrap"><span class="text-gradient">{title}</span></h1>
-
-<style>
-	h1 {
-		font-size: 4rem;
-	}
-
-	@media screen and (max-width: 768px) {
-		h1 {
-			font-size: 3rem;
-		}
-	}
-
-	@media screen and (max-width: 400px) {
-		h1 {
-			font-size: 2.5rem;
-		}
-	}
-</style>
+<h1 class="font-bold leading-none text-center mb-[1em] whitespace-nowrap text-[4rem] max-[768px]:text-[3rem] max-[400px]:text-[2.5rem]"><span class="text-gradient">{title}</span></h1>
