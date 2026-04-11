@@ -41,6 +41,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
     ssr: {
       noExternal: ['lucide-react'],
+      external: ['sharp'],
     },
   },
 });
