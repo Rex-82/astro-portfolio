@@ -3,6 +3,7 @@ import Layout from './Layout.astro';
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { generateCover } from '../lib/generate-cover';
+import { ArrowLeft } from 'lucide-react';
 
 interface Props {
 	title: string;
@@ -71,8 +72,22 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 >
 	<main>
 		<div class="reading-progress" id="reading-progress"></div>
-		<nav class="back-link">
-			<a href="/blog/"><span class="back-arrow">&larr;</span> Blog</a>
+		<nav class="mb-6">
+			<a
+				href="/blog/"
+				class="group inline-flex items-center gap-1.5 select-none no-underline
+				       text-[var(--color-text-secondary)] text-[0.75rem] uppercase tracking-[0.1em]
+				       transition-colors duration-300 ease-[var(--ease-out-expo)]
+				       hover:text-[var(--color-accent-light)]"
+			>
+				<ArrowLeft
+					size={14}
+					strokeWidth={2}
+					aria-hidden="true"
+					className="transition-transform duration-300 ease-[var(--ease-out-expo)] group-hover:-translate-x-[3px]"
+				/>
+				Blog
+			</a>
 		</nav>
 		<article>
 			<header class="header--hero">
@@ -156,36 +171,6 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		max-width: calc(100% - 2rem);
 		color: var(--color-text-primary);
 		line-height: 1.6;
-	}
-
-	/* ===== BACK LINK ===== */
-	.back-link {
-		margin-bottom: 1.5rem;
-	}
-
-	.back-link a {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.25rem;
-		color: var(--color-text-secondary);
-		text-decoration: none;
-		font-size: 0.75rem;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		transition: color 0.3s var(--ease-out-expo);
-	}
-
-	.back-arrow {
-		display: inline-block;
-		transition: transform 0.3s var(--ease-out-expo);
-	}
-
-	.back-link a:hover {
-		color: var(--color-accent-light);
-	}
-
-	.back-link a:hover .back-arrow {
-		transform: translateX(-3px);
 	}
 
 	/* ===== ARTICLE ENTRANCE ===== */
