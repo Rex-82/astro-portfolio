@@ -3,13 +3,12 @@ import Layout from '../layouts/Layout.astro';
 import PageTitle from '../components/PageTitle.astro';
 import Card from '../components/Card.astro';
 import PostCard from '../components/PostCard.astro';
-import { CURRENT_STATUS } from 'astro:env/server';
 import { getFeaturedProjects } from '../lib/github';
 import { getCollection, getEntry } from 'astro:content';
 
 const stack = ['TypeScript', 'Next.js', 'NestJS', 'PostgreSQL'];
 const infrastructure = ['GCP', 'Docker', 'Linux', 'Git'];
-const learning = ['System Design'];
+const learning = ['System Design', 'Proxmox', 'Gardening'];
 
 const allPosts = await getCollection('blog');
 const latestPost = allPosts
@@ -27,6 +26,7 @@ const caseStudyHref =
 	caseStudyEntry && !caseStudyEntry.data.draft
 		? `/case-studies/${caseStudyEntry.id}/`
 		: null;
+
 ---
 
 <Layout
@@ -42,22 +42,13 @@ const caseStudyHref =
 		</header>
 
 		<div
-			class="grid grid-cols-3 grid-rows-[auto_2fr]
-			       [grid-template-areas:'status_status_status'_'sec2_sec3_sec4']
+			class="grid grid-cols-3 grid-rows-[auto]
+			       [grid-template-areas:'sec2_sec3_sec4']
 			       justify-items-center rounded-[7px] w-full mt-2
-			       max-[768px]:grid-cols-1 max-[768px]:grid-rows-[auto_repeat(3,auto)]
-			       max-[768px]:[grid-template-areas:'status'_'sec2'_'sec3'_'sec4']
+			       max-[768px]:grid-cols-1 max-[768px]:grid-rows-[repeat(3,auto)]
+			       max-[768px]:[grid-template-areas:'sec2'_'sec3'_'sec4']
 			       max-[768px]:gap-y-[1em] max-[768px]:mb-8"
 		>
-			{CURRENT_STATUS && (
-				<p
-					class="[grid-area:status] text-center text-[0.75rem] uppercase tracking-[0.1em]
-					       [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]
-					       mb-2 mx-0 p-0"
-				>
-					{CURRENT_STATUS}
-				</p>
-			)}
 
 			<section
 				class="[grid-area:sec2] flex flex-col p-4
