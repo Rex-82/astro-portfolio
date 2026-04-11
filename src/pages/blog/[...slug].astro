@@ -1,6 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
+import { calculateReadingTime } from '../../lib/reading-time';
 
 const { slug } = Astro.params;
 
@@ -15,6 +16,7 @@ if (!post) {
 }
 
 const { Content } = await render(post);
+const readingTime = calculateReadingTime(post.body ?? '');
 ---
 
 <BlogPost
@@ -25,6 +27,7 @@ const { Content } = await render(post);
 	tags={post.data.tags}
 	id={post.id}
 	coverImage={post.data.coverImage}
+	readingTime={readingTime}
 >
 	<Content />
 </BlogPost>

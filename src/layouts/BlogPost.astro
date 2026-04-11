@@ -13,9 +13,10 @@ interface Props {
 	tags: string[];
 	id: string;
 	coverImage?: ImageMetadata;
+	readingTime?: number;
 }
 
-const { title, description, pubDate, updatedDate, tags, id, coverImage } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, id, coverImage, readingTime } = Astro.props;
 const generatedCover = !coverImage ? generateCover(id) : null;
 
 const canonicalUrl = `${Astro.url.origin}/blog/${id}/`;
@@ -115,6 +116,12 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 						<h1><span class="text-gradient">{title}</span></h1>
 						<div class="meta">
 							<time datetime={pubDate.toISOString()}>{formattedDate}</time>
+							{readingTime && (
+								<>
+									<span aria-hidden="true"> · </span>
+									<span>{readingTime} min read</span>
+								</>
+							)}
 							{formattedUpdatedDate && (
 								<span class="updated">(updated {formattedUpdatedDate})</span>
 							)}

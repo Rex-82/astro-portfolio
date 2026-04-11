@@ -5,11 +5,11 @@ import Card from '../components/Card.astro';
 import PostCard from '../components/PostCard.astro';
 import { CURRENT_STATUS } from 'astro:env/server';
 import { getFeaturedProjects } from '../lib/github';
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 
-const workWith = ['TypeScript', 'Next.js', 'NestJS', 'PostgreSQL'];
-const learning = ['Rust', 'Go'];
-const like = ['Linux', 'Docker', 'Neovim', 'Lists'];
+const stack = ['TypeScript', 'Next.js', 'NestJS', 'PostgreSQL'];
+const infrastructure = ['GCP', 'Docker', 'Linux', 'Git'];
+const learning = ['System Design'];
 
 const allPosts = await getCollection('blog');
 const latestPost = allPosts
@@ -18,6 +18,15 @@ const latestPost = allPosts
 
 // Featured project slug — must match GitHub repo `name` exactly.
 const [featuredProject] = await getFeaturedProjects(['nvim-config']);
+
+// Case study: if a published case study exists for the featured project, link to it.
+const caseStudyEntry = featuredProject
+	? await getEntry('caseStudies', featuredProject.name)
+	: null;
+const caseStudyHref =
+	caseStudyEntry && !caseStudyEntry.data.draft
+		? `/case-studies/${caseStudyEntry.id}/`
+		: null;
 ---
 
 <Layout
@@ -59,7 +68,7 @@ const [featuredProject] = await getFeaturedProjects(['nvim-config']);
 					       [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]
 					       max-[768px]:text-[1rem]"
 				>
-					What I work with
+					Stack
 				</h2>
 				<ul
 					class="list-none m-0 p-0 ml-2 pl-2 border-l
@@ -67,7 +76,7 @@ const [featuredProject] = await getFeaturedProjects(['nvim-config']);
 					       max-[768px]:flex max-[768px]:items-center max-[768px]:gap-x-[1em]
 					       max-[768px]:h-8 max-[768px]:border-l-0 max-[768px]:m-0 max-[768px]:p-0"
 				>
-					{workWith.map((e) => <li>{e}</li>)}
+					{stack.map((e) => <li>{e}</li>)}
 				</ul>
 			</section>
 
@@ -80,7 +89,7 @@ const [featuredProject] = await getFeaturedProjects(['nvim-config']);
 					       [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]
 					       max-[768px]:text-[1rem]"
 				>
-					What I am learning
+					Infrastructure
 				</h2>
 				<ul
 					class="list-none m-0 p-0 ml-2 pl-2 border-l
@@ -88,7 +97,7 @@ const [featuredProject] = await getFeaturedProjects(['nvim-config']);
 					       max-[768px]:flex max-[768px]:items-center max-[768px]:gap-x-[1em]
 					       max-[768px]:h-8 max-[768px]:border-l-0 max-[768px]:m-0 max-[768px]:p-0"
 				>
-					{learning.map((e) => <li>{e}</li>)}
+					{infrastructure.map((e) => <li>{e}</li>)}
 				</ul>
 			</section>
 
@@ -101,7 +110,7 @@ const [featuredProject] = await getFeaturedProjects(['nvim-config']);
 					       [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]
 					       max-[768px]:text-[1rem]"
 				>
-					More things I like
+					Learning
 				</h2>
 				<ul
 					class="list-none m-0 p-0 ml-2 pl-2 border-l
@@ -109,7 +118,7 @@ const [featuredProject] = await getFeaturedProjects(['nvim-config']);
 					       max-[768px]:flex max-[768px]:items-center max-[768px]:gap-x-[1em]
 					       max-[768px]:h-8 max-[768px]:border-l-0 max-[768px]:m-0 max-[768px]:p-0"
 				>
-					{like.map((e) => <li>{e}</li>)}
+					{learning.map((e) => <li>{e}</li>)}
 				</ul>
 			</section>
 		</div>
@@ -161,14 +170,26 @@ const [featuredProject] = await getFeaturedProjects(['nvim-config']);
 							topics={featuredProject.topics}
 						/>
 					</ul>
-					<a
-						href="/projects/"
-						class="text-[0.75rem] uppercase tracking-[0.1em] text-[var(--color-text-secondary)]
-						       no-underline self-start transition-colors duration-300 ease-[var(--ease-out-expo)]
-						       hover:text-[var(--color-accent-light)]"
-					>
-						All projects →
-					</a>
+					<div class="flex gap-4">
+						<a
+							href="/projects/"
+							class="text-[0.75rem] uppercase tracking-[0.1em] text-[var(--color-text-secondary)]
+							       no-underline transition-colors duration-300 ease-[var(--ease-out-expo)]
+							       hover:text-[var(--color-accent-light)]"
+						>
+							All projects →
+						</a>
+						{caseStudyHref && (
+							<a
+								href={caseStudyHref}
+								class="text-[0.75rem] uppercase tracking-[0.1em] text-[var(--color-text-secondary)]
+								       no-underline transition-colors duration-300 ease-[var(--ease-out-expo)]
+								       hover:text-[var(--color-accent-light)]"
+							>
+								Read case study →
+							</a>
+						)}
+					</div>
 				</div>
 			)}
 		</section>
