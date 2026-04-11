@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PageTitle from '../../components/PageTitle.astro';
+import RssSubscribe from '../../components/RssSubscribe.astro';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import { generateCover } from '../../lib/generate-cover';
@@ -8,6 +9,7 @@ import { generateCover } from '../../lib/generate-cover';
 const posts = (await getCollection('blog'))
 	.filter((post) => !post.data.draft)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
 ---
 
 <Layout
@@ -15,7 +17,12 @@ const posts = (await getCollection('blog'))
 	description="Thoughts on web development, tools, and side projects by Simone Ferretti."
 >
 	<main>
-		<PageTitle title="Blog" />
+		<div class="relative">
+			<PageTitle title="Blog" />
+			<div class="absolute top-0 right-0">
+				<RssSubscribe />
+			</div>
+		</div>
 		<p class="blog-intro">
 			Thoughts on web development, tools, and side projects.
 		</p>

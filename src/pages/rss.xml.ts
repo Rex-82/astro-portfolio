@@ -12,11 +12,14 @@ export async function GET(context: APIContext) {
 		description:
 			'Thoughts on web development, tools, and side projects.',
 		site: context.site!,
+		customData: '<language>en-us</language>',
 		items: posts.map((post) => ({
 			title: post.data.title,
 			pubDate: post.data.pubDate,
 			description: post.data.description,
 			link: `/blog/${post.id}/`,
+			author: 'Simone Ferretti',
+			categories: post.data.tags,
 		})),
 	});
 }
