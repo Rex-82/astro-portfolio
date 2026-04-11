@@ -24,7 +24,7 @@ export const GET: APIRoute = async () => {
     const manifest = {
         name: "Simone Ferretti",
         description:
-            "Full-Stack Developer building products end to end. TypeScript, Next.js, NestJS, PostgreSQL, GCP.",
+            "Full-Stack Developer building products end to end. TypeScript, Next.js, NestJS, PostgreSQL.",
         start_url: "/",
         display: "standalone",
         id: "some-unique-id",

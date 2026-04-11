@@ -27,14 +27,14 @@ const {
 	title,
 	description,
 	ogType = 'website',
-	ogDescription = 'Full-Stack Developer building products end to end. TypeScript, Next.js, NestJS, PostgreSQL, GCP.',
+	ogDescription = 'Full-Stack Developer building products end to end. TypeScript, Next.js, NestJS, PostgreSQL.',
 	ogImage,
 	canonicalUrl,
 	jsonLd,
 	articleMeta,
 } = Astro.props;
 
-const ogImageUrl = ogImage ?? `${Astro.url.origin}/api/og`;
+const ogImageUrl = ogImage ?? `${Astro.url.origin}/api/og?title=${encodeURIComponent(title)}`;
 
 const appleTouchIcon = await getImage({
 	src: faviconSrc,

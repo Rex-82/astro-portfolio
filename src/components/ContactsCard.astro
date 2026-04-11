@@ -1,19 +1,14 @@
 ---
 import GithubIcon from '../components/icons/GithubIcon.astro';
-import DiscordIcon from '../components/icons/DiscordIcon.astro';
 import LinkedinIcon from '../components/icons/LinkedinIcon.astro';
 import EmailIcon from '../components/icons/EmailIcon.astro';
+import { GITHUB_USERNAME } from 'astro:env/server';
 
 const socials = [
 	{
 		name: 'Github',
 		icon: GithubIcon,
-		url: 'https://github.com/Rex-82',
-	},
-	{
-		name: 'Discord',
-		icon: DiscordIcon,
-		url: 'https://discord.com/users/406817041157193728',
+		url: `https://github.com/${GITHUB_USERNAME}`,
 	},
 	{
 		name: 'Linkedin',
@@ -40,7 +35,6 @@ const socials = [
 							target="_blank"
 							rel="noopener"
 							href={social.url}
-							
 							role="link"
 							aria-labelledby=`${social.name}-label`
 						>
