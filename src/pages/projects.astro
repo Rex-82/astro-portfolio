@@ -14,7 +14,7 @@ const projects = await getProjects();
 >
 	<main class="page-main text-text-primary">
 		<PageTitle title="Projects" />
-		<ul role="list" class="grid grid-cols-[repeat(auto-fit,minmax(35ch,1fr))] gap-8 p-0 list-none max-md:gap-y-4">
+		<ul role="list" class="grid grid-cols-[repeat(auto-fit,minmax(min(35ch,100%),1fr))] gap-8 p-0 list-none max-md:gap-y-4">
 			{projects.length === 0 ? (
 				<li class="text-text-secondary text-center col-span-full py-8">
 					No projects to display right now.
