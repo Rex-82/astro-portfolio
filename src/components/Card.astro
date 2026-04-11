@@ -7,10 +7,10 @@ interface Props {
 	href: string;
 	homepage: string;
 	topics: Array<string>;
-	caseStudyHref?: string;
+
 }
 
-const { href, title, body, homepage, topics, caseStudyHref } = Astro.props;
+const { href, title, body, homepage, topics } = Astro.props;
 ---
 
 <li class="link-card flex-col">
@@ -18,7 +18,7 @@ const { href, title, body, homepage, topics, caseStudyHref } = Astro.props;
 		href={href}
 		target="_blank"
 		rel="noopener"
-		style={caseStudyHref ? 'border-bottom-left-radius: 0; border-bottom-right-radius: 0' : undefined}
+
 	>
 		<h2>
 			{title}
@@ -46,19 +46,7 @@ const { href, title, body, homepage, topics, caseStudyHref } = Astro.props;
 		</a>
 	</div>
 	: <></>}
-	{caseStudyHref && (
-		<a
-			href={caseStudyHref}
-			class="px-[calc(1.5rem-1px)] pt-2 pb-[calc(1.5rem-1px)]
-			       text-[0.75rem] uppercase tracking-[0.1em] no-underline
-			       text-[var(--color-text-secondary)] bg-[var(--color-bg)] rounded-b-lg
-			       border-t border-[var(--color-border-subtle)]
-			       transition-colors duration-300 ease-[var(--ease-out-expo)]
-			       hover:text-[var(--color-accent-light)]"
-		>
-			Case study →
-		</a>
-	)}
+
 </li>
 <style>
 	.link-card {

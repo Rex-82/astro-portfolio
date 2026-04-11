@@ -4,12 +4,8 @@ import Card from '../components/Card.astro';
 import CtaButton from '../components/CtaButton.astro';
 import PageTitle from '../components/PageTitle.astro';
 import { getProjects } from '../lib/github';
-import { getCollection } from 'astro:content';
 
 const projects = await getProjects();
-
-const caseStudyEntries = await getCollection('caseStudies', (e) => !e.data.draft);
-const caseStudyMap = new Map(caseStudyEntries.map((e) => [e.data.project, e.id]));
 ---
 
 <Layout
@@ -31,7 +27,7 @@ const caseStudyMap = new Map(caseStudyEntries.map((e) => [e.data.project, e.id])
 						homepage={repo.homepage}
 						href={repo.html_url}
 						topics={repo.topics}
-						caseStudyHref={caseStudyMap.has(repo.name) ? `/case-studies/${caseStudyMap.get(repo.name)}/` : undefined}
+	
 					/>
 				))
 			)}

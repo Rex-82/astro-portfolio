@@ -4,7 +4,7 @@ import PageTitle from '../components/PageTitle.astro';
 import Card from '../components/Card.astro';
 import PostCard from '../components/PostCard.astro';
 import { getFeaturedProjects } from '../lib/github';
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 
 const stack = ['TypeScript', 'Next.js', 'NestJS', 'PostgreSQL'];
 const infrastructure = ['GCP', 'Docker', 'Linux', 'Git'];
@@ -18,14 +18,6 @@ const latestPost = allPosts
 // Featured project slug — must match GitHub repo `name` exactly.
 const [featuredProject] = await getFeaturedProjects(['nvim-config']);
 
-// Case study: if a published case study exists for the featured project, link to it.
-const caseStudyEntry = featuredProject
-	? await getEntry('caseStudies', featuredProject.name)
-	: null;
-const caseStudyHref =
-	caseStudyEntry && !caseStudyEntry.data.draft
-		? `/case-studies/${caseStudyEntry.id}/`
-		: null;
 
 ---
 
@@ -33,7 +25,7 @@ const caseStudyHref =
 	title="Simone Ferretti — Full-Stack Developer"
 	description="Full-Stack Developer building products end to end. TypeScript, Next.js, NestJS, PostgreSQL."
 >
-	<main class="p-4 w-[800px] max-w-[calc(100%-2rem)] text-[16px] text-accent leading-[1.6] flex flex-col items-center">
+	<main class="px-4 pt-14 pb-16 w-[800px] max-w-[calc(100%-2rem)] text-[16px] text-accent leading-[1.6] flex flex-col items-center">
 		<header class="flex flex-col items-center w-fit tracking-[0.125em]">
 			<PageTitle title="Simone Ferretti" />
 			<p class="text-[1.5rem] uppercase tracking-[0.125em] self-end -mt-[2.5em] m-0 max-[768px]:text-[1.125rem] max-[400px]:text-[1rem]">
@@ -44,7 +36,7 @@ const caseStudyHref =
 		<div
 			class="grid grid-cols-3 grid-rows-[auto]
 			       [grid-template-areas:'sec2_sec3_sec4']
-			       justify-items-center rounded-[7px] w-full mt-2
+			       justify-items-center rounded-[7px] w-full mt-10
 			       max-[768px]:grid-cols-1 max-[768px]:grid-rows-[repeat(3,auto)]
 			       max-[768px]:[grid-template-areas:'sec2'_'sec3'_'sec4']
 			       max-[768px]:gap-y-[1em] max-[768px]:mb-8"
@@ -114,7 +106,7 @@ const caseStudyHref =
 			</section>
 		</div>
 
-		<section class="w-full mt-8 flex flex-col gap-10">
+		<section class="w-full mt-16 flex flex-col gap-16">
 			{latestPost && (
 				<div class="flex flex-col gap-3">
 					<h2
@@ -170,16 +162,6 @@ const caseStudyHref =
 						>
 							All projects →
 						</a>
-						{caseStudyHref && (
-							<a
-								href={caseStudyHref}
-								class="text-[0.75rem] uppercase tracking-[0.1em] text-[var(--color-text-secondary)]
-								       no-underline transition-colors duration-300 ease-[var(--ease-out-expo)]
-								       hover:text-[var(--color-accent-light)]"
-							>
-								Read case study →
-							</a>
-						)}
 					</div>
 				</div>
 			)}
