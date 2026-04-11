@@ -60,7 +60,7 @@ const socials = [
 		padding: 1rem;
 		padding-bottom: 1.5rem;
 		border-radius: 7px;
-		border: 1px solid rgba(var(--accent-light), 0.2);
+		border: 1px solid color-mix(in srgb, var(--color-accent-light) 20%, transparent);
 	}
 
 	h1 {
@@ -136,7 +136,7 @@ const socials = [
 
 	@media screen and (max-width: 768px) {
 		.social-link {
-			background-color: rgb(var(--accent-light));
+			background-color: var(--color-accent-light);
 			background-size: 300%;
 		}
 
@@ -152,7 +152,7 @@ const socials = [
 
 	@media screen and (min-width: 768px) {
 		.social-link:hover {
-			background-color: rgb(var(--accent-light));
+			background-color: var(--color-accent-light);
 			transform: scale(1.1);
 		}
 

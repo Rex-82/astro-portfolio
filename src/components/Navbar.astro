@@ -11,46 +11,14 @@ const links = [
 ];
 ---
 
-<nav>
-	<div class="list-container">
+<nav class="text-accent px-4 max-[480px]:px-0">
+	<div class="flex items-center justify-between max-w-[var(--width-nav)] mx-auto max-[480px]:justify-center">
 		<PageSelector
 			client:load
 			currentPath={currentPath}
 			links={links}
 			transition:persist="page-selector"
 		/>
-		<span id="nav-name">Simone Ferretti</span>
+		<span class="whitespace-nowrap max-[480px]:hidden">Simone Ferretti</span>
 	</div>
 </nav>
-<style>
-	nav {
-		color: var(--color-accent);
-		padding: 0 1rem;
-	}
-
-	@media screen and (max-width: 480px) {
-		nav {
-			padding: 0;
-		}
-
-		nav .list-container {
-			justify-content: center;
-		}
-
-		#nav-name {
-			display: none;
-		}
-	}
-
-	.list-container {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		max-width: var(--width-nav);
-		margin: 0 auto;
-	}
-
-	#nav-name {
-		white-space: nowrap;
-	}
-</style>

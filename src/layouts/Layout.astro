@@ -98,58 +98,13 @@ const manifestUrl = `${Astro.url.origin}/manifest.json`;
 			async></script>
 	</head>
 	<body>
-		<header id="site-header">
+		<header
+			class="sticky top-0 z-10 backdrop-blur-[15px]"
+			style="background-color: color-mix(in srgb, var(--color-bg) 33%, transparent)"
+		>
 			<Navbar />
 		</header>
 		<slot />
 		<Footer />
 	</body>
 </html>
-<style is:global>
-	html {
-		font-family: system-ui, sans-serif;
-		letter-spacing: 0.025rem;
-		background: var(--color-bg);
-	}
-
-	#site-header {
-		position: sticky;
-		top: 0;
-		z-index: 1;
-		background-color: color-mix(in srgb, var(--color-bg) 33%, transparent);
-		backdrop-filter: blur(15px);
-		width: auto;
-		place-self: start stretch;
-	}
-
-	.text-gradient {
-		background-image: linear-gradient(var(--accent-gradient-values));
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-color: rgb(var(--accent-light));
-		background-size: 400%;
-		background-position: 0%;
-	}
-
-	body {
-		margin: 0;
-		display: grid;
-		grid-template-columns: 100%;
-		grid-template-rows: auto 1fr auto;
-		min-height: 100vh;
-		place-items: start center;
-	}
-
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
-</style>

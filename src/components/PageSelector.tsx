@@ -79,18 +79,13 @@ export default function PageSelector({
       <ul
         ref={containerRef}
         className="relative flex list-none my-2 mx-0 p-0 gap-0"
-        style={
-          {
-            '--ease-out-expo': 'cubic-bezier(0.22, 1, 0.36, 1)',
-          } as React.CSSProperties
-        }
       >
         {thumbStyle && (
           <motion.div
             className="absolute top-0 bottom-0 left-0 pointer-events-none z-0 rounded-2xl"
             style={{
-              backgroundColor: 'rgba(230, 250, 250, 0.1)',
-              boxShadow: 'inset 0 1px 2px rgba(230, 250, 250, 0.2)',
+              backgroundColor: 'color-mix(in srgb, var(--color-accent-light) 10%, transparent)',
+              boxShadow: 'inset 0 1px 2px color-mix(in srgb, var(--color-accent-light) 20%, transparent)',
             }}
             initial={false}
             animate={{
@@ -146,9 +141,9 @@ export default function PageSelector({
                   paddingLeft: isFirst ? '0.75rem' : isLast ? '0.5rem' : '0.75rem',
                   paddingRight: isFirst ? '0.5rem' : isLast ? '0.75rem' : '0.75rem',
                   color: isActive
-                    ? 'rgb(var(--color-accent))'
-                    : 'rgb(var(--color-text-secondary))',
-                  transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+                    ? 'var(--color-accent)'
+                    : 'var(--color-text-secondary)',
+                  transitionTimingFunction: 'var(--ease-out-expo)',
                 }}
               >
                 {link.label}

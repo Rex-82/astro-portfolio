@@ -12,12 +12,12 @@ const { label, destination } = Astro.props;
 		justify-content: center;
 		align-items: center;
 
-		border: 1px solid rgba(var(--accent-light), 0.2);
-		border-radius: 8px;
+		border: 1px solid color-mix(in srgb, var(--color-accent-light) 20%, transparent);
+		border-radius: var(--radius-card);
 
 		margin: 2.5rem auto;
 
-		background-color: rgba(var(--accent-light), 0.1);
+		background-color: color-mix(in srgb, var(--color-accent-light) 10%, transparent);
 		background-position: 50%;
 		background-size: 110%;
 
@@ -25,7 +25,6 @@ const { label, destination } = Astro.props;
 		width: fit-content;
 
 		transform: scale(1);
-		/*box-shadow: inset 0 0.125em 0.25em rgba(var(--accent), 0.2);*/
 
 		transition:
 			transform 0.6s var(--ease-out-expo),
@@ -36,7 +35,7 @@ const { label, destination } = Astro.props;
 	.button-gradient {
 		background-image: radial-gradient(
 			ellipse farthest-corner at 50% -90%,
-			rgba(var(--accent-light), 0.2) -20%,
+			color-mix(in srgb, var(--color-accent-light) 20%, transparent) -20%,
 			transparent 80%
 		);
 	}
@@ -47,7 +46,7 @@ const { label, destination } = Astro.props;
 			background-size: 120%;
 			cursor: pointer;
 
-			border: 1px solid rgba(var(--accent-light), 0.4);
+			border: 1px solid color-mix(in srgb, var(--color-accent-light) 40%, transparent);
 		}
 	}
 
@@ -56,7 +55,7 @@ const { label, destination } = Astro.props;
 		justify-content: center;
 		align-items: center;
 
-		color: rgb(var(--accent-light));
+		color: var(--color-accent-light);
 		text-decoration: none;
 		font-size: 1rem;
 
