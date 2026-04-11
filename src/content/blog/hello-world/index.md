@@ -1,6 +1,6 @@
 ---
 title: 'Hello World'
-description: 'My first blog post — a quick intro to this new section of my site and what to expect.'
+description: 'My first blog post - a quick intro to this new section of my site and what to expect.'
 pubDate: 2026-03-17
 tags: ['personal', 'meta']
 draft: false
