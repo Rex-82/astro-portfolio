@@ -1,38 +1,7 @@
 ---
 const year = new Date().getFullYear();
-
-const navLinks = [
-	{ label: 'Home', href: '/' },
-	{ label: 'Blog', href: '/blog/' },
-	{ label: 'Projects', href: '/projects/' },
-	{ label: 'Contacts', href: '/contacts/' },
-];
 ---
 
-<footer class="mt-8 border-t border-[var(--color-border-subtle)]">
-	<div class="w-[800px] max-w-[calc(100%-2rem)] mx-auto py-6 flex flex-col items-center gap-3">
-		<nav class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-			{navLinks.map((link) => (
-				<a
-					href={link.href}
-					class="text-[0.75rem] uppercase tracking-[0.1em] text-[var(--color-text-secondary)]
-					       no-underline transition-colors duration-300 ease-[var(--ease-out-expo)]
-					       hover:text-[var(--color-accent-light)]"
-				>
-					{link.label}
-				</a>
-			))}
-			<a
-				href="/rss.xml"
-				class="text-[0.75rem] uppercase tracking-[0.1em] text-[var(--color-text-secondary)]
-				       no-underline transition-colors duration-300 ease-[var(--ease-out-expo)]
-				       hover:text-[var(--color-accent-light)]"
-			>
-				RSS
-			</a>
-		</nav>
-		<span class="text-[0.75rem] text-[var(--color-text-secondary)]">
-			Simone Ferretti &copy; {year}
-		</span>
-	</div>
+<footer class="h-8 flex items-center justify-center">
+	<span class="text-sm text-accent">Simone Ferretti &copy; {year}</span>
 </footer>
