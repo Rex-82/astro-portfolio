@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ContactsCard from '../components/ContactsCard.astro';
-import { CURRENT_STATUS } from 'astro:env/server';
 ---
 
 <Layout
@@ -9,17 +8,16 @@ import { CURRENT_STATUS } from 'astro:env/server';
 	description="Get in touch with a Full-Stack Developer."
 >
 	<main class="page-main text-accent flex flex-col items-center">
-		<p class="text-[2rem] font-light text-center mb-0 max-[768px]:text-[1.5rem]">
+		<p
+			class="text-[2rem] font-light text-center mb-0 max-[768px]:text-[1.5rem]"
+		>
 			<span>Let's build</span>
 		</p>
-		<p class="text-[4rem] font-bold leading-none text-center mt-0 mb-[0.5em] max-[768px]:text-[3rem]">
+		<p
+			class="text-[4rem] font-bold leading-none text-center mt-0 mb-[0.5em] max-[768px]:text-[3rem]"
+		>
 			<span class="text-gradient">Something real</span>
 		</p>
-		{CURRENT_STATUS && (
-			<p class="text-center text-[var(--color-text-secondary)] text-[0.75rem] uppercase tracking-[0.1em] mb-2">
-				{CURRENT_STATUS}
-			</p>
-		)}
 		<section class="max-[768px]:grid">
 			<ContactsCard />
 		</section>

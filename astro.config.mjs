@@ -28,11 +28,6 @@ export default defineConfig({
 
   env: {
     schema: {
-      CURRENT_STATUS: envField.string({
-        context: 'server',
-        access: 'public',
-        optional: true,
-      }),
       GITHUB_USERNAME: envField.string({
         context: 'server',
         access: 'public',
