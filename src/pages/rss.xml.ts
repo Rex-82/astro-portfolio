@@ -10,7 +10,7 @@ export async function GET(context: APIContext) {
 	return rss({
 		title: "Simone Ferretti's Blog",
 		description:
-			'Thoughts on web development, tools, and side projects.',
+			'Notes on web development, tooling, side projects, and things I am learning.',
 		site: context.site!,
 		customData: '<language>en-us</language>',
 		items: posts.map((post) => ({

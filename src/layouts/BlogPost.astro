@@ -19,10 +19,11 @@ interface Props {
 const { title, description, pubDate, updatedDate, tags, id, coverImage, readingTime } = Astro.props;
 const generatedCover = !coverImage ? generateCover(id) : null;
 
-const canonicalUrl = `${Astro.url.origin}/blog/${id}/`;
+const siteOrigin = Astro.site?.origin ?? Astro.url.origin;
+const canonicalUrl = `${siteOrigin}/blog/${id}/`;
 const ogImage = coverImage
-	? `${Astro.url.origin}${coverImage.src}`
-	: `${Astro.url.origin}/api/og?title=${encodeURIComponent(title)}`;
+	? `${siteOrigin}${coverImage.src}`
+	: `${siteOrigin}/api/og?title=${encodeURIComponent(title)}`;
 
 const jsonLd = {
 	'@context': 'https://schema.org',
