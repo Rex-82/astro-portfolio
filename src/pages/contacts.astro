@@ -1,11 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ContactsCard from '../components/ContactsCard.astro';
+
+const siteOrigin = 'https://simoneferretti.dev';
+const pageUrl = `${siteOrigin}/contacts/`;
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'ContactPage',
+	'@id': `${pageUrl}#contactpage`,
+	url: pageUrl,
+	name: 'Contact Simone Ferretti',
+	description: 'Get in touch with Simone Ferretti, Full-Stack Developer. Find me on GitHub, LinkedIn, or by email.',
+	mainEntity: {
+		'@type': 'Person',
+		'@id': `${siteOrigin}/#person`,
+	},
+};
 ---
 
 <Layout
-	title="Contact — Simone Ferretti"
-	description="Get in touch with a Full-Stack Developer."
+	title="Contact | Simone Ferretti"
+	description="Get in touch with Simone Ferretti, Full-Stack Developer. Find me on GitHub, LinkedIn, or by email. Open to interesting product and tooling projects."
+	jsonLd={jsonLd}
 >
 	<main class="page-main text-accent flex flex-col items-center">
 		<p

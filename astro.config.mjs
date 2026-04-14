@@ -11,6 +11,7 @@ import react from '@astrojs/react';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://simoneferretti.dev',
+  trailingSlash: 'always',
   integrations: [react(), compress()],
   output: 'server',
 

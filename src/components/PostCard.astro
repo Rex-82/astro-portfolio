@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import { generateCover } from '../lib/generate-cover';
 
 interface Props {
 	id: string;
@@ -39,9 +38,14 @@ const { id, title, description, pubDate, tags, coverImage, animationDelay = 0 } 
 					sizes="(max-width: 800px) 100vw, 800px"
 				/>
 			) : (
-				<div
-					class="post-cover-generated h-full overflow-hidden transition-transform duration-[600ms] ease-[var(--ease-out-expo)] md:group-hover:scale-105"
-					set:html={generateCover(id)}
+				<img
+					src={`/covers/${id}/`}
+					alt=""
+					loading="lazy"
+					decoding="async"
+					width="800"
+					height="480"
+					class="post-cover-generated h-full w-full object-cover block transition-transform duration-[600ms] ease-[var(--ease-out-expo)] md:group-hover:scale-105"
 				/>
 			)}
 		</div>

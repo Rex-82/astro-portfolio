@@ -8,11 +8,37 @@ import { getCollection } from 'astro:content';
 const posts = (await getCollection('blog'))
 	.filter((post) => !post.data.draft)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const siteOrigin = 'https://simoneferretti.dev';
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'Blog',
+	'@id': `${siteOrigin}/blog/#blog`,
+	url: `${siteOrigin}/blog/`,
+	name: "Simone Ferretti's Blog",
+	description: 'Thoughts on web development, tools, and side projects by Simone Ferretti.',
+	inLanguage: 'en',
+	author: {
+		'@type': 'Person',
+		'@id': `${siteOrigin}/#person`,
+		name: 'Simone Ferretti',
+		url: siteOrigin,
+	},
+	blogPost: posts.map((p) => ({
+		'@type': 'BlogPosting',
+		headline: p.data.title,
+		url: `${siteOrigin}/blog/${p.id}/`,
+		datePublished: p.data.pubDate.toISOString(),
+		...(p.data.updatedDate && { dateModified: p.data.updatedDate.toISOString() }),
+	})),
+};
 ---
 
 <Layout
-	title="Blog — Simone Ferretti"
+	title="Blog | Simone Ferretti"
 	description="Thoughts on web development, tools, and side projects by Simone Ferretti."
+	jsonLd={jsonLd}
 >
 	<main class="page-main text-text-primary leading-[1.6]">
 		<div class="relative">

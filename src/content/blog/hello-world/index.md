@@ -4,6 +4,8 @@ description: 'My first blog post - a quick intro to this new section of my site 
 pubDate: 2026-03-17
 tags: ['personal', 'meta']
 draft: false
+noindex: true
+tldr: 'A short intro post kicking off the blog. Expect web development notes, side projects, and the occasional opinion piece.'
 ---
 
 ## Welcome

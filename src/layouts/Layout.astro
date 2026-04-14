@@ -15,6 +15,7 @@ interface Props {
 	ogImage?: string;
 	canonicalUrl?: string;
 	jsonLd?: Record<string, unknown>;
+	noindex?: boolean;
 	articleMeta?: {
 		publishedTime: string;
 		modifiedTime?: string;
@@ -31,6 +32,7 @@ const {
 	ogImage,
 	canonicalUrl,
 	jsonLd,
+	noindex,
 	articleMeta,
 } = Astro.props;
 
@@ -53,6 +55,7 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: 'svg' });
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
+		{noindex && <meta name="robots" content="noindex,follow" />}
 		<meta name="viewport" content="width=device-width" />
 		<meta name="theme-color" content="#101010" />
 		<link rel="icon" type="image/svg+xml" href={faviconSvg.src} />

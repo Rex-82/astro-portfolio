@@ -2,7 +2,6 @@
 import Layout from './Layout.astro';
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import { generateCover } from '../lib/generate-cover';
 import { ArrowLeft } from 'lucide-react';
 
 interface Props {
@@ -14,10 +13,12 @@ interface Props {
 	id: string;
 	coverImage?: ImageMetadata;
 	readingTime?: number;
+	noindex?: boolean;
+	tldr?: string;
+	wordCount?: number;
 }
 
-const { title, description, pubDate, updatedDate, tags, id, coverImage, readingTime } = Astro.props;
-const generatedCover = !coverImage ? generateCover(id) : null;
+const { title, description, pubDate, updatedDate, tags, id, coverImage, readingTime, noindex, tldr, wordCount } = Astro.props;
 
 const siteOrigin = Astro.site?.origin ?? Astro.url.origin;
 const canonicalUrl = `${siteOrigin}/blog/${id}/`;
@@ -34,12 +35,25 @@ const jsonLd = {
 	...(updatedDate && { dateModified: updatedDate.toISOString() }),
 	author: {
 		'@type': 'Person',
+		'@id': 'https://simoneferretti.dev/#person',
 		name: 'Simone Ferretti',
 		url: 'https://simoneferretti.dev',
 	},
+	publisher: {
+		'@type': 'Person',
+		'@id': 'https://simoneferretti.dev/#person',
+		name: 'Simone Ferretti',
+		url: 'https://simoneferretti.dev',
+	},
+	mainEntityOfPage: {
+		'@type': 'WebPage',
+		'@id': canonicalUrl,
+	},
+	inLanguage: 'en',
 	image: ogImage,
 	url: canonicalUrl,
 	keywords: tags.join(', '),
+	...(wordCount && { wordCount }),
 };
 
 const articleMeta = {
@@ -63,13 +77,14 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 ---
 
 <Layout
-	title={`${title} — Simone Ferretti`}
+	title={`${title} | Simone Ferretti`}
 	description={description}
 	ogType="article"
 	ogDescription={description}
 	ogImage={ogImage}
 	canonicalUrl={canonicalUrl}
 	jsonLd={jsonLd}
+	noindex={noindex}
 	articleMeta={articleMeta}
 >
 	<main>
@@ -103,7 +118,15 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 							sizes="(max-width: 800px) 100vw, 800px"
 						/>
 					) : (
-						<div class="generated-cover" set:html={generatedCover} />
+						<img
+							src={`/covers/${id}/`}
+							alt=""
+							loading="lazy"
+							decoding="async"
+							width="1200"
+							height="630"
+							class="generated-cover"
+						/>
 					)}
 					<div class="hero-overlay"></div>
 					<div class="hero-content">
@@ -131,6 +154,11 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 				</div>
 			</header>
 			<hr class="header-separator" />
+			{tldr && (
+				<aside class="tldr" aria-label="Summary">
+					<strong>TL;DR:</strong> {tldr}
+				</aside>
+			)}
 			<div class="prose">
 				<slot />
 			</div>
@@ -387,6 +415,19 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		);
 		max-width: 65ch;
 		margin: 0 auto 2.5rem;
+	}
+
+	/* ===== TL;DR BLOCK ===== */
+	.tldr {
+		max-width: 65ch;
+		margin: 0 auto 2rem;
+		padding: 0.875rem 1.25rem;
+		border-left: 3px solid color-mix(in srgb, var(--color-accent) 60%, transparent);
+		background: color-mix(in srgb, var(--color-accent) 6%, transparent);
+		border-radius: 0 8px 8px 0;
+		color: var(--color-text-secondary);
+		font-size: 0.9375rem;
+		line-height: 1.6;
 	}
 
 	/* ===== PROSE ===== */
