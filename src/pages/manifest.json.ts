@@ -27,7 +27,7 @@ export const GET: APIRoute = async () => {
             "Full-Stack Developer building products end to end. TypeScript, Next.js, NestJS, PostgreSQL.",
         start_url: "/",
         display: "standalone",
-        id: "some-unique-id",
+        id: "https://simoneferretti.dev/",
         icons,
     };
 

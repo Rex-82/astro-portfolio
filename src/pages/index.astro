@@ -18,12 +18,45 @@ const latestPost = allPosts
 // Featured project slug — must match GitHub repo `name` exactly.
 const [featuredProject] = await getFeaturedProjects(['nvim-config']);
 
-
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@graph': [
+		{
+			'@type': 'Person',
+			'@id': 'https://simoneferretti.dev/#person',
+			name: 'Simone Ferretti',
+			url: 'https://simoneferretti.dev',
+			jobTitle: 'Full-Stack Developer',
+			sameAs: [
+				'https://github.com/Rex-82',
+				'https://www.linkedin.com/in/simoneferretti',
+			],
+			knowsAbout: [
+				'TypeScript',
+				'Next.js',
+				'NestJS',
+				'PostgreSQL',
+				'Docker',
+				'GCP',
+				'Linux',
+			],
+		},
+		{
+			'@type': 'WebSite',
+			'@id': 'https://simoneferretti.dev/#website',
+			url: 'https://simoneferretti.dev',
+			name: 'Simone Ferretti',
+			publisher: { '@id': 'https://simoneferretti.dev/#person' },
+			inLanguage: 'en',
+		},
+	],
+};
 ---
 
 <Layout
 	title="Simone Ferretti — Full-Stack Developer"
 	description="Full-Stack Developer building products end to end. TypeScript, Next.js, NestJS, PostgreSQL."
+	jsonLd={jsonLd}
 >
 	<main class="px-4 pt-14 pb-16 w-[800px] max-w-[calc(100%-2rem)] text-[16px] text-accent leading-[1.6] flex flex-col items-center">
 		<header class="flex flex-col items-center w-fit tracking-[0.125em] max-[480px]:tracking-normal">

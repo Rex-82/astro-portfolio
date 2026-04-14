@@ -27,14 +27,17 @@ const {
 	title,
 	description,
 	ogType = 'website',
-	ogDescription = 'Full-Stack Developer building products end to end. TypeScript, Next.js, NestJS, PostgreSQL.',
+	ogDescription,
 	ogImage,
 	canonicalUrl,
 	jsonLd,
 	articleMeta,
 } = Astro.props;
 
-const ogImageUrl = ogImage ?? `${Astro.url.origin}/api/og?title=${encodeURIComponent(title)}`;
+const siteOrigin = Astro.site?.origin ?? Astro.url.origin;
+const ogImageUrl = ogImage ?? `${siteOrigin}/api/og?title=${encodeURIComponent(title)}`;
+const resolvedCanonical = canonicalUrl ?? new URL(Astro.url.pathname, siteOrigin).href;
+const resolvedOgDescription = ogDescription ?? description;
 
 const appleTouchIcon = await getImage({
 	src: faviconSrc,
@@ -43,9 +46,6 @@ const appleTouchIcon = await getImage({
 	format: 'png',
 });
 const faviconSvg = await getImage({ src: faviconSvgSrc, format: 'svg' });
-
-const faviconUrl = `${Astro.url.origin}/favicon.ico`;
-const manifestUrl = `${Astro.url.origin}/manifest.json`;
 ---
 
 <!doctype html>
@@ -54,6 +54,7 @@ const manifestUrl = `${Astro.url.origin}/manifest.json`;
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width" />
+		<meta name="theme-color" content="#101010" />
 		<link rel="icon" type="image/svg+xml" href={faviconSvg.src} />
 		<meta name="generator" content={Astro.generator} />
 
@@ -64,16 +65,22 @@ const manifestUrl = `${Astro.url.origin}/manifest.json`;
 
 		<title>{title}</title>
 
-		{canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+		<link rel="canonical" href={resolvedCanonical} />
 
-		<link rel="icon" href={faviconUrl} sizes="32x32" />
+		<link rel="icon" href="/favicon.ico" sizes="32x32" />
 		<link rel="icon" href={faviconSvg.src} type="image/svg+xml" />
 		<link rel="apple-touch-icon" href={appleTouchIcon.src} />
 
 		<meta property="og:title" content={title} />
 		<meta property="og:image" content={ogImageUrl} />
 		<meta property="og:type" content={ogType} />
-		<meta property="og:description" content={ogDescription} />
+		<meta property="og:description" content={resolvedOgDescription} />
+		<meta property="og:url" content={resolvedCanonical} />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={resolvedOgDescription} />
+		<meta name="twitter:image" content={ogImageUrl} />
 
 		{articleMeta && (
 			<>

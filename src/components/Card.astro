@@ -17,7 +17,7 @@ const { href, title, body, homepage, topics } = Astro.props;
 	<a
 		href={href}
 		target="_blank"
-		rel="noopener"
+		rel="noopener noreferrer"
 
 	>
 		<h2>
@@ -38,7 +38,7 @@ const { href, title, body, homepage, topics } = Astro.props;
 	</a>
 	{homepage ?
 	<div id="homepage-container">
-		<a role="button" aria-labelledby="homepage-label" class="flex items-center justify-center" href={homepage} target="_blank" rel="noopener">
+		<a role="button" aria-labelledby="homepage-label" class="flex items-center justify-center" href={homepage} target="_blank" rel="noopener noreferrer">
 			<span id="homepage-label">Live Demo</span>
 			<div id="homepage-link" class="pill flex items-center justify-center">
 				<GlobeIcon/>
