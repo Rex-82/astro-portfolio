@@ -1,4 +1,7 @@
-# Simone Ferretti
+import type { APIRoute } from 'astro';
+import { getCollection } from 'astro:content';
+
+const HEADER = `# Simone Ferretti
 
 > Full-Stack Developer building products end to end. Personal portfolio, blog, and project index at simoneferretti.dev.
 
@@ -19,4 +22,27 @@ Simone Ferretti is a Full-Stack Developer focused on shipping complete products.
 ## Social
 
 - [GitHub](https://github.com/Rex-82)
-- [LinkedIn](https://www.linkedin.com/in/simoneferretti)
+- [LinkedIn](https://www.linkedin.com/in/simoneferretti)`;
+
+export const GET: APIRoute = async () => {
+	const posts = (await getCollection('blog'))
+		.filter((post) => !post.data.draft)
+		.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+	const postsSection =
+		posts.length > 0
+			? `\n\n## Posts\n\n` +
+				posts
+					.map((p) => `- [${p.data.title}](https://simoneferretti.dev/blog/${p.id}/) | ${p.data.description}`)
+					.join('\n')
+			: '';
+
+	const body = HEADER + postsSection + '\n';
+
+	return new Response(body, {
+		headers: {
+			'content-type': 'text/plain; charset=utf-8',
+			'cache-control': 'public, max-age=3600',
+		},
+	});
+};

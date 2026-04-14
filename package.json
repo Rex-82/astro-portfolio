@@ -25,8 +25,8 @@
 		"react-dom": "^19.2.5",
 		"satori": "^0.25.0",
 		"satori-html": "^0.3.2",
-		"sharp-ico": "^0.1.5",
-		"tailwindcss": "^4.2.1"
+		"sharp": "^0.33.5",
+"tailwindcss": "^4.2.1"
 	},
 	"devDependencies": {
 		"@types/d3-contour": "^3.0.6",

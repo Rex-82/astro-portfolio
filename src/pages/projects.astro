@@ -6,11 +6,35 @@ import PageTitle from '../components/PageTitle.astro';
 import { getProjects } from '../lib/github';
 
 const projects = await getProjects();
+
+const siteOrigin = 'https://simoneferretti.dev';
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'ItemList',
+	'@id': `${siteOrigin}/projects/#itemlist`,
+	url: `${siteOrigin}/projects/`,
+	name: "Simone Ferretti's Projects",
+	description: 'Open source projects and experiments by Simone Ferretti.',
+	itemListElement: projects.map((repo, index) => ({
+		'@type': 'ListItem',
+		position: index + 1,
+		item: {
+			'@type': 'SoftwareSourceCode',
+			name: repo.name,
+			description: repo.description ?? undefined,
+			codeRepository: repo.html_url,
+			...(repo.language && { programmingLanguage: repo.language }),
+			...(repo.topics.length > 0 && { keywords: repo.topics.join(', ') }),
+		},
+	})),
+};
 ---
 
 <Layout
-	title="Projects — Simone Ferretti"
+	title="Projects | Simone Ferretti"
 	description="Projects by a Full-Stack Developer. TypeScript, Next.js, NestJS, Go, Rust. Open source tools and experiments."
+	jsonLd={jsonLd}
 >
 	<main class="page-main text-text-primary">
 		<PageTitle title="Projects" />

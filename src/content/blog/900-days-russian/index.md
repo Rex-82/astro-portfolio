@@ -4,6 +4,7 @@ description: 'After 900 days of learning Russian I am still a beginner, and that
 pubDate: 2026-04-12
 tags: ['personal', 'learning', 'languages']
 draft: false
+tldr: '900 days into learning Russian and still a beginner. A reflection on why consistency matters more than fluency, and how embracing slow progress is the only honest path forward.'
 ---
 
 I don't have a precise reason for picking Russian. It's one of those languages that has always felt like an enigma to me: a different alphabet, a different structure, a different way of building meaning. The same goes for Arabic and Chinese. There's something about languages that don't share your visual vocabulary that makes them feel like a locked door. I find that attractive, not discouraging.

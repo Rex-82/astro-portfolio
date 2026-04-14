@@ -3,6 +3,15 @@ import { getEntry, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 import { calculateReadingTime } from '../../lib/reading-time';
 
+function countWords(markdown: string): number {
+	return markdown
+		.replace(/```[\s\S]*?```/g, ' ')
+		.replace(/`[^`]*`/g, ' ')
+		.replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+		.split(/\s+/)
+		.filter(Boolean).length;
+}
+
 const { slug } = Astro.params;
 
 if (!slug) {
@@ -17,6 +26,7 @@ if (!post) {
 
 const { Content } = await render(post);
 const readingTime = calculateReadingTime(post.body ?? '');
+const wordCount = countWords(post.body ?? '');
 ---
 
 <BlogPost
@@ -28,6 +38,9 @@ const readingTime = calculateReadingTime(post.body ?? '');
 	id={post.id}
 	coverImage={post.data.coverImage}
 	readingTime={readingTime}
+	wordCount={wordCount}
+	noindex={post.data.noindex}
+	tldr={post.data.tldr}
 >
 	<Content />
 </BlogPost>

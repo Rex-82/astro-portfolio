@@ -2,6 +2,7 @@ import { html } from 'satori-html';
 import satori from 'satori';
 import { readFileSync } from 'node:fs';
 import { Resvg } from '@resvg/resvg-js';
+import sharp from 'sharp';
 
 export async function GET({ url }) {
 	const rawTitle = url.searchParams.get('title');
@@ -161,10 +162,23 @@ export async function GET({ url }) {
 		},
 	});
 	const image = resvg.render();
+	const pngBuffer = image.asPng();
 
-	return new Response(image.asPng(), {
+	const wantsFormat = url.searchParams.get('format');
+	if (wantsFormat === 'png') {
+		return new Response(pngBuffer, {
+			headers: {
+				'Content-Type': 'image/png',
+				'Cache-Control': 'public, max-age=31536000, immutable',
+			},
+		});
+	}
+
+	const webpBuffer = await sharp(pngBuffer).webp({ quality: 82 }).toBuffer();
+
+	return new Response(webpBuffer, {
 		headers: {
-			'Content-Type': 'image/png',
+			'Content-Type': 'image/webp',
 			'Cache-Control': 'public, max-age=31536000, immutable',
 		},
 	});
