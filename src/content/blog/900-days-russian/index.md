@@ -9,7 +9,7 @@ tldr: '900 days into learning Russian and still a beginner. A reflection on why 
 
 I don't have a precise reason for picking Russian. It's one of those languages that has always felt like an enigma to me: a different alphabet, a different structure, a different way of building meaning. The same goes for Arabic and Chinese. There's something about languages that don't share your visual vocabulary that makes them feel like a locked door. I find that attractive, not discouraging.
 
-Beyond the fascination, there's a more practical thought I've had for a while. Italian and English feel like the baseline now. Most people in tech have both. I wanted something that was genuinely mine, a skill I'd carry for the rest of my life, one that opens a different cultural window and doesn't expire.
+Beyond the fascination, there's a more practical thought I've had for a while. If your native language isn't English, you most likely already speak at least two by default. That's the baseline. I wanted something beyond it, a skill that was genuinely mine, one I'd carry for the rest of my life, one that opens a different cultural window and doesn't expire.
 
 ## The false start
 
