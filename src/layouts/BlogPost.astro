@@ -301,14 +301,16 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 	.hero-overlay {
 		grid-column: 1 / -1;
 		grid-row: 1 / -1;
-		background: linear-gradient(
-			to bottom,
-			color-mix(in srgb, var(--color-bg) 25%, transparent) 0%,
-			transparent 25%,
-			transparent 40%,
-			color-mix(in srgb, var(--color-bg) 75%, transparent) 70%,
-			var(--color-bg) 100%
-		);
+		background:
+			linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+			linear-gradient(
+				to bottom,
+				color-mix(in srgb, var(--color-bg) 25%, transparent) 0%,
+				transparent 25%,
+				transparent 40%,
+				color-mix(in srgb, var(--color-bg) 75%, transparent) 70%,
+				var(--color-bg) 100%
+			);
 		z-index: 1;
 		pointer-events: none;
 	}

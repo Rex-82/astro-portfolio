@@ -26,9 +26,9 @@ const { id, title, description, pubDate, tags, coverImage, animationDelay = 0 } 
 >
 	<a
 		href={`/blog/${id}/`}
-		class="flex max-[600px]:flex-col no-underline [color:inherit] rounded-lg bg-[var(--color-bg)] overflow-hidden"
+		class="flex h-[180px] max-[600px]:h-auto max-[600px]:flex-col no-underline [color:inherit] rounded-lg bg-[var(--color-bg)] overflow-hidden border border-[var(--color-border-mid)] transition-colors duration-[600ms] ease-[var(--ease-out-expo)] md:group-hover:border-[var(--color-accent-light)]"
 	>
-		<div class="shrink-0 w-[320px] overflow-hidden max-[600px]:w-full max-[600px]:h-[180px]">
+		<div class="shrink-0 w-[320px] h-[180px] overflow-hidden max-[600px]:w-full">
 			{coverImage ? (
 				<Image
 					src={coverImage}
@@ -49,7 +49,7 @@ const { id, title, description, pubDate, tags, coverImage, animationDelay = 0 } 
 				/>
 			)}
 		</div>
-		<div class="flex-1 min-w-0 py-5 px-6 flex flex-col justify-center">
+		<div class="flex-1 min-w-0 py-5 px-6 flex flex-col justify-center overflow-hidden">
 			<h2
 				class="m-0 mb-2 text-[1.25rem] text-text-primary
 				       transition-[color,transform] duration-[600ms] ease-[var(--ease-out-expo)]
@@ -57,7 +57,7 @@ const { id, title, description, pubDate, tags, coverImage, animationDelay = 0 } 
 			>
 				{title}
 			</h2>
-			<p class="m-0 mb-3 text-[var(--color-text-secondary)] md:group-hover:text-[var(--color-accent-light-dimmed)]">
+			<p class="m-0 mb-3 text-[var(--color-text-secondary)] line-clamp-2 md:group-hover:text-[var(--color-accent-light-dimmed)]">
 				{description}
 			</p>
 			<div class="flex flex-wrap items-center gap-3">
