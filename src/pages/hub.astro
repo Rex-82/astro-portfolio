@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HubBlock from '../components/HubBlock.astro';
+import GithubIcon from '../components/icons/GithubIcon.astro';
+import LinkedinIcon from '../components/icons/LinkedinIcon.astro';
+import EmailIcon from '../components/icons/EmailIcon.astro';
+import PortfolioIcon from '../components/icons/PortfolioIcon.astro';
+import BlogIcon from '../components/icons/BlogIcon.astro';
+import { generateCover } from '../lib/generate-cover';
+import { GITHUB_USERNAME } from 'astro:env/server';
+
+const siteOrigin = 'https://simoneferretti.dev';
+const pageUrl = `${siteOrigin}/hub/`;
+
+const bioBgSvg = generateCover('simoneferretti');
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'ProfilePage',
+	'@id': `${pageUrl}#profilepage`,
+	url: pageUrl,
+	name: 'Simone Ferretti | Hub',
+	description:
+		'Personal hub for Simone Ferretti: bio, social links, stack, and highlights.',
+	mainEntity: {
+		'@type': 'Person',
+		'@id': `${siteOrigin}/#person`,
+	},
+};
+---
+
+<Layout
+	title="Simone Ferretti | Hub"
+	description="Personal hub for Simone Ferretti, full-stack developer building systems and the infrastructure they need. Bio, social links, stack, and highlights."
+	jsonLd={jsonLd}
+>
+	<main
+		class="px-4 pt-14 pb-10 w-[800px] max-w-[calc(100%-2rem)] text-[16px] text-accent leading-[1.6] flex flex-col items-center"
+	>
+		<section class="w-full flex flex-col gap-3" aria-label="Hub blocks">
+			<HubBlock
+				variant="bio"
+				index="00"
+				heading="Simone Ferretti"
+				body="I build systems and the infrastructure they need to not fall over."
+				bgSvg={bioBgSvg}
+			/>
+
+			<div class="grid grid-cols-3 gap-3">
+				<HubBlock
+					variant="link"
+					index="01"
+					title="Connect"
+					body="LinkedIn"
+					href="https://www.linkedin.com/in/simoneferretti"
+					icon={LinkedinIcon}
+					external
+					iconOnly
+				/>
+				<HubBlock
+					variant="link"
+					index="02"
+					title="Code"
+					body={`@${GITHUB_USERNAME}`}
+					href={`https://github.com/${GITHUB_USERNAME}`}
+					icon={GithubIcon}
+					external
+					iconOnly
+				/>
+				<HubBlock
+					variant="link"
+					index="03"
+					title="Write"
+					body="Email"
+					href="mailto:simoneferretti99@pm.me"
+					icon={EmailIcon}
+					iconOnly
+				/>
+			</div>
+
+			<div
+				class="grid grid-cols-1 gap-3 min-[480px]:grid-cols-2 md:grid-cols-3"
+			>
+				<HubBlock
+					variant="link"
+					index="04"
+					title="Portfolio"
+					body="simoneferretti.dev"
+					href={siteOrigin}
+					icon={PortfolioIcon}
+					external
+					spanClass="col-span-full md:col-span-2"
+				/>
+				<HubBlock
+					variant="link"
+					index="05"
+					title="Read"
+					body="Blog"
+					href="/blog/"
+					icon={BlogIcon}
+					spanClass="max-md:col-span-full"
+				/>
+				<HubBlock
+					variant="text"
+					index="06"
+					title="On my desk"
+					items={[
+						'<strong>Payment infra</strong> between <strong>Italy</strong> and <strong>the US</strong>.',
+						'<strong>Music player</strong> built for how I listen.',
+						'<strong>Homelab</strong> quietly running my life.',
+						'<strong>450m² / 4,843ft² garden</strong>.',
+						'<strong>Drip coffee</strong>.',
+					]}
+					spanClass="md:col-span-2"
+				/>
+				<HubBlock
+					variant="text"
+					index="07"
+					title="Elsewhere"
+					items={[
+						'<strong>Russian</strong>, past the awkward phase.',
+						'<strong>Lifting</strong> and <strong>vie ferrate</strong> in the <strong>Dolomites</strong>.',
+						'<strong>Chinese</strong>, in the awkward phase.',
+						'<strong>Cockatiel</strong> with strong opinions.',
+					]}
+				/>
+				<HubBlock
+					variant="tags"
+					index="08"
+					title="Tech Stack"
+					items={[
+						'TypeScript',
+						'NestJS',
+						'Next.js 15',
+						'PostgreSQL',
+						'GCP',
+						'Stripe',
+						'Twilio',
+					]}
+					spanClass="col-span-full md:col-span-3"
+				/>
+			</div>
+		</section>
+	</main>
+</Layout>

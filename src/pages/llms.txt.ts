@@ -3,9 +3,9 @@ import { getCollection } from 'astro:content';
 
 const HEADER = `# Simone Ferretti
 
-> Full-Stack Developer building products end to end. Personal portfolio, blog, and project index at simoneferretti.dev.
+> Full-Stack Developer building agentic systems and the infrastructure they need to not fall over. Personal portfolio, blog, and project index at simoneferretti.dev.
 
-Simone Ferretti is a Full-Stack Developer focused on shipping complete products. His stack includes TypeScript, Next.js, NestJS, PostgreSQL, Docker, GCP, and Linux. This site hosts his portfolio, project list, contact links, and a blog with notes on web development, tooling, side projects, and things he is currently learning.
+Simone Ferretti is a Full-Stack Developer building agentic systems and the infrastructure behind them. His stack includes TypeScript, Next.js, NestJS, PostgreSQL, Docker, GCP, and Linux. This site hosts his portfolio, project list, contact links, and a blog with notes on web development, tooling, side projects, and things he is currently learning.
 
 ## Site
 
@@ -13,6 +13,7 @@ Simone Ferretti is a Full-Stack Developer focused on shipping complete products.
 - [Projects](https://simoneferretti.dev/projects/): Open-source and personal projects pulled live from GitHub.
 - [Blog](https://simoneferretti.dev/blog/): Articles on web development, tools, side projects, and language learning notes.
 - [Contacts](https://simoneferretti.dev/contacts/): Professional contact links (GitHub, LinkedIn, email).
+- [Hub](https://simoneferretti.dev/hub/): Personal hub with bio, social links, stack, and highlights.
 
 ## Feeds
 
