@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 
 const FALLBACK_ORIGIN = 'https://simoneferretti.dev';
 
-const STATIC_ROUTES = ['/', '/blog/', '/contacts/', '/projects/'] as const;
+const STATIC_ROUTES = ['/', '/blog/', '/contacts/', '/hub/', '/projects/'] as const;
 
 const toIsoDate = (date?: Date): string | undefined =>
 	date ? date.toISOString().split('T')[0] : undefined;
