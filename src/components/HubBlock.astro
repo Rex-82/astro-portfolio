@@ -18,6 +18,7 @@ interface Props {
 	spanClass?: string;
 	bgSvg?: string;
 	iconOnly?: boolean;
+	trackEvent?: string;
 }
 
 const {
@@ -34,7 +35,13 @@ const {
 	spanClass = '',
 	bgSvg,
 	iconOnly = false,
+	trackEvent,
 } = Astro.props;
+
+const onclickHandler =
+	variant === 'link' && trackEvent
+		? `window.rybbit?.trackEvent('${trackEvent}', { label: '${body?.replace(/'/g, "\\'")}', href: '${href?.replace(/'/g, "\\'")}' })`
+		: undefined;
 
 const linkAttrs = external
 	? { target: '_blank', rel: 'noopener noreferrer' }
@@ -97,6 +104,7 @@ const metaLabel =
 			<a
 				href={href}
 				{...linkAttrs}
+				onclick={onclickHandler}
 				class={`${innerBase} ${innerHover} ${innerPaddingCompact} no-underline [color:inherit] ${featured ? 'md:p-7' : ''}`}
 			>
 				<div class="flex items-center justify-between">
