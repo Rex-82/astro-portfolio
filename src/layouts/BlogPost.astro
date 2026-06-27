@@ -4,6 +4,7 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { ArrowLeft } from 'lucide-react';
 import RssSubscribe from '../components/RssSubscribe.astro';
+import ReadingProgress from '../components/ReadingProgress.astro';
 
 interface Props {
 	title: string;
@@ -108,7 +109,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 	articleMeta={articleMeta}
 >
 	<main>
-		<div class="reading-progress" id="reading-progress"></div>
+		<ReadingProgress />
 		<nav class="mb-6">
 			<a
 				href="/blog/"
@@ -206,41 +207,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 	</main>
 </Layout>
 
-<script>
-	const bar = document.getElementById('reading-progress');
-	if (bar) {
-		const update = () => {
-			const { scrollTop, scrollHeight, clientHeight } =
-				document.documentElement;
-			const progress =
-				scrollHeight <= clientHeight
-					? 0
-					: (scrollTop / (scrollHeight - clientHeight)) * 100;
-			bar.style.width = `${progress}%`;
-		};
-		window.addEventListener('scroll', update, { passive: true });
-		update();
-	}
-</script>
-
 <style>
-	/* ===== READING PROGRESS BAR ===== */
-	.reading-progress {
-		position: fixed;
-		top: 0;
-		left: 0;
-		height: 2px;
-		width: 0%;
-		background: linear-gradient(
-			to right,
-			var(--color-accent),
-			var(--color-accent-light)
-		);
-		z-index: 10;
-		pointer-events: none;
-		transition: width 0.15s linear;
-	}
-
 	main {
 		padding: 1rem;
 		width: 800px;
@@ -537,25 +504,16 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		margin-bottom: 1.25rem;
 	}
 
-	/* Animated underline that grows left-to-right on hover */
 	.prose :global(a) {
 		color: var(--color-accent-light);
-		text-decoration: none;
-		background-image: linear-gradient(
-			var(--color-accent-light),
-			var(--color-accent-light)
-		);
-		background-position: 0% 100%;
-		background-repeat: no-repeat;
-		background-size: 0% 1px;
-		transition:
-			background-size 0.3s var(--ease-out-expo),
-			color 0.3s var(--ease-out-expo);
+		text-decoration-line: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.18em;
+		transition: color 0.3s var(--ease-out-expo);
 	}
 
 	.prose :global(a:hover) {
 		color: var(--color-text-bright);
-		background-size: 100% 1px;
 	}
 
 	.prose :global(strong) {
