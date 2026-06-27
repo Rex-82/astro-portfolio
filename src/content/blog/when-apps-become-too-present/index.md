@@ -25,7 +25,7 @@ There is a difference between a product introducing a feature and a product deci
 
 That distinction feels small, but I think it matters.
 
-I had a similar thought with Duolingo, although in that case my relationship with the product is different. I recently wrote about reaching day 900 of learning Russian, and Duolingo was a big part of that. The app helped me build the habit. The short lessons, the streak, the reminders, the small daily push to come back: all of that worked on me.
+I had a similar thought with Duolingo, although in that case my relationship with the product is different. I recently wrote about [reaching day 900 of learning Russian](/blog/900-days-russian/), and Duolingo was a big part of that. The app helped me build the habit. The short lessons, the streak, the reminders, the small daily push to come back: all of that worked on me.
 
 I don’t want to pretend otherwise. Without those mechanics, I probably would have stopped much earlier.
 
