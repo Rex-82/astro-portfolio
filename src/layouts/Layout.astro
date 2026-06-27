@@ -103,6 +103,7 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: 'svg' });
 			async></script>
 	</head>
 	<body>
+		<div id="reading-progress" class="reading-progress" aria-hidden="true"></div>
 		<header
 			class="sticky top-0 z-10 backdrop-blur-[15px]"
 			style="background-color: color-mix(in srgb, var(--color-bg) 33%, transparent)"
@@ -111,5 +112,67 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: 'svg' });
 		</header>
 		<slot />
 		<Footer />
+
+		<script>
+			type ReadingProgressWindow = Window & {
+				__readingProgressControllerReady?: boolean;
+			};
+
+			const readingProgressWindow = window as ReadingProgressWindow;
+
+			function getReadingProgressBar() {
+				return document.getElementById('reading-progress');
+			}
+
+			function isReadingProgressPage() {
+				return document.querySelector('[data-reading-progress-page]') !== null;
+			}
+
+			function updateReadingProgress() {
+				const readingProgressBar = getReadingProgressBar();
+
+				if (!(readingProgressBar instanceof HTMLElement)) {
+					return;
+				}
+
+				if (!isReadingProgressPage()) {
+					readingProgressBar.hidden = true;
+					readingProgressBar.style.width = '0%';
+					return;
+				}
+
+				const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+				const maxScroll = scrollHeight - clientHeight;
+				const progress = maxScroll <= 0 ? 0 : (scrollTop / maxScroll) * 100;
+
+				readingProgressBar.hidden = false;
+				readingProgressBar.style.width = `${Math.max(0, Math.min(100, progress))}%`;
+			}
+
+			if (!readingProgressWindow.__readingProgressControllerReady) {
+				readingProgressWindow.__readingProgressControllerReady = true;
+				document.addEventListener('astro:page-load', () => {
+					requestAnimationFrame(updateReadingProgress);
+				});
+				window.addEventListener('scroll', updateReadingProgress, { passive: true });
+				window.addEventListener('resize', updateReadingProgress);
+			}
+
+			requestAnimationFrame(updateReadingProgress);
+		</script>
 	</body>
 </html>
+
+<style is:global>
+	.reading-progress {
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 2px;
+		width: 0%;
+		background: linear-gradient(to right, var(--color-accent), var(--color-accent-light));
+		z-index: 20;
+		pointer-events: none;
+		transition: width 0.15s linear;
+	}
+</style>

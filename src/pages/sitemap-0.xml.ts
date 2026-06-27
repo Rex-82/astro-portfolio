@@ -17,7 +17,7 @@ export const GET: APIRoute = async ({ site }) => {
 	const siteOrigin = site?.origin ?? FALLBACK_ORIGIN;
 
 	const posts = (await getCollection('blog'))
-		.filter((post) => !post.data.draft)
+		.filter((post) => !post.data.draft && !post.data.noindex)
 		.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 	const latestPostDate = posts[0]?.data.pubDate;
