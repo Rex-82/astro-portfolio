@@ -42,6 +42,7 @@ const ogImage = coverImage
 const jsonLd = {
 	'@context': 'https://schema.org',
 	'@type': 'BlogPosting',
+	'@id': `${canonicalUrl}#blogposting`,
 	headline: title,
 	description,
 	datePublished: pubDate.toISOString(),
