@@ -62,6 +62,12 @@ const jsonLd = {
 		'@type': 'WebPage',
 		'@id': canonicalUrl,
 	},
+	isPartOf: {
+		'@type': 'Blog',
+		'@id': `${siteOrigin}/blog/#blog`,
+		name: "Simone Ferretti's Blog",
+		url: `${siteOrigin}/blog/`,
+	},
 	inLanguage: 'en',
 	image: ogImage,
 	url: canonicalUrl,
