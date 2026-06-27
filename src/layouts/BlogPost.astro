@@ -3,6 +3,8 @@ import Layout from './Layout.astro';
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { ArrowLeft } from 'lucide-react';
+import RssSubscribe from '../components/RssSubscribe.astro';
+import ReadingProgress from '../components/ReadingProgress.astro';
 
 interface Props {
 	title: string;
@@ -18,7 +20,19 @@ interface Props {
 	wordCount?: number;
 }
 
-const { title, description, pubDate, updatedDate, tags, id, coverImage, readingTime, noindex, tldr, wordCount } = Astro.props;
+const {
+	title,
+	description,
+	pubDate,
+	updatedDate,
+	tags,
+	id,
+	coverImage,
+	readingTime,
+	noindex,
+	tldr,
+	wordCount,
+} = Astro.props;
 
 const siteOrigin = Astro.site?.origin ?? Astro.url.origin;
 const canonicalUrl = `${siteOrigin}/blog/${id}/`;
@@ -29,6 +43,7 @@ const ogImage = coverImage
 const jsonLd = {
 	'@context': 'https://schema.org',
 	'@type': 'BlogPosting',
+	'@id': `${canonicalUrl}#blogposting`,
 	headline: title,
 	description,
 	datePublished: pubDate.toISOString(),
@@ -48,6 +63,12 @@ const jsonLd = {
 	mainEntityOfPage: {
 		'@type': 'WebPage',
 		'@id': canonicalUrl,
+	},
+	isPartOf: {
+		'@type': 'Blog',
+		'@id': `${siteOrigin}/blog/#blog`,
+		name: "Simone Ferretti's Blog",
+		url: `${siteOrigin}/blog/`,
 	},
 	inLanguage: 'en',
 	image: ogImage,
@@ -88,7 +109,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 	articleMeta={articleMeta}
 >
 	<main>
-		<div class="reading-progress" id="reading-progress"></div>
+		<ReadingProgress />
 		<nav class="mb-6">
 			<a
 				href="/blog/"
@@ -109,98 +130,84 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		<article>
 			<header class="header--hero">
 				<div class="hero-image-wrapper">
-					{coverImage ? (
-						<Image
-							src={coverImage}
-							alt={`Cover image for ${title}`}
-							class="cover-image"
-							widths={[400, 800, 1200]}
-							sizes="(max-width: 800px) 100vw, 800px"
-						/>
-					) : (
-						<img
-							src={`/covers/${id}/`}
-							alt=""
-							loading="lazy"
-							decoding="async"
-							width="1200"
-							height="630"
-							class="generated-cover"
-						/>
-					)}
+					{
+						coverImage ? (
+							<Image
+								src={coverImage}
+								alt={`Cover image for ${title}`}
+								class="cover-image"
+								widths={[400, 800, 1200]}
+								sizes="(max-width: 800px) 100vw, 800px"
+							/>
+						) : (
+							<img
+								src={`/covers/${id}/`}
+								alt=""
+								loading="lazy"
+								decoding="async"
+								width="1200"
+								height="630"
+								class="generated-cover"
+							/>
+						)
+					}
 					<div class="hero-overlay"></div>
 					<div class="hero-content">
-						{tags.length > 0 && (
-							<div class="tags">
-								{tags.map((tag) => (
-									<span class="tag">{tag}</span>
-								))}
-							</div>
-						)}
+						{
+							tags.length > 0 && (
+								<div class="tags">
+									{tags.map((tag) => (
+										<span class="tag">{tag}</span>
+									))}
+								</div>
+							)
+						}
 						<h1><span class="text-gradient">{title}</span></h1>
 						<div class="meta">
 							<time datetime={pubDate.toISOString()}>{formattedDate}</time>
-							{readingTime && (
-								<>
-									<span aria-hidden="true"> · </span>
-									<span>{readingTime} min read</span>
-								</>
-							)}
-							{formattedUpdatedDate && (
-								<span class="updated">(updated {formattedUpdatedDate})</span>
-							)}
+							{
+								readingTime && (
+									<>
+										<span aria-hidden="true"> · </span>
+										<span>{readingTime} min read</span>
+									</>
+								)
+							}
+							{
+								formattedUpdatedDate && (
+									<span class="updated">(updated {formattedUpdatedDate})</span>
+								)
+							}
 						</div>
 					</div>
 				</div>
 			</header>
 			<hr class="header-separator" />
-			{tldr && (
-				<aside class="tldr" aria-label="Summary">
-					<strong>TL;DR:</strong> {tldr}
-				</aside>
-			)}
+			{
+				tldr && (
+					<aside class="tldr" aria-label="Summary">
+						<strong>TL;DR:</strong> {tldr}
+					</aside>
+				)
+			}
 			<div class="prose">
 				<slot />
 			</div>
+			<footer class="post-footer" aria-label="Article footer">
+				<p>
+					Enjoyed this post? Subscribe to the RSS feed to get future notes from
+					Simone Ferretti.
+				</p>
+				<div class="post-footer-actions">
+					<RssSubscribe />
+					<a href="/blog/">More posts</a>
+				</div>
+			</footer>
 		</article>
 	</main>
 </Layout>
 
-<script>
-	const bar = document.getElementById('reading-progress');
-	if (bar) {
-		const update = () => {
-			const { scrollTop, scrollHeight, clientHeight } =
-				document.documentElement;
-			const progress =
-				scrollHeight <= clientHeight
-					? 0
-					: (scrollTop / (scrollHeight - clientHeight)) * 100;
-			bar.style.width = `${progress}%`;
-		};
-		window.addEventListener('scroll', update, { passive: true });
-		update();
-	}
-</script>
-
 <style>
-	/* ===== READING PROGRESS BAR ===== */
-	.reading-progress {
-		position: fixed;
-		top: 0;
-		left: 0;
-		height: 2px;
-		width: 0%;
-		background: linear-gradient(
-			to right,
-			var(--color-accent),
-			var(--color-accent-light)
-		);
-		z-index: 10;
-		pointer-events: none;
-		transition: width 0.15s linear;
-	}
-
 	main {
 		padding: 1rem;
 		width: 800px;
@@ -424,7 +431,8 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		max-width: 65ch;
 		margin: 0 auto 2rem;
 		padding: 0.875rem 1.25rem;
-		border-left: 3px solid color-mix(in srgb, var(--color-accent) 60%, transparent);
+		border-left: 3px solid
+			color-mix(in srgb, var(--color-accent) 60%, transparent);
 		background: color-mix(in srgb, var(--color-accent) 6%, transparent);
 		border-radius: 0 8px 8px 0;
 		color: var(--color-text-secondary);
@@ -439,6 +447,40 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		overflow-wrap: break-word;
 	}
 
+	.post-footer {
+		max-width: 65ch;
+		margin: 2.5rem auto 0;
+		padding: 1.25rem;
+		border-top: 1px solid var(--color-border-subtle);
+		color: var(--color-text-secondary);
+	}
+
+	.post-footer p {
+		margin-bottom: 1rem;
+		font-size: 0.9375rem;
+		line-height: 1.6;
+	}
+
+	.post-footer-actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.post-footer-actions a {
+		color: var(--color-text-secondary);
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		text-decoration: none;
+		transition: color 0.3s var(--ease-out-expo);
+	}
+
+	.post-footer-actions a:hover {
+		color: var(--color-accent-light);
+	}
+
 	.prose :global(h2) {
 		font-size: 1.75rem;
 		font-weight: 600;
@@ -446,7 +488,8 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		margin-bottom: 0.75rem;
 		color: var(--color-accent-light);
 		padding-left: 0.75rem;
-		border-left: 3px solid color-mix(in srgb, var(--color-accent-light) 40%, transparent);
+		border-left: 3px solid
+			color-mix(in srgb, var(--color-accent-light) 40%, transparent);
 	}
 
 	.prose :global(h3) {
@@ -461,25 +504,16 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		margin-bottom: 1.25rem;
 	}
 
-	/* Animated underline that grows left-to-right on hover */
 	.prose :global(a) {
 		color: var(--color-accent-light);
-		text-decoration: none;
-		background-image: linear-gradient(
-			var(--color-accent-light),
-			var(--color-accent-light)
-		);
-		background-position: 0% 100%;
-		background-repeat: no-repeat;
-		background-size: 0% 1px;
-		transition:
-			background-size 0.3s var(--ease-out-expo),
-			color 0.3s var(--ease-out-expo);
+		text-decoration-line: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.18em;
+		transition: color 0.3s var(--ease-out-expo);
 	}
 
 	.prose :global(a:hover) {
 		color: var(--color-text-bright);
-		background-size: 100% 1px;
 	}
 
 	.prose :global(strong) {
@@ -530,7 +564,8 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 	/* Blockquotes with decorative quotation mark */
 	.prose :global(blockquote) {
 		position: relative;
-		border-left: 3px solid color-mix(in srgb, var(--color-accent) 50%, transparent);
+		border-left: 3px solid
+			color-mix(in srgb, var(--color-accent) 50%, transparent);
 		padding: 1rem 1.25rem;
 		margin-left: 0;
 		margin-bottom: 1.5rem;
