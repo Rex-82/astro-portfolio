@@ -114,13 +114,23 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: 'svg' });
 		<Footer />
 
 		<script>
-			const readingProgressBar = document.getElementById('reading-progress');
+			type ReadingProgressWindow = Window & {
+				__readingProgressControllerReady?: boolean;
+			};
+
+			const readingProgressWindow = window as ReadingProgressWindow;
+
+			function getReadingProgressBar() {
+				return document.getElementById('reading-progress');
+			}
 
 			function isReadingProgressPage() {
 				return document.querySelector('[data-reading-progress-page]') !== null;
 			}
 
 			function updateReadingProgress() {
+				const readingProgressBar = getReadingProgressBar();
+
 				if (!(readingProgressBar instanceof HTMLElement)) {
 					return;
 				}
@@ -139,11 +149,15 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: 'svg' });
 				readingProgressBar.style.width = `${Math.max(0, Math.min(100, progress))}%`;
 			}
 
-			document.addEventListener('astro:page-load', () => {
-				requestAnimationFrame(updateReadingProgress);
-			});
-			window.addEventListener('scroll', updateReadingProgress, { passive: true });
-			window.addEventListener('resize', updateReadingProgress);
+			if (!readingProgressWindow.__readingProgressControllerReady) {
+				readingProgressWindow.__readingProgressControllerReady = true;
+				document.addEventListener('astro:page-load', () => {
+					requestAnimationFrame(updateReadingProgress);
+				});
+				window.addEventListener('scroll', updateReadingProgress, { passive: true });
+				window.addEventListener('resize', updateReadingProgress);
+			}
+
 			requestAnimationFrame(updateReadingProgress);
 		</script>
 	</body>
