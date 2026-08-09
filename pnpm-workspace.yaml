@@ -1,0 +1,12 @@
+packages:
+  - .
+
+allowBuilds:
+  esbuild: true
+
+minimumReleaseAgeExclude:
+  - baseline-browser-mapping@2.11.13
+  - electron-to-chromium@1.5.403
+  - esbuild@0.28.2
+  # NOTE: Platform packages are published in lockstep with the audited esbuild release above.
+  - '@esbuild/*'
