@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { getCollection } from 'astro:content';
+import { getPublishedPosts } from '../lib/blog';
 
 const HEADER = `# Simone Ferretti
 
@@ -18,7 +18,7 @@ Simone Ferretti is a Full-Stack Developer building agentic systems and the infra
 ## Feeds
 
 - [RSS feed](https://simoneferretti.dev/rss.xml): Full blog feed in RSS 2.0.
-- [Sitemap](https://simoneferretti.dev/sitemap-index.xml): XML sitemap index for all indexable pages.
+- [Sitemap](https://simoneferretti.dev/sitemap.xml): XML sitemap for all indexable pages.
 
 ## Social
 
@@ -26,15 +26,16 @@ Simone Ferretti is a Full-Stack Developer building agentic systems and the infra
 - [LinkedIn](https://www.linkedin.com/in/simoneferretti)`;
 
 export const GET: APIRoute = async () => {
-	const posts = (await getCollection('blog'))
-		.filter((post) => !post.data.draft)
-		.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+	const posts = await getPublishedPosts();
 
 	const postsSection =
 		posts.length > 0
 			? `\n\n## Posts\n\n` +
 				posts
-					.map((p) => `- [${p.data.title}](https://simoneferretti.dev/blog/${p.id}/) | ${p.data.description}`)
+					.map(
+						(p) =>
+							`- [${p.data.title}](https://simoneferretti.dev/blog/${p.id}/) | ${p.data.description}`,
+					)
 					.join('\n')
 			: '';
 

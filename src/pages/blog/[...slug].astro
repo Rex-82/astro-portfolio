@@ -1,16 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
-import { calculateReadingTime } from '../../lib/reading-time';
-
-function countWords(markdown: string): number {
-	return markdown
-		.replace(/```[\s\S]*?```/g, ' ')
-		.replace(/`[^`]*`/g, ' ')
-		.replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
-		.split(/\s+/)
-		.filter(Boolean).length;
-}
+import { getReadingStats } from '../../lib/blog';
 
 const { slug } = Astro.params;
 
@@ -25,8 +16,7 @@ if (!post) {
 }
 
 const { Content } = await render(post);
-const readingTime = calculateReadingTime(post.body ?? '');
-const wordCount = countWords(post.body ?? '');
+const { readingTime, wordCount } = getReadingStats(post.body ?? '');
 ---
 
 <BlogPost

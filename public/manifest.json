@@ -1,0 +1,22 @@
+{
+	"name": "Simone Ferretti",
+	"short_name": "Simone Ferretti",
+	"description": "Full-Stack Developer building agentic systems and the infrastructure they need to not fall over.",
+	"start_url": "/",
+	"id": "/",
+	"display": "standalone",
+	"background_color": "#101010",
+	"theme_color": "#101010",
+	"icons": [
+		{
+			"src": "/assets/favicon/favicon.svg",
+			"sizes": "any",
+			"type": "image/svg+xml"
+		},
+		{
+			"src": "/assets/favicon/favicon.png",
+			"sizes": "1024x1024",
+			"type": "image/png"
+		}
+	]
+}

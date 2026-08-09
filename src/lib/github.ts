@@ -41,9 +41,3 @@ export async function getProjects(): Promise<Repository[]> {
 		return filterAndSort(fallbackSnapshot as unknown as Repository[]);
 	}
 }
-
-export async function getFeaturedProjects(slugs: string[]): Promise<Repository[]> {
-	const all = await getProjects();
-	const bySlug = new Map(all.map((r) => [r.name, r]));
-	return slugs.map((s) => bySlug.get(s)).filter((r): r is Repository => r !== undefined);
-}

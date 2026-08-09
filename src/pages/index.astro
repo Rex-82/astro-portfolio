@@ -3,20 +3,21 @@ import Layout from '../layouts/Layout.astro';
 import PageTitle from '../components/PageTitle.astro';
 import Card from '../components/Card.astro';
 import PostCard from '../components/PostCard.astro';
-import { getFeaturedProjects } from '../lib/github';
-import { getCollection } from 'astro:content';
+import { getProjects } from '../lib/github';
+import { getPublishedPosts } from '../lib/blog';
 
-const stack = ['TypeScript', 'Next.js', 'NestJS', 'PostgreSQL'];
-const infrastructure = ['GCP', 'Docker', 'Linux', 'Git'];
-const learning = ['System Design', 'Proxmox', 'Gardening'];
+const skillGroups = [
+	{ title: 'Stack', items: ['TypeScript', 'Next.js', 'NestJS', 'PostgreSQL'] },
+	{ title: 'Infrastructure', items: ['GCP', 'Docker', 'Linux', 'Git'] },
+	{ title: 'Learning', items: ['System Design', 'Proxmox', 'Gardening'] },
+];
 
-const allPosts = await getCollection('blog');
-const latestPost = allPosts
-	.filter((p) => !p.data.draft)
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())[0];
+const latestPost = (await getPublishedPosts())[0];
 
 // Featured project slug — must match GitHub repo `name` exactly.
-const [featuredProject] = await getFeaturedProjects(['nvim-config']);
+const featuredProject = (await getProjects()).find(
+	(project) => project.name === 'nvim-config',
+);
 
 const jsonLd = {
 	'@context': 'https://schema.org',
@@ -58,146 +59,103 @@ const jsonLd = {
 	description="Full-Stack Developer building agentic systems and the infrastructure they need to not fall over. TypeScript, Next.js, NestJS, PostgreSQL."
 	jsonLd={jsonLd}
 >
-	<main class="px-4 pt-14 pb-16 w-[800px] max-w-[calc(100%-2rem)] text-[16px] text-accent leading-[1.6] flex flex-col items-center">
-		<header class="flex flex-col items-center w-fit tracking-[0.125em] max-[480px]:tracking-normal">
+	<main
+		class="px-4 pt-14 pb-16 w-[800px] max-w-[calc(100%-2rem)] text-[16px] text-accent leading-[1.6] flex flex-col items-center"
+	>
+		<header
+			class="flex flex-col items-center w-fit tracking-[0.125em] max-[480px]:tracking-normal"
+		>
 			<PageTitle title="Simone Ferretti" />
-			<p class="text-[1.5rem] uppercase tracking-[0.125em] self-end -mt-[2.5em] m-0 max-[768px]:text-[1.125rem] max-[400px]:text-[1rem]">
+			<p
+				class="text-[1.5rem] uppercase tracking-[0.125em] self-end -mt-[2.5em] m-0 max-[768px]:text-[1.125rem] max-[400px]:text-[1rem]"
+			>
 				<span>full-stack developer</span>
 			</p>
 		</header>
 
 		<div
-			class="grid grid-cols-3 grid-rows-[auto]
-			       [grid-template-areas:'sec2_sec3_sec4']
-			       justify-items-center rounded-[7px] w-full mt-10
-			       max-[768px]:grid-cols-1 max-[768px]:grid-rows-[repeat(3,auto)]
-			       max-[768px]:[grid-template-areas:'sec2'_'sec3'_'sec4']
-			       max-[768px]:gap-y-[1em] max-[768px]:mb-8"
+			class="grid grid-cols-3 justify-items-center rounded-[7px] w-full mt-10
+				       max-[768px]:grid-cols-1 max-[768px]:gap-y-[1em] max-[768px]:mb-8"
 		>
-
-			<section
-				class="[grid-area:sec2] flex flex-col p-4
-				       max-[768px]:pt-0 max-[768px]:border-b max-[768px]:border-border max-[768px]:items-center"
-			>
-				<h2
-					class="text-[0.875rem] uppercase tracking-[0.125em] m-0 p-0
-					       [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]
-					       max-[768px]:text-[1rem]"
-				>
-					Stack
-				</h2>
-				<ul
-					class="list-none m-0 p-0 ml-2 pl-2 border-l
-					       [border-color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]
-					       max-[768px]:flex max-[768px]:items-center max-[768px]:gap-x-[1em]
-					       max-[768px]:h-8 max-[768px]:border-l-0 max-[768px]:m-0 max-[768px]:p-0"
-				>
-					{stack.map((e) => <li>{e}</li>)}
-				</ul>
-			</section>
-
-			<section
-				class="[grid-area:sec3] flex flex-col p-4
-				       max-[768px]:pt-0 max-[768px]:border-b max-[768px]:border-border max-[768px]:items-center"
-			>
-				<h2
-					class="text-[0.875rem] uppercase tracking-[0.125em] m-0 p-0
-					       [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]
-					       max-[768px]:text-[1rem]"
-				>
-					Infrastructure
-				</h2>
-				<ul
-					class="list-none m-0 p-0 ml-2 pl-2 border-l
-					       [border-color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]
-					       max-[768px]:flex max-[768px]:items-center max-[768px]:gap-x-[1em]
-					       max-[768px]:h-8 max-[768px]:border-l-0 max-[768px]:m-0 max-[768px]:p-0"
-				>
-					{infrastructure.map((e) => <li>{e}</li>)}
-				</ul>
-			</section>
-
-			<section
-				class="[grid-area:sec4] flex flex-col p-4
-				       max-[768px]:pt-0 max-[768px]:border-b max-[768px]:border-border max-[768px]:items-center"
-			>
-				<h2
-					class="text-[0.875rem] uppercase tracking-[0.125em] m-0 p-0
-					       [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]
-					       max-[768px]:text-[1rem]"
-				>
-					Learning
-				</h2>
-				<ul
-					class="list-none m-0 p-0 ml-2 pl-2 border-l
-					       [border-color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]
-					       max-[768px]:flex max-[768px]:items-center max-[768px]:gap-x-[1em]
-					       max-[768px]:h-8 max-[768px]:border-l-0 max-[768px]:m-0 max-[768px]:p-0"
-				>
-					{learning.map((e) => <li>{e}</li>)}
-				</ul>
-			</section>
+			{
+				skillGroups.map((group) => (
+					<section class="flex flex-col p-4 max-[768px]:items-center max-[768px]:border-b max-[768px]:border-border max-[768px]:pt-0">
+						<h2 class="m-0 p-0 text-[0.875rem] uppercase tracking-[0.125em] [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)] max-[768px]:text-[1rem]">
+							{group.title}
+						</h2>
+						<ul class="m-0 ml-2 list-none border-l p-0 pl-2 [border-color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)] max-[768px]:m-0 max-[768px]:flex max-[768px]:h-8 max-[768px]:items-center max-[768px]:gap-x-[1em] max-[768px]:border-l-0 max-[768px]:p-0">
+							{group.items.map((item) => (
+								<li>{item}</li>
+							))}
+						</ul>
+					</section>
+				))
+			}
 		</div>
 
 		<section class="w-full mt-16 flex flex-col gap-16">
-			{latestPost && (
-				<div class="flex flex-col gap-3">
-					<h2
-						class="text-[0.875rem] uppercase tracking-[0.125em] m-0 p-0
+			{
+				latestPost && (
+					<div class="flex flex-col gap-3">
+						<h2
+							class="text-[0.875rem] uppercase tracking-[0.125em] m-0 p-0
 						       [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]"
-					>
-						Latest post
-					</h2>
-					<ul class="list-none p-0 m-0">
-						<PostCard
-							id={latestPost.id}
-							title={latestPost.data.title}
-							description={latestPost.data.description}
-							pubDate={latestPost.data.pubDate}
-							tags={latestPost.data.tags}
-							coverImage={latestPost.data.coverImage}
-						/>
-					</ul>
-					<a
-						href="/blog/"
-						class="text-[0.75rem] uppercase tracking-[0.1em] text-[var(--color-text-secondary)]
+						>
+							Latest post
+						</h2>
+						<ul class="list-none p-0 m-0">
+							<PostCard
+								id={latestPost.id}
+								title={latestPost.data.title}
+								description={latestPost.data.description}
+								pubDate={latestPost.data.pubDate}
+								tags={latestPost.data.tags}
+								coverImage={latestPost.data.coverImage}
+							/>
+						</ul>
+						<a
+							href="/blog/"
+							class="text-[0.75rem] uppercase tracking-[0.1em] text-[var(--color-text-secondary)]
 						       no-underline self-start transition-colors duration-300 ease-[var(--ease-out-expo)]
 						       hover:text-[var(--color-accent-light)]"
-					>
-						Read more on the Blog →
-					</a>
-				</div>
-			)}
-
-			{featuredProject && (
-				<div class="flex flex-col gap-3">
-					<h2
-						class="text-[0.875rem] uppercase tracking-[0.125em] m-0 p-0
-						       [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]"
-					>
-						Featured project
-					</h2>
-					<ul class="list-none p-0 m-0">
-						<Card
-							title={featuredProject.name}
-							body={featuredProject.description ?? ''}
-							homepage={featuredProject.homepage}
-							href={featuredProject.html_url}
-							topics={featuredProject.topics}
-						/>
-					</ul>
-					<div class="flex gap-4">
-						<a
-							href="/projects/"
-							class="text-[0.75rem] uppercase tracking-[0.1em] text-[var(--color-text-secondary)]
-							       no-underline transition-colors duration-300 ease-[var(--ease-out-expo)]
-							       hover:text-[var(--color-accent-light)]"
 						>
-							All projects →
+							Read more on the Blog →
 						</a>
 					</div>
-				</div>
-			)}
+				)
+			}
+
+			{
+				featuredProject && (
+					<div class="flex flex-col gap-3">
+						<h2
+							class="text-[0.875rem] uppercase tracking-[0.125em] m-0 p-0
+						       [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]"
+						>
+							Featured project
+						</h2>
+						<ul class="list-none p-0 m-0">
+							<Card
+								title={featuredProject.name}
+								body={featuredProject.description ?? ''}
+								homepage={featuredProject.homepage}
+								href={featuredProject.html_url}
+								topics={featuredProject.topics}
+							/>
+						</ul>
+						<div class="flex gap-4">
+							<a
+								href="/projects/"
+								class="text-[0.75rem] uppercase tracking-[0.1em] text-[var(--color-text-secondary)]
+							       no-underline transition-colors duration-300 ease-[var(--ease-out-expo)]
+							       hover:text-[var(--color-accent-light)]"
+							>
+								All projects →
+							</a>
+						</div>
+					</div>
+				)
+			}
 		</section>
 	</main>
 </Layout>

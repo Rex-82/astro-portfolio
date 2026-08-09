@@ -1,11 +1,11 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
+import { getPublishedPosts } from '../lib/blog';
 
 export async function GET(context: APIContext) {
-	const posts = (await getCollection('blog'))
-		.filter((post) => !post.data.draft && !post.data.noindex)
-		.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+	const posts = (await getPublishedPosts()).filter(
+		(post) => !post.data.noindex,
+	);
 
 	return rss({
 		title: "Simone Ferretti's Blog",

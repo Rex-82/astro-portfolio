@@ -15,120 +15,65 @@ export async function GET({ url }) {
 				.slice(0, 100)
 		: null;
 
-	const markup = title
-		? html(`
-  <div id="image-container">
-    <div>
-      <h1>
-        <span class="text-gradient">${title}</span>
-      </h1>
-      <p id="cta"><span>simoneferretti.dev</span></p>
+	const displayTitle = title ?? 'Simone Ferretti';
+	const cta = title ? 'simoneferretti.dev' : 'full-stack developer';
+	const titleStyles = title
+		? 'font-size: 5rem; line-height: 1.1; padding: 0 2rem;'
+		: 'font-size: 7rem; line-height: 1; white-space: nowrap;';
+	const ctaStyles = title
+		? 'font-size: 2rem; bottom: -1rem;'
+		: 'font-size: 2.75rem; right: 0; top: 6.5rem;';
+
+	const markup = html(`
+    <div id="image-container">
+      <div>
+        <h1 style="${titleStyles}">
+          <span class="text-gradient">${displayTitle}</span>
+        </h1>
+        <p id="cta" style="${ctaStyles}"><span>${cta}</span></p>
+      </div>
     </div>
-  </div>
 
-  <style>
-    #image-container {
-      display: flex;
-      height: 100%;
-      width: 100%;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background-color: #101010;
-      color: #a0a0a0;
-    }
+    <style>
+      #image-container {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #101010;
+        color: #a0a0a0;
+      }
 
-    #image-container div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      margin-top: 2rem;
-    }
+      #image-container div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        margin-top: 2rem;
+      }
 
-    h1 {
-      font-size: 5rem;
-      line-height: 1.1;
-      text-align: center;
-      margin-bottom: 1em;
-      padding: 0 2rem;
-    }
+      h1 {
+        text-align: center;
+        margin-bottom: 1em;
+      }
 
-    #cta {
-      font-size: 2rem;
-      text-transform: uppercase;
-      letter-spacing: 0.125em;
-      position: absolute;
-      font-weight: 200;
-      color: grey;
-      bottom: -1rem;
-    }
+      #cta {
+        text-transform: uppercase;
+        letter-spacing: 0.125em;
+        position: absolute;
+        font-weight: 200;
+        color: grey;
+      }
 
-    .text-gradient {
-      background-image: linear-gradient(45deg,rgb(136, 136, 136), rgb(230, 250, 250) 30%, rgb(255, 255, 255) 60% );
-      background-clip: text;
-      color: transparent;
-    }
-  </style>
-  `)
-		: html(`
-  <div id="image-container">
-    <div>
-      <h1>
-        <span class="text-gradient">Simone Ferretti</span>
-      </h1>
-      <p id="cta"><span>full-stack developer</span></p>
-    </div>
-  </div>
-
-  <style>
-    #image-container {
-      display: flex;
-      height: 100%;
-      width: 100%;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background-color: #101010;
-      color: #a0a0a0;
-	}
-
-    #image-container div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      margin-top: 2rem;
-    }
-
-	h1 {
-      font-size: 7rem;
-      line-height: 1;
-      text-align: center;
-      margin-bottom: 1em;
-      text-wrap: nowrap;
-	}
-
-	#cta {
-      font-size: 2.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.125em;
-      position: absolute;
-      right: 0;
-      font-weight: 200;
-      color: grey;
-      top: 6.5rem;
-	}
-
-	.text-gradient {
-      background-image: linear-gradient(45deg,rgb(136, 136, 136), rgb(230, 250, 250) 30%, rgb(255, 255, 255) 60% );
-      background-clip: text;
-      color: transparent;
-	}
-
-  </style>
+      .text-gradient {
+        background-image: linear-gradient(45deg, rgb(136, 136, 136), rgb(230, 250, 250) 30%, rgb(255, 255, 255) 60%);
+        background-clip: text;
+        color: transparent;
+      }
+    </style>
   `);
 
 	const fontFiles = [

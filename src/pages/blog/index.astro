@@ -3,11 +3,9 @@ import Layout from '../../layouts/Layout.astro';
 import PageTitle from '../../components/PageTitle.astro';
 import RssSubscribe from '../../components/RssSubscribe.astro';
 import PostCard from '../../components/PostCard.astro';
-import { getCollection } from 'astro:content';
+import { getPublishedPosts } from '../../lib/blog';
 
-const posts = (await getCollection('blog'))
-	.filter((post) => !post.data.draft)
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const posts = await getPublishedPosts();
 
 const siteOrigin = 'https://simoneferretti.dev';
 
@@ -17,7 +15,8 @@ const jsonLd = {
 	'@id': `${siteOrigin}/blog/#blog`,
 	url: `${siteOrigin}/blog/`,
 	name: "Simone Ferretti's Blog",
-	description: 'Thoughts on web development, tools, and side projects by Simone Ferretti.',
+	description:
+		'Thoughts on web development, tools, and side projects by Simone Ferretti.',
 	inLanguage: 'en',
 	author: {
 		'@type': 'Person',
@@ -30,7 +29,9 @@ const jsonLd = {
 		headline: p.data.title,
 		url: `${siteOrigin}/blog/${p.id}/`,
 		datePublished: p.data.pubDate.toISOString(),
-		...(p.data.updatedDate && { dateModified: p.data.updatedDate.toISOString() }),
+		...(p.data.updatedDate && {
+			dateModified: p.data.updatedDate.toISOString(),
+		}),
 	})),
 };
 ---
@@ -47,25 +48,31 @@ const jsonLd = {
 				<RssSubscribe />
 			</div>
 		</div>
-		<p class="text-[var(--color-text-secondary)] text-center -mt-4 mb-10 text-[0.9375rem]">
+		<p
+			class="text-[var(--color-text-secondary)] text-center -mt-4 mb-10 text-[0.9375rem]"
+		>
 			Thoughts on web development, tools, and side projects.
 		</p>
-		{posts.length === 0 ? (
-			<p class="text-center text-[var(--color-text-secondary)]">No posts yet. Check back soon.</p>
-		) : (
-			<ul class="list-none p-0 grid gap-8">
-				{posts.map((post, index) => (
-					<PostCard
-						id={post.id}
-						title={post.data.title}
-						description={post.data.description}
-						pubDate={post.data.pubDate}
-						tags={post.data.tags}
-						coverImage={post.data.coverImage}
-						animationDelay={index * 0.1}
-					/>
-				))}
-			</ul>
-		)}
+		{
+			posts.length === 0 ? (
+				<p class="text-center text-[var(--color-text-secondary)]">
+					No posts yet. Check back soon.
+				</p>
+			) : (
+				<ul class="list-none p-0 grid gap-8">
+					{posts.map((post, index) => (
+						<PostCard
+							id={post.id}
+							title={post.data.title}
+							description={post.data.description}
+							pubDate={post.data.pubDate}
+							tags={post.data.tags}
+							coverImage={post.data.coverImage}
+							animationDelay={index * 0.1}
+						/>
+					))}
+				</ul>
+			)
+		}
 	</main>
 </Layout>

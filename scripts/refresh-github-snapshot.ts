@@ -1,9 +1,6 @@
 #!/usr/bin/env tsx
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 const user = process.env.GITHUB_USERNAME ?? 'Rex-82';
 
 console.log(`Fetching repos for user: ${user}`);
@@ -19,7 +16,10 @@ if (!res.ok) {
 }
 
 const data = await res.json();
-const out = resolve(__dirname, '../src/data/github-projects.snapshot.json');
+const out = resolve(
+	import.meta.dirname,
+	'../src/data/github-projects.snapshot.json',
+);
 mkdirSync(dirname(out), { recursive: true });
 writeFileSync(out, JSON.stringify(data, null, 2) + '\n');
 console.log(`Wrote ${out} (${data.length} repos)`);

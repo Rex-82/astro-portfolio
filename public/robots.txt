@@ -28,4 +28,4 @@ Disallow: /
 User-agent: anthropic-ai
 Disallow: /
 
-Sitemap: https://simoneferretti.dev/sitemap-index.xml
+Sitemap: https://simoneferretti.dev/sitemap.xml
