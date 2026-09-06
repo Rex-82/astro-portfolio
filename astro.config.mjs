@@ -28,7 +28,7 @@ export default defineConfig({
   env: {
     schema: {
       GITHUB_USERNAME: envField.string({
-        context: 'server',
+        context: 'client',
         access: 'public',
         optional: true,
         default: 'Rex-82',

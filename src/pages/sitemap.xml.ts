@@ -1,13 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getPublishedPosts } from '../lib/blog';
 
-const STATIC_ROUTES = [
-	'/',
-	'/blog/',
-	'/contacts/',
-	'/hub/',
-	'/projects/',
-] as const;
+const STATIC_ROUTES = ['/', '/blog/', '/contacts/', '/hub/'] as const;
 
 const toIsoDate = (date?: Date) => date?.toISOString().split('T')[0];
 

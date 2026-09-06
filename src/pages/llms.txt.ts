@@ -3,14 +3,13 @@ import { getPublishedPosts } from '../lib/blog';
 
 const HEADER = `# Simone Ferretti
 
-> Full-Stack Developer building agentic systems and the infrastructure they need to not fall over. Personal portfolio, blog, and project index at simoneferretti.dev.
+> Product Engineer building agentic systems and the infrastructure they need to not fall over. Personal portfolio and blog at simoneferretti.dev.
 
-Simone Ferretti is a Full-Stack Developer building agentic systems and the infrastructure behind them. His stack includes TypeScript, Next.js, NestJS, PostgreSQL, Docker, GCP, and Linux. This site hosts his portfolio, project list, contact links, and a blog with notes on web development, tooling, side projects, and things he is currently learning.
+Simone Ferretti is a Product Engineer building agentic systems and the infrastructure behind them. His stack includes TypeScript, Next.js, NestJS, PostgreSQL, Docker, GCP, and Linux. This site hosts his portfolio, contact links, and a blog with notes on web development, tooling, side projects, and things he is currently learning.
 
 ## Site
 
-- [Home](https://simoneferretti.dev/): About Simone, skills summary, and highlighted links.
-- [Projects](https://simoneferretti.dev/projects/): Open-source and personal projects pulled live from GitHub.
+- [Home](https://simoneferretti.dev/): Simone's profile and latest writing.
 - [Blog](https://simoneferretti.dev/blog/): Articles on web development, tools, side projects, and language learning notes.
 - [Contacts](https://simoneferretti.dev/contacts/): Professional contact links (GitHub, LinkedIn, email).
 - [Hub](https://simoneferretti.dev/hub/): Personal hub with bio, social links, stack, and highlights.

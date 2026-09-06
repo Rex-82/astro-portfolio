@@ -1,23 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageTitle from '../components/PageTitle.astro';
-import Card from '../components/Card.astro';
 import PostCard from '../components/PostCard.astro';
-import { getProjects } from '../lib/github';
 import { getPublishedPosts } from '../lib/blog';
+import { GITHUB_USERNAME } from 'astro:env/client';
 
-const skillGroups = [
-	{ title: 'Stack', items: ['TypeScript', 'Next.js', 'NestJS', 'PostgreSQL'] },
-	{ title: 'Infrastructure', items: ['GCP', 'Docker', 'Linux', 'Git'] },
-	{ title: 'Learning', items: ['System Design', 'Proxmox', 'Gardening'] },
-];
-
-const latestPost = (await getPublishedPosts())[0];
-
-// Featured project slug — must match GitHub repo `name` exactly.
-const featuredProject = (await getProjects()).find(
-	(project) => project.name === 'nvim-config',
-);
+const [latestPost, ...recentPosts] = (await getPublishedPosts()).slice(0, 3);
 
 const jsonLd = {
 	'@context': 'https://schema.org',
@@ -27,9 +15,9 @@ const jsonLd = {
 			'@id': 'https://simoneferretti.dev/#person',
 			name: 'Simone Ferretti',
 			url: 'https://simoneferretti.dev',
-			jobTitle: 'Full-Stack Developer',
+			jobTitle: 'Product Engineer',
 			sameAs: [
-				'https://github.com/Rex-82',
+				`https://github.com/${GITHUB_USERNAME}`,
 				'https://www.linkedin.com/in/simoneferretti',
 			],
 			knowsAbout: [
@@ -55,8 +43,8 @@ const jsonLd = {
 ---
 
 <Layout
-	title="Simone Ferretti | Full-Stack Developer"
-	description="Full-Stack Developer building agentic systems and the infrastructure they need to not fall over. TypeScript, Next.js, NestJS, PostgreSQL."
+	title="Simone Ferretti | Product Engineer"
+	description="Product Engineer building agentic systems and the infrastructure they need to not fall over. TypeScript, Next.js, NestJS, PostgreSQL."
 	jsonLd={jsonLd}
 >
 	<main
@@ -69,93 +57,144 @@ const jsonLd = {
 			<p
 				class="text-[1.5rem] uppercase tracking-[0.125em] self-end -mt-[2.5em] m-0 max-[768px]:text-[1.125rem] max-[400px]:text-[1rem]"
 			>
-				<span>full-stack developer</span>
+				<span>product engineer</span>
 			</p>
 		</header>
 
-		<div
-			class="grid grid-cols-3 justify-items-center rounded-[7px] w-full mt-10
-				       max-[768px]:grid-cols-1 max-[768px]:gap-y-[1em] max-[768px]:mb-8"
-		>
-			{
-				skillGroups.map((group) => (
-					<section class="flex flex-col p-4 max-[768px]:items-center max-[768px]:border-b max-[768px]:border-border max-[768px]:pt-0">
-						<h2 class="m-0 p-0 text-[0.875rem] uppercase tracking-[0.125em] [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)] max-[768px]:text-[1rem]">
-							{group.title}
-						</h2>
-						<ul class="m-0 ml-2 list-none border-l p-0 pl-2 [border-color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)] max-[768px]:m-0 max-[768px]:flex max-[768px]:h-8 max-[768px]:items-center max-[768px]:gap-x-[1em] max-[768px]:border-l-0 max-[768px]:p-0">
-							{group.items.map((item) => (
-								<li>{item}</li>
-							))}
-						</ul>
-					</section>
-				))
-			}
-		</div>
+		<section class="mt-16 w-full" aria-labelledby="now-heading">
+			<h2
+				id="now-heading"
+				class="m-0 text-[0.875rem] uppercase tracking-[0.125em] [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]"
+			>
+				Now &amp; Elsewhere
+			</h2>
+			<dl
+				class="m-0 mt-5 grid gap-x-6 gap-y-2 min-[480px]:grid-cols-[6.5rem_1fr] min-[480px]:gap-y-4"
+			>
+				<dt
+					class="text-[0.75rem] uppercase tracking-[0.1em] text-[var(--color-text-secondary)] min-[480px]:pt-1"
+				>
+					Building
+				</dt>
+				<dd
+					class="m-0 mb-3 text-[0.9375rem] text-[var(--color-text-primary)] min-[480px]:mb-0"
+				>
+					A homelab quietly running my life, and a music player built for how I
+					listen.
+				</dd>
+				<dt
+					class="text-[0.75rem] uppercase tracking-[0.1em] text-[var(--color-text-secondary)] min-[480px]:pt-1"
+				>
+					Learning
+				</dt>
+				<dd
+					class="m-0 mb-3 text-[0.9375rem] text-[var(--color-text-primary)] min-[480px]:mb-0"
+				>
+					Russian, past the awkward phase. Chinese, still in it.
+				</dd>
+				<dt
+					class="text-[0.75rem] uppercase tracking-[0.1em] text-[var(--color-text-secondary)] min-[480px]:pt-1"
+				>
+					Outside
+				</dt>
+				<dd class="m-0 text-[0.9375rem] text-[var(--color-text-primary)]">
+					Lifting and via ferrata in the Dolomites.
+				</dd>
+			</dl>
+		</section>
 
-		<section class="w-full mt-16 flex flex-col gap-16">
-			{
-				latestPost && (
-					<div class="flex flex-col gap-3">
-						<h2
-							class="text-[0.875rem] uppercase tracking-[0.125em] m-0 p-0
+		{
+			latestPost && (
+				<section
+					class="w-full mt-12 flex flex-col gap-3"
+					aria-labelledby="writing-heading"
+				>
+					<h2
+						id="writing-heading"
+						class="text-[0.875rem] uppercase tracking-[0.125em] m-0 p-0
 						       [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]"
-						>
-							Latest post
-						</h2>
-						<ul class="list-none p-0 m-0">
-							<PostCard
-								id={latestPost.id}
-								title={latestPost.data.title}
-								description={latestPost.data.description}
-								pubDate={latestPost.data.pubDate}
-								tags={latestPost.data.tags}
-								coverImage={latestPost.data.coverImage}
-							/>
-						</ul>
-						<a
-							href="/blog/"
-							class="text-[0.75rem] uppercase tracking-[0.1em] text-[var(--color-text-secondary)]
+					>
+						Writing
+					</h2>
+					<ul class="list-none p-0 m-0">
+						<PostCard
+							id={latestPost.id}
+							title={latestPost.data.title}
+							description={latestPost.data.description}
+							pubDate={latestPost.data.pubDate}
+							tags={latestPost.data.tags}
+							coverImage={latestPost.data.coverImage}
+						/>
+					</ul>
+					<ul class="m-0 list-none divide-y divide-[var(--color-border-subtle)] p-0">
+						{recentPosts.map((post) => (
+							<li>
+								<a
+									href={`/blog/${post.id}/`}
+									class="flex flex-col gap-1 py-3 text-[0.9375rem] text-[var(--color-text-primary)] no-underline transition-colors hover:text-[var(--color-accent-light)] min-[480px]:flex-row min-[480px]:items-baseline min-[480px]:justify-between min-[480px]:gap-6"
+								>
+									<span>{post.data.title}</span>
+									<time
+										datetime={post.data.pubDate.toISOString()}
+										class="shrink-0 text-[0.6875rem] uppercase tracking-[0.08em] text-[var(--color-text-secondary)]"
+									>
+										{post.data.pubDate.toLocaleDateString('en-US', {
+											year: 'numeric',
+											month: 'short',
+											day: 'numeric',
+										})}
+									</time>
+								</a>
+							</li>
+						))}
+					</ul>
+					<a
+						href="/blog/"
+						class="text-[0.75rem] uppercase tracking-[0.1em] text-[var(--color-text-secondary)]
 						       no-underline self-start transition-colors duration-300 ease-[var(--ease-out-expo)]
 						       hover:text-[var(--color-accent-light)]"
-						>
-							Read more on the Blog →
-						</a>
-					</div>
-				)
-			}
+					>
+						Read more on the Blog →
+					</a>
+				</section>
+			)
+		}
 
-			{
-				featuredProject && (
-					<div class="flex flex-col gap-3">
-						<h2
-							class="text-[0.875rem] uppercase tracking-[0.125em] m-0 p-0
-						       [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]"
-						>
-							Featured project
-						</h2>
-						<ul class="list-none p-0 m-0">
-							<Card
-								title={featuredProject.name}
-								body={featuredProject.description ?? ''}
-								homepage={featuredProject.homepage}
-								href={featuredProject.html_url}
-								topics={featuredProject.topics}
-							/>
-						</ul>
-						<div class="flex gap-4">
-							<a
-								href="/projects/"
-								class="text-[0.75rem] uppercase tracking-[0.1em] text-[var(--color-text-secondary)]
-							       no-underline transition-colors duration-300 ease-[var(--ease-out-expo)]
-							       hover:text-[var(--color-accent-light)]"
-							>
-								All projects →
-							</a>
-						</div>
-					</div>
-				)
-			}
+		<section
+			class="mt-12 w-full border-t border-[var(--color-border-subtle)] pt-6"
+			aria-labelledby="connect-heading"
+		>
+			<h2
+				id="connect-heading"
+				class="m-0 text-[0.875rem] uppercase tracking-[0.125em] [color:color-mix(in_srgb,var(--color-accent-light)_70%,transparent)]"
+			>
+				Connect
+			</h2>
+			<ul
+				class="m-0 mt-3 flex list-none flex-wrap gap-x-6 gap-y-2 p-0 text-[0.9375rem]"
+			>
+				<li>
+					<a
+						href="https://www.linkedin.com/in/simoneferretti"
+						class="text-[var(--color-text-primary)] underline decoration-[var(--color-border)] underline-offset-4 hover:text-[var(--color-accent-light)]"
+						>LinkedIn</a
+					>
+				</li>
+				<li>
+					<a
+						href="mailto:simoneferretti99@pm.me"
+						class="text-[var(--color-text-primary)] underline decoration-[var(--color-border)] underline-offset-4 hover:text-[var(--color-accent-light)]"
+						>Email</a
+					>
+				</li>
+				<li>
+					<a
+						href={`https://github.com/${GITHUB_USERNAME}`}
+						class="text-[var(--color-text-primary)] underline decoration-[var(--color-border)] underline-offset-4 hover:text-[var(--color-accent-light)]"
+						>GitHub</a
+					>
+				</li>
+			</ul>
 		</section>
 	</main>
 </Layout>

@@ -7,7 +7,7 @@ import EmailIcon from '../components/icons/EmailIcon.astro';
 import PortfolioIcon from '../components/icons/PortfolioIcon.astro';
 import BlogIcon from '../components/icons/BlogIcon.astro';
 import { generateCover } from '../lib/generate-cover';
-import { GITHUB_USERNAME } from 'astro:env/server';
+import { GITHUB_USERNAME } from 'astro:env/client';
 
 const siteOrigin = 'https://simoneferretti.dev';
 const pageUrl = `${siteOrigin}/hub/`;
@@ -31,7 +31,7 @@ const jsonLd = {
 
 <Layout
 	title="Simone Ferretti | Hub"
-	description="Personal hub for Simone Ferretti, full-stack developer building systems and the infrastructure they need. Bio, social links, stack, and highlights."
+	description="Personal hub for Simone Ferretti, product engineer building systems and the infrastructure they need. Bio, social links, stack, and highlights."
 	jsonLd={jsonLd}
 >
 	<main

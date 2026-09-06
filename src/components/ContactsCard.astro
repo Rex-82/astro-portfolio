@@ -2,7 +2,7 @@
 import GithubIcon from '../components/icons/GithubIcon.astro';
 import LinkedinIcon from '../components/icons/LinkedinIcon.astro';
 import EmailIcon from '../components/icons/EmailIcon.astro';
-import { GITHUB_USERNAME } from 'astro:env/server';
+import { GITHUB_USERNAME } from 'astro:env/client';
 
 const socials = [
 	{
@@ -36,12 +36,14 @@ const socials = [
 							rel="noopener noreferrer"
 							href={social.url}
 							role="link"
-							aria-labelledby=`${social.name}-label`
+							aria-labelledby={`${social.name}-label`}
 						>
 							<social.icon />
 						</a>
 					</div>
-					<span id=`${social.name}-label` class="social-name">{social.name}</span>
+					<span id={`${social.name}-label`} class="social-name">
+						{social.name}
+					</span>
 				</li>
 			))
 		}
@@ -54,7 +56,8 @@ const socials = [
 		padding: 2rem 4rem;
 		padding-bottom: 1.5rem;
 		border-radius: 7px;
-		border: 1px solid color-mix(in srgb, var(--color-accent-light) 20%, transparent);
+		border: 1px solid
+			color-mix(in srgb, var(--color-accent-light) 20%, transparent);
 	}
 
 	h1 {

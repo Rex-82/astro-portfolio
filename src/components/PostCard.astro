@@ -12,7 +12,15 @@ interface Props {
 	animationDelay?: number;
 }
 
-const { id, title, description, pubDate, tags, coverImage, animationDelay = 0 } = Astro.props;
+const {
+	id,
+	title,
+	description,
+	pubDate,
+	tags,
+	coverImage,
+	animationDelay = 0,
+} = Astro.props;
 ---
 
 <li
@@ -26,66 +34,74 @@ const { id, title, description, pubDate, tags, coverImage, animationDelay = 0 } 
 >
 	<a
 		href={`/blog/${id}/`}
-		class="flex h-[180px] max-[600px]:h-auto max-[600px]:flex-col no-underline [color:inherit] rounded-lg bg-[var(--color-bg)] overflow-hidden border border-[var(--color-border-mid)] transition-colors duration-[600ms] ease-[var(--ease-out-expo)] md:group-hover:border-[var(--color-accent-light)]"
+		class="grid md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] no-underline [color:inherit] rounded-lg bg-[var(--color-bg)] overflow-hidden border border-[var(--color-border-mid)] transition-colors duration-[600ms] ease-[var(--ease-out-expo)] md:group-hover:border-[var(--color-accent-light)]"
 	>
-		<div class="shrink-0 w-[320px] h-[180px] overflow-hidden max-[600px]:w-full">
-			{coverImage ? (
-				<Image
-					src={coverImage}
-					alt={`Cover image for ${title}`}
-					class="w-full h-full object-cover block transition-transform duration-[600ms] ease-[var(--ease-out-expo)] md:group-hover:scale-105"
-					widths={[400, 800]}
-					sizes="(max-width: 800px) 100vw, 800px"
-				/>
-			) : (
-				<img
-					src={`/covers/${id}/`}
-					alt=""
-					loading="lazy"
-					decoding="async"
-					width="800"
-					height="480"
-					class="post-cover-generated h-full w-full object-cover block transition-transform duration-[600ms] ease-[var(--ease-out-expo)] md:group-hover:scale-105"
-				/>
-			)}
+		<div class="relative aspect-[1200/630] overflow-hidden md:aspect-auto">
+			{
+				coverImage ? (
+					<Image
+						src={coverImage}
+						alt={`Cover image for ${title}`}
+						class="w-full h-full object-cover block transition-transform duration-[600ms] ease-[var(--ease-out-expo)] md:group-hover:scale-105"
+						widths={[400, 800]}
+						sizes="(max-width: 800px) 100vw, 800px"
+					/>
+				) : (
+					<img
+						src={`/covers/${id}/`}
+						alt=""
+						loading="lazy"
+						decoding="async"
+						width="1200"
+						height="630"
+						class="post-cover-generated h-full w-full object-cover block transition-transform duration-[600ms] ease-[var(--ease-out-expo)] md:group-hover:scale-105"
+					/>
+				)
+			}
 		</div>
-		<div class="flex-1 min-w-0 py-5 px-6 flex flex-col justify-center overflow-hidden">
+		<div class="min-w-0 py-5 px-6 flex flex-col overflow-hidden">
 			<h2
-				class="m-0 mb-2 text-[1.25rem] text-text-primary
+				class="m-0 mb-2 line-clamp-2 text-[1.25rem] text-text-primary
 				       transition-[color,transform] duration-[600ms] ease-[var(--ease-out-expo)]
 				       md:group-hover:text-[var(--color-accent-light)] md:group-hover:translate-x-1"
 			>
 				{title}
 			</h2>
-			<p class="m-0 mb-3 text-[var(--color-text-secondary)] line-clamp-2 md:group-hover:text-[var(--color-accent-light-dimmed)]">
+			<p
+				class="m-0 mb-3 text-[var(--color-text-secondary)] line-clamp-2 md:group-hover:text-[var(--color-accent-light-dimmed)]"
+			>
 				{description}
 			</p>
-			<div class="flex flex-wrap items-center gap-3">
-				<time
-					datetime={pubDate.toISOString()}
-					class="text-[0.75rem] text-[var(--color-text-secondary)] uppercase tracking-[0.1em] md:group-hover:text-[var(--color-accent-light-dimmed)]"
-				>
-					{pubDate.toLocaleDateString('en-US', {
-						year: 'numeric',
-						month: 'long',
-						day: 'numeric',
-					})}
-				</time>
-				{tags.length > 0 && (
-					<div class="flex flex-wrap gap-1.5">
-						{tags.map((tag) => (
-							<span
-								class="shadow-[inset_0_0_0_1px_var(--color-border-subtle)] bg-[var(--color-surface-tag)]
+			<div class="mt-auto flex flex-col items-stretch gap-2">
+				{
+					tags.length > 0 && (
+						<div class="flex flex-wrap gap-1.5">
+							{tags.map((tag) => (
+								<span
+									class="shadow-[inset_0_0_0_1px_var(--color-border-subtle)] bg-[var(--color-surface-tag)]
 								       px-[0.625rem] py-1 rounded-full text-[0.75rem] text-[var(--color-accent)]
 								       transition-[color,background-color] duration-[600ms] ease-[var(--ease-out-expo)]
 								       md:group-hover:text-[var(--color-accent-light-dimmed)]
 								       md:group-hover:bg-[color-mix(in_srgb,var(--color-accent-light-dimmed)_20%,transparent)]"
-							>
-								{tag}
-							</span>
-						))}
-					</div>
-				)}
+								>
+									{tag}
+								</span>
+							))}
+						</div>
+					)
+				}
+				<time
+					datetime={pubDate.toISOString()}
+					class="ml-auto shrink-0 text-right text-[0.6875rem] uppercase tracking-[0.08em] text-[var(--color-text-secondary)] md:group-hover:text-[var(--color-accent-light-dimmed)]"
+				>
+					{
+						pubDate.toLocaleDateString('en-US', {
+							year: 'numeric',
+							month: 'long',
+							day: 'numeric',
+						})
+					}
+				</time>
 			</div>
 		</div>
 	</a>

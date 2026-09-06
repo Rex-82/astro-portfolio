@@ -84,9 +84,6 @@ importers:
       simplex-noise:
         specifier: ^4.0.3
         version: 4.0.3
-      tsx:
-        specifier: ^4.23.11
-        version: 4.23.11
 
 packages:
 
@@ -4312,6 +4309,7 @@ snapshots:
       esbuild: 0.28.2
     optionalDependencies:
       fsevents: 2.3.3
+    optional: true
 
   ufo@1.6.4: {}
 

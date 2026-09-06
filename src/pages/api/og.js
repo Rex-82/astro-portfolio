@@ -16,7 +16,7 @@ export async function GET({ url }) {
 		: null;
 
 	const displayTitle = title ?? 'Simone Ferretti';
-	const cta = title ? 'simoneferretti.dev' : 'full-stack developer';
+	const cta = title ? 'simoneferretti.dev' : 'product engineer';
 	const titleStyles = title
 		? 'font-size: 5rem; line-height: 1.1; padding: 0 2rem;'
 		: 'font-size: 7rem; line-height: 1; white-space: nowrap;';

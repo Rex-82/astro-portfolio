@@ -6,13 +6,14 @@ const currentPath = Astro.url.pathname;
 const links = [
 	{ path: '/', label: 'Home' },
 	{ path: '/blog/', label: 'Blog' },
-	{ path: '/projects/', label: 'Projects' },
 	{ path: '/contacts/', label: 'Contacts' },
 ];
 ---
 
 <nav class="text-accent px-4 max-[480px]:px-0">
-	<div class="flex items-center justify-between max-w-[var(--width-nav)] mx-auto max-[480px]:justify-center">
+	<div
+		class="flex items-center justify-between max-w-[var(--width-nav)] mx-auto max-[480px]:justify-center"
+	>
 		<PageSelector
 			client:load
 			currentPath={currentPath}
