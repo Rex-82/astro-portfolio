@@ -1,10 +1,17 @@
 ---
+import { ArrowUpRight } from 'lucide-react';
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
 	<span>Simone Ferretti &copy; {year}</span><span>Built with intent.</span><a
-		href="/hub/">Personal index ↗</a>
+		href="/hub/"
+		>Personal index <ArrowUpRight
+			size="1em"
+			strokeWidth={1.5}
+			aria-hidden="true"
+		/></a
+	>
 </footer>
 <style>
 	.site-footer {
@@ -17,6 +24,9 @@ const year = new Date().getFullYear();
 		color: var(--color-text-secondary);
 	}
 	a {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
 		color: inherit;
 		text-decoration: none;
 	}

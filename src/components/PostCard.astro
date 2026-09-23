@@ -1,4 +1,5 @@
 ---
+import { ArrowUpRight } from 'lucide-react';
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
@@ -24,7 +25,7 @@ const { id, title, description, pubDate, tags, coverImage } = Astro.props;
 						src={coverImage}
 						alt=""
 						widths={[320, 640]}
-						sizes="(max-width: 640px) 120px, 180px"
+						sizes="(max-width: 900px) 120px, 160px"
 					/>
 				) : (
 					<img
@@ -56,7 +57,12 @@ const { id, title, description, pubDate, tags, coverImage } = Astro.props;
 				)
 			}
 		</div>
-		<span class="post-arrow" aria-hidden="true">↗</span>
+		<ArrowUpRight
+			className="post-arrow"
+			size={13}
+			strokeWidth={1.5}
+			aria-hidden="true"
+		/>
 	</a>
 </li>
 <style>
@@ -66,7 +72,7 @@ const { id, title, description, pubDate, tags, coverImage } = Astro.props;
 	}
 	a {
 		display: grid;
-		grid-template-columns: minmax(100px, 36%) 1fr;
+		grid-template-columns: minmax(100px, 160px) minmax(0, 1fr);
 		gap: 20px;
 		position: relative;
 		color: inherit;
@@ -86,6 +92,7 @@ const { id, title, description, pubDate, tags, coverImage } = Astro.props;
 	.post-info {
 		min-width: 0;
 		padding-top: 2px;
+		line-height: 1.4;
 	}
 	time,
 	.post-tags {
@@ -94,14 +101,14 @@ const { id, title, description, pubDate, tags, coverImage } = Astro.props;
 		color: var(--color-text-secondary);
 	}
 	h2 {
-		margin: 12px 0 10px;
+		margin: 8px 0;
 		font-size: 15px;
 		line-height: 1.35;
 		letter-spacing: -0.025em;
 		font-weight: 500;
 	}
 	p {
-		margin: 0 0 14px;
+		margin: 0 0 8px;
 		color: var(--color-text-secondary);
 		font-size: 12px;
 		line-height: 1.6;
@@ -114,7 +121,7 @@ const { id, title, description, pubDate, tags, coverImage } = Astro.props;
 		display: block;
 		font-size: 9px;
 	}
-	.post-arrow {
+	:global(.post-arrow) {
 		position: absolute;
 		right: 0;
 		bottom: 0;
@@ -124,10 +131,15 @@ const { id, title, description, pubDate, tags, coverImage } = Astro.props;
 		text-decoration: underline;
 		text-underline-offset: 3px;
 	}
-	@media (max-width: 640px) {
+	@media (max-width: 900px) {
 		a {
 			grid-template-columns: 120px 1fr;
 			gap: 18px;
+		}
+	}
+	@media (max-width: 900px) {
+		p {
+			-webkit-line-clamp: 2;
 		}
 	}
 	@media (max-width: 360px) {

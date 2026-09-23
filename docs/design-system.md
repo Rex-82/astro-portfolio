@@ -47,6 +47,10 @@ thumbnail, presented as an independent image rather than a background hero.
   Respect reduced motion. Preserve working navigation and persisted page
   transitions while changing their appearance.
 
+Article layout refinement (2026-09-23): the summary, body and article footer
+share the full width of the article header, including its image column. Separate
+the header from the reading content with whitespace, without a divider line.
+
 ## Implementation anchors
 
 Runtime values are defined in `src/styles/global.css`:

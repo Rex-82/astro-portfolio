@@ -181,7 +181,6 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 					</div>
 				</div>
 			</header>
-			<hr class="header-separator" />
 			{
 				tldr && (
 					<aside class="tldr" aria-label="Summary">
@@ -253,9 +252,19 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		margin: 24px 0;
 	}
 	@media (max-width: 640px) {
+		main {
+			padding-top: 32px;
+		}
+		.header--hero {
+			margin: 24px 0;
+		}
+		.hero-content h1 {
+			margin: 12px 0;
+		}
+
 		.hero-image-wrapper {
 			grid-template-columns: 1fr;
-			gap: 32px;
+			gap: 16px;
 		}
 		.hero-content {
 			grid-column: 1;
@@ -266,8 +275,8 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		.generated-cover {
 			grid-column: 1;
 			grid-row: 2;
-			width: 150px;
-			height: 180px;
+			width: 80px;
+			height: 100px;
 			justify-self: end;
 		}
 	}
@@ -302,23 +311,9 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		color: var(--color-accent);
 	}
 
-	/* ===== HEADER SEPARATOR ===== */
-	.header-separator {
-		border: none;
-		height: 1px;
-		background: linear-gradient(
-			to right,
-			transparent,
-			color-mix(in srgb, var(--color-accent) 40%, transparent),
-			transparent
-		);
-		max-width: 65ch;
-		margin: 0 auto 2.5rem;
-	}
-
 	/* ===== TL;DR BLOCK ===== */
 	.tldr {
-		max-width: 65ch;
+		max-width: 100%;
 		margin: 0 auto 2rem;
 		padding: 0.875rem 1.25rem;
 		border-left: 3px solid var(--color-accent);
@@ -331,13 +326,13 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 
 	/* ===== PROSE ===== */
 	.prose {
-		max-width: 65ch;
+		max-width: 100%;
 		margin: 0 auto;
 		overflow-wrap: break-word;
 	}
 
 	.post-footer {
-		max-width: 65ch;
+		max-width: 100%;
 		margin: 2.5rem auto 0;
 		padding: 1.25rem;
 		border-top: 1px solid var(--color-border-subtle);
@@ -371,7 +366,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 	}
 
 	.prose :global(h2) {
-		font-size: 1.75rem;
+		font-size: 1.375rem;
 		font-weight: 600;
 		margin-top: 2.5rem;
 		margin-bottom: 0.75rem;
@@ -380,7 +375,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 	}
 
 	.prose :global(h3) {
-		font-size: 1.375rem;
+		font-size: 1.125rem;
 		font-weight: 600;
 		margin-top: 1.75rem;
 		margin-bottom: 0.5rem;
