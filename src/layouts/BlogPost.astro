@@ -321,8 +321,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		max-width: 65ch;
 		margin: 0 auto 2rem;
 		padding: 0.875rem 1.25rem;
-		border-left: 3px solid
-			color-mix(in srgb, var(--color-accent) 60%, transparent);
+		border-left: 3px solid var(--color-accent);
 		background: color-mix(in srgb, var(--color-accent) 6%, transparent);
 		border-radius: 0;
 		color: var(--color-text-secondary);
@@ -376,7 +375,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		font-weight: 600;
 		margin-top: 2.5rem;
 		margin-bottom: 0.75rem;
-		color: var(--color-accent-light);
+		color: var(--color-text-bright);
 		letter-spacing: -0.025em;
 	}
 
@@ -385,7 +384,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 		font-weight: 600;
 		margin-top: 1.75rem;
 		margin-bottom: 0.5rem;
-		color: var(--color-accent-light);
+		color: var(--color-text-bright);
 	}
 
 	.prose :global(p) {

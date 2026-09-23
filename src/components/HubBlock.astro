@@ -62,8 +62,11 @@ const metaLabel =
 	variant === 'bio' && (
 		<div class={`${outerFrame} ${spanClass}`}>
 			<div
-				class={`${innerBase} relative min-h-[220px] gap-4 py-6 md:min-h-[280px] md:gap-5`}
+				class={`${innerBase} hub-bio relative min-h-[220px] gap-4 py-6 md:min-h-[280px] md:gap-5`}
 			>
+				{bgSvg && (
+					<div class="hub-thumbnail" aria-hidden="true" set:html={bgSvg} />
+				)}
 				<span class={`${metaLabel} relative`}>
 					<span class="text-[var(--color-text-secondary)]">
 						{index ?? '00'}
@@ -75,7 +78,7 @@ const metaLabel =
 						<span class="text-gradient">{heading}</span>
 					</h1>
 				)}
-				<p class="relative m-0 mt-auto text-[1.25rem] leading-[1.3] text-[var(--color-accent-light)] max-[480px]:text-[1.0625rem] md:max-w-[28ch] md:text-[1.5rem]">
+				<p class="relative m-0 mt-auto text-[1.25rem] leading-[1.3] text-[var(--color-text-primary)] max-[480px]:text-[1.0625rem] md:max-w-[28ch] md:text-[1.5rem]">
 					{body}
 				</p>
 			</div>
@@ -178,12 +181,36 @@ const metaLabel =
 }
 
 <style>
-	.hub-bio-bg :global(svg) {
+	.hub-bio {
+		padding-right: 240px;
+	}
+	.hub-thumbnail {
+		position: absolute;
+		right: 0;
+		top: 24px;
+		width: 180px;
+		height: 225px;
+		overflow: hidden;
+	}
+	@media (max-width: 640px) {
+		.hub-bio {
+			padding-right: 0;
+		}
+		.hub-thumbnail {
+			position: static;
+			width: 140px;
+			height: 175px;
+			order: 1;
+			align-self: flex-end;
+			margin-top: 24px;
+		}
+	}
+
+	.hub-thumbnail :global(svg) {
 		width: 100%;
 		height: 100%;
 		display: block;
 		object-fit: cover;
-		opacity: 0.85;
 	}
 
 	.hub-text-list :global(strong) {

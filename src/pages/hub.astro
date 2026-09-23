@@ -1,4 +1,5 @@
 ---
+import { generateCover } from '../lib/generate-cover';
 import Layout from '../layouts/Layout.astro';
 import HubBlock from '../components/HubBlock.astro';
 import GithubIcon from '../components/icons/GithubIcon.astro';
@@ -33,11 +34,12 @@ const jsonLd = {
 >
 	<main
 		id="main-content"
-		class="page-main text-[16px] text-accent leading-[1.6] flex flex-col items-center"
+		class="page-main text-[16px] text-text-primary leading-[1.6] flex flex-col items-center"
 	>
 		<section class="w-full flex flex-col gap-12" aria-label="Hub blocks">
 			<HubBlock
 				variant="bio"
+				bgSvg={generateCover('simoneferretti')}
 				index="00"
 				heading="Simone Ferretti"
 				body="I build systems and the infrastructure they need to not fall over."

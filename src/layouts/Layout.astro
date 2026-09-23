@@ -198,11 +198,7 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: 'svg' });
 		left: 0;
 		height: 2px;
 		width: 0%;
-		background: linear-gradient(
-			to right,
-			var(--color-accent),
-			var(--color-accent-light)
-		);
+		background: var(--color-accent);
 		z-index: 20;
 		pointer-events: none;
 		transition: width 0.15s linear;

@@ -7,9 +7,9 @@
 	--color-text-secondary: #666660;
 	--color-text-muted: #62625d;
 	--color-text-bright: #111111;
-	--color-accent: #42423e;
-	--color-accent-light: #111111;
-	--color-accent-light-dimmed: #42423e;
+	--color-accent: #9c411d;
+	--color-accent-light: var(--color-accent);
+	--color-accent-light-dimmed: var(--color-accent);
 	--color-border: #c9c8c2;
 	--color-border-subtle: #dcdad4;
 	--color-border-mid: #d1cfc9;
@@ -116,11 +116,11 @@ a {
 	text-underline-offset: 4px;
 }
 a:focus-visible {
-	outline: 2px solid var(--color-text-primary);
+	outline: 2px solid var(--color-accent);
 	outline-offset: 6px;
 }
 ::selection {
-	background: #d5d2c9;
+	background: color-mix(in srgb, var(--color-accent) 20%, var(--color-bg));
 	color: #111;
 }
 .skip-link {

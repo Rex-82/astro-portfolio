@@ -89,7 +89,7 @@ export default function PageSelector({
 						aria-hidden="true"
 						className="absolute bottom-0 left-0 h-px pointer-events-none z-0"
 						style={{
-							backgroundColor: 'var(--color-text-primary)',
+							backgroundColor: 'var(--color-accent)',
 						}}
 						initial={false}
 						animate={{
