@@ -17,16 +17,16 @@ const ROWS = Math.round(COLS * (H / W));
 const THRESHOLDS = 8;
 
 const STONE = [
-	'#221f1e', // stone-850 (min elevation)
-	'#292524', // stone-800
-	'#3c3834', // stone-750
-	'#44403c', // stone-700
-	'#78716c', // stone-500
-	'#a8a29e', // stone-400  (~--color-accent)
-	'#d6d3d1', // stone-300  (~--color-text-primary)
-	'#e7e5e4', // stone-200  (~--color-text-bright)
+	'#25130e',
+	'#492015',
+	'#713019',
+	'#9c411d',
+	'#c55b27',
+	'#df7d38',
+	'#eb9b56',
+	'#f4bf83',
 ];
-const BG = '#0c0a09'; // stone-950
+const BG = '#160e0a';
 
 // --- Elevation primitives ---
 
@@ -130,7 +130,12 @@ export function generateCover(seed: string): string {
 		};
 	};
 
-	function makeShape(cx: number, cy: number, peak: number, sign: number): ElevFn {
+	function makeShape(
+		cx: number,
+		cy: number,
+		peak: number,
+		sign: number,
+	): ElevFn {
 		const type = rand();
 		if (type < 0.4) {
 			const r = randRange(ROWS * 0.5, ROWS * 1.1);

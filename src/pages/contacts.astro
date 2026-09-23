@@ -25,19 +25,47 @@ const jsonLd = {
 	description="Get in touch with Simone Ferretti, Product Engineer. Find me on GitHub, LinkedIn, or by email. Open to interesting product and tooling projects."
 	jsonLd={jsonLd}
 >
-	<main class="page-main text-accent flex flex-col items-center">
-		<p
-			class="text-[2rem] font-light text-center mb-0 max-[768px]:text-[1.5rem]"
-		>
-			<span>Let's build</span>
-		</p>
-		<p
-			class="text-[4rem] font-bold leading-none text-center mt-0 mb-[0.5em] max-[768px]:text-[3rem]"
-		>
-			<span class="text-gradient">Something real</span>
-		</p>
-		<section class="max-[768px]:grid">
-			<ContactsCard />
+	<main id="main-content" class="page-main contact-page">
+		<header>
+			<p class="eyebrow">03 / Get in touch</p><h1>
+				Let's build<br />something real.
+			</h1>
+		</header>
+		<section aria-label="Contact information">
+			<p class="contact-intro">
+				Open to interesting product and tooling projects.
+			</p><ContactsCard />
 		</section>
 	</main>
 </Layout>
+<style>
+	.contact-page {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 12%;
+		min-height: 65vh;
+	}
+	h1 {
+		margin-top: 32px;
+		font-size: clamp(30px, 4vw, 48px);
+		font-weight: 500;
+		letter-spacing: -0.05em;
+		line-height: 1.15;
+	}
+	section {
+		padding-top: 150px;
+	}
+	.contact-intro {
+		font-size: 13px;
+		color: var(--color-text-secondary);
+		margin-bottom: 24px;
+	}
+	@media (max-width: 640px) {
+		.contact-page {
+			display: block;
+		}
+		section {
+			padding-top: 64px;
+		}
+	}
+</style>

@@ -1,165 +1,56 @@
 ---
-import GithubIcon from '../components/icons/GithubIcon.astro';
-import LinkedinIcon from '../components/icons/LinkedinIcon.astro';
-import EmailIcon from '../components/icons/EmailIcon.astro';
 import { GITHUB_USERNAME } from 'astro:env/client';
 
 const socials = [
 	{
 		name: 'Github',
-		icon: GithubIcon,
 		url: `https://github.com/${GITHUB_USERNAME}`,
 	},
 	{
 		name: 'Linkedin',
-		icon: LinkedinIcon,
 		url: 'https://www.linkedin.com/in/simoneferretti',
 	},
 	{
 		name: 'Email',
-		icon: EmailIcon,
 		url: 'mailto:simoneferretti99@pm.me',
 	},
 ];
 ---
 
-<div id="contacts-card">
-	<h1 class="flex items-center justify-center">Contact information</h1>
-	<ul class="socials-grid">
-		{
-			socials.map((social) => (
-				<li class="social-container flex items-center justify-center">
-					<div class="social-link flex items-center justify-center">
-						<a
-							class="flex items-center justify-center"
-							target="_blank"
-							rel="noopener noreferrer"
-							href={social.url}
-							role="link"
-							aria-labelledby={`${social.name}-label`}
-						>
-							<social.icon />
-						</a>
-					</div>
-					<span id={`${social.name}-label`} class="social-name">
-						{social.name}
-					</span>
-				</li>
-			))
-		}
-	</ul>
-</div>
+<ul class="contact-list">
+	{
+		socials.map((social, index) => (
+			<li>
+				<a href={social.url} target="_blank" rel="noopener noreferrer">
+					<>
+						<span class="eyebrow">0{index + 1}</span>
+						<span>{social.name}</span>
+						<span aria-hidden="true">↗</span>
+					</>
+				</a>
+			</li>
+		))
+	}
+</ul>
 <style>
-	#contacts-card {
-		display: flex;
-		flex-direction: column;
-		padding: 2rem 4rem;
-		padding-bottom: 1.5rem;
-		border-radius: 7px;
-		border: 1px solid
-			color-mix(in srgb, var(--color-accent-light) 20%, transparent);
-	}
-
-	h1 {
-		font-size: 1rem;
-		font-weight: normal;
-		margin-bottom: 1rem;
-		text-wrap: nowrap;
-	}
-
-	p {
-		margin-top: 0.5rem;
-		margin-bottom: 0;
-		color: var(--color-text-secondary);
-	}
-
-	.socials-grid {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		column-gap: 3rem;
-		margin: 0 auto;
-		padding: 1rem 0;
-	}
-
-	@media screen and (max-width: 500px) {
-		.socials-grid {
-			flex-direction: column;
-			row-gap: 3rem;
-		}
-
-		#contacts-card {
-			width: fit-content;
-			justify-self: center;
-			padding: 4rem;
-			padding-top: 0;
-		}
-	}
-
-	.social-container {
-		position: relative;
-	}
-
-	.social-link {
+	.contact-list {
+		list-style: none;
 		padding: 0;
 		margin: 0;
-		width: 50px;
-		height: 50px;
-		box-shadow: inset 0 0 0 1px var(--color-border);
-		border-radius: 5rem;
-		transition:
-			background-color 0.6s var(--ease-out-expo),
-			transform 0.6s var(--ease-out-expo);
-	}
-
-	.social-link > a {
-		margin: 0;
-		height: 100%;
 		width: 100%;
-		color: var(--color-text-secondary);
-		font-size: 0.875rem;
-		transition: color 0.6s var(--ease-out-expo);
 	}
-
-	.social-name {
-		opacity: 0;
-		font-size: 0.875rem;
-		position: absolute;
-		bottom: -1.5em;
-		transition:
-			opacity 0.6s var(--ease-out-expo),
-			bottom 0.6s var(--ease-out-expo);
+	a {
+		display: grid;
+		grid-template-columns: 48px 1fr auto;
+		gap: 20px;
+		padding: 24px 0;
+		color: var(--color-text-primary);
+		text-decoration: none;
+		font-size: 18px;
+		border-bottom: 1px solid var(--color-border-subtle);
+		align-items: baseline;
 	}
-
-	@media screen and (max-width: 768px) {
-		.social-link {
-			background-color: var(--color-accent-light);
-			background-size: 300%;
-		}
-
-		.social-link > a {
-			color: var(--color-bg);
-		}
-
-		.social-name {
-			opacity: 100;
-			bottom: -1.875em;
-		}
-	}
-
-	@media screen and (min-width: 768px) {
-		.social-link:hover {
-			background-color: var(--color-accent-light);
-			transform: scale(1.1);
-		}
-
-		.social-link:hover > a {
-			color: var(--color-bg);
-		}
-
-		.social-link:hover ~ .social-name {
-			opacity: 100;
-			bottom: -1.875em;
-		}
+	a:hover {
+		text-decoration: underline;
 	}
 </style>

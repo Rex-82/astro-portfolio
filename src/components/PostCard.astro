@@ -12,39 +12,19 @@ interface Props {
 	animationDelay?: number;
 }
 
-const {
-	id,
-	title,
-	description,
-	pubDate,
-	tags,
-	coverImage,
-	animationDelay = 0,
-} = Astro.props;
+const { id, title, description, pubDate, tags, coverImage } = Astro.props;
 ---
 
-<li
-	class="list-none rounded-lg shadow-[inset_0_0_0_1px_var(--color-border-mid)]
-	       transition-[background-position,box-shadow,transform] duration-[600ms] ease-[var(--ease-out-expo)]
-	       bg-[length:400%] bg-[position:100%]
-	       animate-fade-in-up
-	       group
-	       md:hover:bg-[position:0%] md:hover:bg-[image:var(--color-accent-gradient)] md:hover:scale-[1.02]"
-	style={`animation-delay: ${animationDelay}s`}
->
-	<a
-		href={`/blog/${id}/`}
-		class="grid md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] no-underline [color:inherit] rounded-lg bg-[var(--color-bg)] overflow-hidden border border-[var(--color-border-mid)] transition-colors duration-[600ms] ease-[var(--ease-out-expo)] md:group-hover:border-[var(--color-accent-light)]"
-	>
-		<div class="relative aspect-[1200/630] overflow-hidden md:aspect-auto">
+<li class="post-entry">
+	<a href={`/blog/${id}/`}>
+		<div class="post-media">
 			{
 				coverImage ? (
 					<Image
 						src={coverImage}
-						alt={`Cover image for ${title}`}
-						class="w-full h-full object-cover block transition-transform duration-[600ms] ease-[var(--ease-out-expo)] md:group-hover:scale-105"
-						widths={[400, 800]}
-						sizes="(max-width: 800px) 100vw, 800px"
+						alt=""
+						widths={[320, 640]}
+						sizes="(max-width: 640px) 120px, 180px"
 					/>
 				) : (
 					<img
@@ -54,55 +34,106 @@ const {
 						decoding="async"
 						width="1200"
 						height="630"
-						class="post-cover-generated h-full w-full object-cover block transition-transform duration-[600ms] ease-[var(--ease-out-expo)] md:group-hover:scale-105"
 					/>
 				)
 			}
 		</div>
-		<div class="min-w-0 py-5 px-6 flex flex-col overflow-hidden">
-			<h2
-				class="m-0 mb-2 line-clamp-2 text-[1.25rem] text-text-primary
-				       transition-[color,transform] duration-[600ms] ease-[var(--ease-out-expo)]
-				       md:group-hover:text-[var(--color-accent-light)] md:group-hover:translate-x-1"
+		<div class="post-info">
+			<time datetime={pubDate.toISOString()}
+				>{
+					pubDate.toLocaleDateString('en-GB', {
+						day: '2-digit',
+						month: 'short',
+						year: 'numeric',
+					})
+				}</time
 			>
-				{title}
-			</h2>
-			<p
-				class="m-0 mb-3 text-[var(--color-text-secondary)] line-clamp-2 md:group-hover:text-[var(--color-accent-light-dimmed)]"
-			>
-				{description}
-			</p>
-			<div class="mt-auto flex flex-col items-stretch gap-2">
-				{
-					tags.length > 0 && (
-						<div class="flex flex-wrap gap-1.5">
-							{tags.map((tag) => (
-								<span
-									class="shadow-[inset_0_0_0_1px_var(--color-border-subtle)] bg-[var(--color-surface-tag)]
-								       px-[0.625rem] py-1 rounded-full text-[0.75rem] text-[var(--color-accent)]
-								       transition-[color,background-color] duration-[600ms] ease-[var(--ease-out-expo)]
-								       md:group-hover:text-[var(--color-accent-light-dimmed)]
-								       md:group-hover:bg-[color-mix(in_srgb,var(--color-accent-light-dimmed)_20%,transparent)]"
-								>
-									{tag}
-								</span>
-							))}
-						</div>
-					)
-				}
-				<time
-					datetime={pubDate.toISOString()}
-					class="ml-auto shrink-0 text-right text-[0.6875rem] uppercase tracking-[0.08em] text-[var(--color-text-secondary)] md:group-hover:text-[var(--color-accent-light-dimmed)]"
-				>
-					{
-						pubDate.toLocaleDateString('en-US', {
-							year: 'numeric',
-							month: 'long',
-							day: 'numeric',
-						})
-					}
-				</time>
-			</div>
+			<h2>{title}</h2>
+			<p>{description}</p>
+			{
+				tags.length > 0 && (
+					<span class="post-tags">{tags.slice(0, 2).join(' / ')}</span>
+				)
+			}
 		</div>
+		<span class="post-arrow" aria-hidden="true">↗</span>
 	</a>
 </li>
+<style>
+	.post-entry {
+		list-style: none;
+		min-width: 0;
+	}
+	a {
+		display: grid;
+		grid-template-columns: minmax(100px, 36%) 1fr;
+		gap: 20px;
+		position: relative;
+		color: inherit;
+		text-decoration: none;
+	}
+	.post-media {
+		aspect-ratio: 4 / 5;
+		overflow: hidden;
+		background: #291b13;
+	}
+	.post-media :global(img) {
+		display: block;
+		height: 100%;
+		width: 100%;
+		object-fit: cover;
+	}
+	.post-info {
+		min-width: 0;
+		padding-top: 2px;
+	}
+	time,
+	.post-tags {
+		font-size: 10px;
+		letter-spacing: 0.03em;
+		color: var(--color-text-secondary);
+	}
+	h2 {
+		margin: 12px 0 10px;
+		font-size: 15px;
+		line-height: 1.35;
+		letter-spacing: -0.025em;
+		font-weight: 500;
+	}
+	p {
+		margin: 0 0 14px;
+		color: var(--color-text-secondary);
+		font-size: 12px;
+		line-height: 1.6;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+	.post-tags {
+		display: block;
+		font-size: 9px;
+	}
+	.post-arrow {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		font-size: 13px;
+	}
+	a:hover h2 {
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+	@media (max-width: 640px) {
+		a {
+			grid-template-columns: 120px 1fr;
+			gap: 18px;
+		}
+	}
+	@media (max-width: 360px) {
+		a {
+			grid-template-columns: 95px 1fr;
+			gap: 14px;
+		}
+	}
+</style>

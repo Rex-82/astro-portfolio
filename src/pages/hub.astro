@@ -6,13 +6,10 @@ import LinkedinIcon from '../components/icons/LinkedinIcon.astro';
 import EmailIcon from '../components/icons/EmailIcon.astro';
 import PortfolioIcon from '../components/icons/PortfolioIcon.astro';
 import BlogIcon from '../components/icons/BlogIcon.astro';
-import { generateCover } from '../lib/generate-cover';
 import { GITHUB_USERNAME } from 'astro:env/client';
 
 const siteOrigin = 'https://simoneferretti.dev';
 const pageUrl = `${siteOrigin}/hub/`;
-
-const bioBgSvg = generateCover('simoneferretti');
 
 const jsonLd = {
 	'@context': 'https://schema.org',
@@ -35,15 +32,15 @@ const jsonLd = {
 	jsonLd={jsonLd}
 >
 	<main
-		class="px-4 pt-14 pb-10 w-[800px] max-w-[calc(100%-2rem)] text-[16px] text-accent leading-[1.6] flex flex-col items-center"
+		id="main-content"
+		class="page-main text-[16px] text-accent leading-[1.6] flex flex-col items-center"
 	>
-		<section class="w-full flex flex-col gap-3" aria-label="Hub blocks">
+		<section class="w-full flex flex-col gap-12" aria-label="Hub blocks">
 			<HubBlock
 				variant="bio"
 				index="00"
 				heading="Simone Ferretti"
 				body="I build systems and the infrastructure they need to not fall over."
-				bgSvg={bioBgSvg}
 			/>
 
 			<div class="grid grid-cols-3 gap-3">

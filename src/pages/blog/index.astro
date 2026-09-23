@@ -41,7 +41,10 @@ const jsonLd = {
 	description="Thoughts on web development, tools, and side projects by Simone Ferretti."
 	jsonLd={jsonLd}
 >
-	<main class="page-main text-text-primary leading-[1.6]">
+	<main
+		id="main-content"
+		class="blog-index page-main text-text-primary leading-[1.6]"
+	>
 		<div class="relative">
 			<PageTitle title="Blog" />
 			<div class="absolute top-0 right-0">
@@ -49,7 +52,7 @@ const jsonLd = {
 			</div>
 		</div>
 		<p
-			class="text-[var(--color-text-secondary)] text-center -mt-4 mb-10 text-[0.9375rem]"
+			class="text-[var(--color-text-secondary)] text-left mt-0 mb-10 text-[0.9375rem]"
 		>
 			Thoughts on web development, tools, and side projects.
 		</p>
@@ -59,7 +62,7 @@ const jsonLd = {
 					No posts yet. Check back soon.
 				</p>
 			) : (
-				<ul class="list-none p-0 grid gap-8">
+				<ul class="post-index list-none p-0 grid gap-8">
 					{posts.map((post, index) => (
 						<PostCard
 							id={post.id}
@@ -76,3 +79,32 @@ const jsonLd = {
 		}
 	</main>
 </Layout>
+
+<style>
+	.blog-index {
+		display: grid;
+		grid-template-columns: 1fr 1.5fr;
+		column-gap: 12%;
+		align-content: start;
+	}
+	.blog-index > p {
+		grid-column: 1;
+		font-size: 14px;
+		max-width: 240px;
+	}
+	.post-index {
+		grid-column: 2;
+		grid-row: 1 / 4;
+		gap: 64px;
+		padding-top: 100px;
+	}
+	@media (max-width: 640px) {
+		.blog-index {
+			display: block;
+		}
+		.post-index {
+			padding-top: 32px;
+			gap: 40px;
+		}
+	}
+</style>

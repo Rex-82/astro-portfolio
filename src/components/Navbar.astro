@@ -10,16 +10,45 @@ const links = [
 ];
 ---
 
-<nav class="text-accent px-4 max-[480px]:px-0">
-	<div
-		class="flex items-center justify-between max-w-[var(--width-nav)] mx-auto max-[480px]:justify-center"
-	>
+<nav class="site-nav" aria-label="Main navigation">
+	<div class="nav-inner">
 		<PageSelector
 			client:load
 			currentPath={currentPath}
 			links={links}
 			transition:persist="page-selector"
 		/>
-		<span class="whitespace-nowrap max-[480px]:hidden">Simone Ferretti</span>
+		<a class="wordmark" href="/">SF<span> / Product Engineer</span></a>
 	</div>
 </nav>
+
+<style>
+	.site-nav {
+		padding: 28px 48px;
+	}
+	.nav-inner {
+		max-width: var(--width-nav);
+		margin: auto;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.wordmark {
+		order: -1;
+		font-size: 12px;
+		text-decoration: none;
+		color: var(--color-text-primary);
+	}
+	.wordmark span {
+		color: var(--color-text-secondary);
+		margin-left: 10px;
+	}
+	@media (max-width: 640px) {
+		.site-nav {
+			padding: 20px;
+		}
+		.wordmark span {
+			display: none;
+		}
+	}
+</style>

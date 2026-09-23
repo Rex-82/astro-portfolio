@@ -2,6 +2,34 @@
 const year = new Date().getFullYear();
 ---
 
-<footer class="h-8 flex items-center justify-center">
-	<span class="text-sm text-accent">Simone Ferretti &copy; {year}</span>
+<footer class="site-footer">
+	<span>Simone Ferretti &copy; {year}</span><span>Built with intent.</span><a
+		href="/hub/">Personal index ↗</a>
 </footer>
+<style>
+	.site-footer {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		gap: 20px;
+		padding: 32px 48px;
+		font-size: 10px;
+		color: var(--color-text-secondary);
+	}
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+	a:hover {
+		text-decoration: underline;
+	}
+	@media (max-width: 640px) {
+		.site-footer {
+			padding: 24px 20px;
+			flex-wrap: wrap;
+		}
+		.site-footer > span:nth-child(2) {
+			display: none;
+		}
+	}
+</style>

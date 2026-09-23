@@ -47,17 +47,12 @@ const linkAttrs = external
 	? { target: '_blank', rel: 'noopener noreferrer' }
 	: {};
 
-const outerFrame =
-	'list-none rounded-lg shadow-[inset_0_0_0_1px_var(--color-border-mid)] bg-[length:400%] bg-[position:100%] transition-[background-position,box-shadow,transform] duration-[600ms] ease-[var(--ease-out-expo)]';
-const outerHover =
-	'group md:hover:bg-[position:0%] md:hover:bg-[image:var(--color-accent-gradient)] md:hover:scale-[1.02]';
-
-const innerBase =
-	'flex h-full flex-col gap-4 rounded-lg border border-[var(--color-border-mid)] bg-[var(--color-bg)] transition-colors duration-[600ms] ease-[var(--ease-out-expo)]';
-const innerPadding = 'p-5 md:p-6';
-const innerPaddingCompact = 'p-3 md:p-6';
-const innerHover =
-	'md:group-hover:border-[var(--color-accent-light)]';
+const outerFrame = 'list-none';
+const outerHover = 'group';
+const innerBase = 'flex h-full flex-col gap-4';
+const innerPadding = 'py-6';
+const innerPaddingCompact = 'py-6';
+const innerHover = '';
 
 const metaLabel =
 	'flex items-center gap-2 text-[0.65rem] uppercase tracking-[0.08em] text-[var(--color-text-secondary)] md:text-[0.72rem] md:tracking-[0.14em]';
@@ -66,27 +61,17 @@ const metaLabel =
 {
 	variant === 'bio' && (
 		<div class={`${outerFrame} ${spanClass}`}>
-			<div class={`${innerBase} relative min-h-[220px] gap-4 overflow-hidden p-6 md:min-h-[280px] md:gap-5 md:p-8`}>
-				{bgSvg && (
-					<div
-						class="hub-bio-bg pointer-events-none absolute inset-0"
-						aria-hidden="true"
-						set:html={bgSvg}
-					/>
-				)}
-				{bgSvg && (
-					<div
-						class="pointer-events-none absolute inset-0"
-						aria-hidden="true"
-						style="background: linear-gradient(95deg, color-mix(in srgb, var(--color-bg) 88%, transparent) 0%, color-mix(in srgb, var(--color-bg) 72%, transparent) 50%, color-mix(in srgb, var(--color-bg) 45%, transparent) 100%);"
-					/>
-				)}
+			<div
+				class={`${innerBase} relative min-h-[220px] gap-4 py-6 md:min-h-[280px] md:gap-5`}
+			>
 				<span class={`${metaLabel} relative`}>
-					<span class="text-[var(--color-border)]">{index ?? '00'}</span>
+					<span class="text-[var(--color-text-secondary)]">
+						{index ?? '00'}
+					</span>
 					<span>intro</span>
 				</span>
 				{heading && (
-					<h1 class="relative m-0 font-bold leading-none text-[2.25rem] max-[480px]:text-[1.75rem] md:text-[3.5rem]">
+					<h1 class="relative m-0 font-bold leading-none text-[2.25rem] max-[480px]:text-[1.75rem] md:text-[2.5rem]">
 						<span class="text-gradient">{heading}</span>
 					</h1>
 				)}
@@ -103,13 +88,16 @@ const metaLabel =
 		<div class={`${outerFrame} ${outerHover} ${spanClass}`}>
 			<a
 				href={href}
+				aria-label={`${title}: ${body}`}
 				{...linkAttrs}
 				onclick={onclickHandler}
 				class={`${innerBase} ${innerHover} ${innerPaddingCompact} no-underline [color:inherit] ${featured ? 'md:p-7' : ''}`}
 			>
 				<div class="flex items-center justify-between">
 					<span class={metaLabel}>
-						<span class="text-[var(--color-border)]">{index ?? '00'}</span>
+						<span class="text-[var(--color-text-secondary)]">
+							{index ?? '00'}
+						</span>
 						<span class={iconOnly ? 'max-md:hidden' : ''}>{title}</span>
 					</span>
 					<span
@@ -123,7 +111,9 @@ const metaLabel =
 						)}
 					</span>
 				</div>
-				<div class={`mt-auto flex items-end justify-between gap-3 ${iconOnly ? 'max-md:mt-0 max-md:flex-1 max-md:items-center max-md:justify-center' : ''}`}>
+				<div
+					class={`mt-auto flex items-end justify-between gap-3 ${iconOnly ? 'max-md:mt-0 max-md:flex-1 max-md:items-center max-md:justify-center' : ''}`}
+				>
 					<h3
 						class={`m-0 min-w-0 truncate leading-[1.1] text-[var(--color-text-primary)] transition-colors duration-[600ms] ease-[var(--ease-out-expo)] md:group-hover:text-[var(--color-accent-light)] ${iconOnly ? 'max-md:hidden' : ''} ${featured ? 'text-[1.75rem] md:text-[2rem]' : 'text-[1.25rem] md:text-[1.375rem]'}`}
 					>
@@ -147,7 +137,9 @@ const metaLabel =
 		<div class={`${outerFrame} ${spanClass}`}>
 			<div class={`${innerBase} ${innerPadding}`}>
 				<span class={metaLabel}>
-					<span class="text-[var(--color-border)]">{index ?? '00'}</span>
+					<span class="text-[var(--color-text-secondary)]">
+						{index ?? '00'}
+					</span>
 					<span>{title}</span>
 				</span>
 				<ul class="hub-text-list m-0 flex list-none flex-col gap-2 p-0">
@@ -168,7 +160,9 @@ const metaLabel =
 		<div class={`${outerFrame} ${spanClass}`}>
 			<div class={`${innerBase} ${innerPadding}`}>
 				<span class={metaLabel}>
-					<span class="text-[var(--color-border)]">{index ?? '00'}</span>
+					<span class="text-[var(--color-text-secondary)]">
+						{index ?? '00'}
+					</span>
 					<span>{title}</span>
 				</span>
 				<ul class="m-0 flex list-none flex-wrap gap-2 p-0">
