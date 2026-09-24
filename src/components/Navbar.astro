@@ -1,16 +1,28 @@
 ---
 import PageSelector from './PageSelector';
+import { copy, pathFor, type Locale } from '../i18n';
+
+interface Props {
+	locale: Locale;
+	translations: Partial<Record<Locale, string>>;
+}
+const { locale, translations } = Astro.props;
+const t = copy[locale];
 
 const currentPath = Astro.url.pathname;
 
 const links = [
-	{ path: '/', label: 'Home' },
-	{ path: '/blog/', label: 'Blog' },
-	{ path: '/contacts/', label: 'Contacts' },
+	{ path: pathFor(locale), label: t.nav.home },
+	{ path: pathFor(locale, 'blog'), label: t.nav.blog },
+	{ path: pathFor(locale, 'contacts'), label: t.nav.contacts },
 ];
 ---
 
-<nav class="site-nav" aria-label="Main navigation">
+<nav
+	class="site-nav"
+	aria-label={t.nav.main}
+	data-page-links={JSON.stringify(links)}
+>
 	<div class="nav-inner">
 		<PageSelector
 			client:load
@@ -18,7 +30,50 @@ const links = [
 			links={links}
 			transition:persist="page-selector"
 		/>
-		<a class="wordmark" href="/">SF<span> / Product Engineer</span></a>
+		<div class="nav-right">
+			<div class="language-switch" aria-label={t.nav.language}>
+				{
+					translations.en ? (
+						<a
+							href={translations.en}
+							lang="en"
+							aria-current={locale === 'en' ? 'page' : undefined}
+							aria-label="English"
+						>
+							EN
+						</a>
+					) : (
+						<span aria-current={locale === 'en' ? 'page' : undefined}>EN</span>
+					)
+				}
+				<span aria-hidden="true">/</span>
+				{
+					translations.it ? (
+						<a
+							href={translations.it}
+							lang="it"
+							aria-current={locale === 'it' ? 'page' : undefined}
+							aria-label="Italiano"
+						>
+							IT
+						</a>
+					) : (
+						<span aria-current={locale === 'it' ? 'page' : undefined}>IT</span>
+					)
+				}
+			</div>
+			{
+				!translations.it && locale === 'en' && (
+					<span class="language-note">
+						{t.nav.limited}{' '}
+						<a href={pathFor('it', 'blog')}>{t.nav.otherIndex}</a>
+					</span>
+				)
+			}
+		</div>
+		<a class="wordmark" href={pathFor(locale)}
+			>SF<span> / Product Engineer</span></a
+		>
 	</div>
 </nav>
 
@@ -32,6 +87,50 @@ const links = [
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+	}
+	.nav-right {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		gap: 3px;
+	}
+	.site-nav :global(ul a) {
+		color: var(--color-text-secondary);
+	}
+	.site-nav :global(ul a:hover),
+	.site-nav :global(ul a[aria-current='page']) {
+		color: var(--color-accent);
+	}
+	.site-nav :global(ul a[aria-current='page']) {
+		font-weight: 500;
+	}
+	.language-switch {
+		display: flex;
+		align-items: center;
+		gap: 7px;
+		font-size: 10px;
+		letter-spacing: 0.08em;
+		color: var(--color-text-secondary);
+	}
+	.language-switch a {
+		color: inherit;
+		text-decoration: none;
+	}
+	.language-switch [aria-current='page'] {
+		color: var(--color-accent);
+		font-weight: 600;
+	}
+	.language-switch a:hover {
+		text-decoration: underline;
+	}
+	.language-note {
+		font-size: 9px;
+		color: var(--color-text-secondary);
+		max-width: 220px;
+		text-align: right;
+	}
+	.language-note a {
+		color: var(--color-accent);
 	}
 	.wordmark {
 		order: -1;
@@ -49,6 +148,9 @@ const links = [
 		}
 		.wordmark span {
 			display: none;
+		}
+		.language-note {
+			max-width: 140px;
 		}
 	}
 </style>

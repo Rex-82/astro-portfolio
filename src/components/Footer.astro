@@ -1,16 +1,19 @@
 ---
 import { ArrowUpRight } from 'lucide-react';
+import { copy, pathFor, type Locale } from '../i18n';
+interface Props {
+	locale: Locale;
+}
+const { locale } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
-	<span>Simone Ferretti &copy; {year}</span><span>Built with intent.</span><a
-		href="/hub/"
-		>Personal index <ArrowUpRight
-			size="1em"
-			strokeWidth={1.5}
-			aria-hidden="true"
-		/></a
+	<span>Simone Ferretti &copy; {year}</span><span
+		>{copy[locale].footer.built}</span
+	><a href={pathFor(locale, 'hub')}
+		>{copy[locale].footer.hub}
+		<ArrowUpRight size="1em" strokeWidth={1.5} aria-hidden="true" /></a
 	>
 </footer>
 <style>

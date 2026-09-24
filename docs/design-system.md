@@ -46,6 +46,9 @@ thumbnail, presented as an independent image rather than a background hero.
 - **Interaction:** keep focus visible, links identifiable and motion restrained.
   Respect reduced motion. Preserve working navigation and persisted page
   transitions while changing their appearance.
+- **Language switcher:** keep EN / IT as quiet text in the navigation, with the
+  active language using the shared warm accent and a visible keyboard focus.
+  Allow translated labels to wrap naturally at narrow widths.
 
 Article layout refinement (2026-09-23): the summary, body and article footer
 share the full width of the article header, including its image column. Separate

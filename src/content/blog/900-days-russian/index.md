@@ -1,4 +1,6 @@
 ---
+lang: en
+translationKey: 900-days-russian
 title: 'Learning Russian: notes from day 900'
 description: 'After 900 days of learning Russian I am still a beginner, and that is the point. Notes on consistency, humility, and why the only way forward is to start.'
 pubDate: 2026-04-12

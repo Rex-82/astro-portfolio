@@ -6,6 +6,7 @@ import { getImage } from 'astro:assets';
 import { ClientRouter } from 'astro:transitions';
 import faviconSrc from '../../public/assets/favicon/favicon.png';
 import faviconSvgSrc from '../../public/assets/favicon/favicon.svg';
+import { copy, pathFor, rssPath, type Locale } from '../i18n';
 
 interface Props {
 	title: string;
@@ -22,6 +23,8 @@ interface Props {
 		tags?: string[];
 		author?: string;
 	};
+	locale: Locale;
+	translations?: Partial<Record<Locale, string>>;
 }
 
 const {
@@ -34,6 +37,11 @@ const {
 	jsonLd,
 	noindex,
 	articleMeta,
+	locale,
+	translations = {
+		en: pathFor('en', Astro.url.pathname.replace(/^\/it\//, '')),
+		it: pathFor('it', Astro.url.pathname.replace(/^\/it\//, '')),
+	},
 } = Astro.props;
 
 const siteOrigin = Astro.site?.origin ?? Astro.url.origin;
@@ -42,6 +50,7 @@ const ogImageUrl =
 const resolvedCanonical =
 	canonicalUrl ?? new URL(Astro.url.pathname, siteOrigin).href;
 const resolvedOgDescription = ogDescription ?? description;
+const t = copy[locale];
 
 const appleTouchIcon = await getImage({
 	src: faviconSrc,
@@ -53,7 +62,7 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: 'svg' });
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
@@ -70,13 +79,34 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: 'svg' });
 		<link
 			rel="alternate"
 			type="application/rss+xml"
-			title="Simone Ferretti's Blog"
-			href="/rss.xml"
+			title={t.common.rss}
+			href={rssPath(locale)}
 		/>
 
 		<title>{title}</title>
 
 		<link rel="canonical" href={resolvedCanonical} />
+		{
+			Object.entries(translations).map(
+				([lang, path]) =>
+					path && (
+						<link
+							rel="alternate"
+							hreflang={lang}
+							href={new URL(path, siteOrigin).href}
+						/>
+					),
+			)
+		}
+		{
+			translations.en && (
+				<link
+					rel="alternate"
+					hreflang="x-default"
+					href={new URL(translations.en, siteOrigin).href}
+				/>
+			)
+		}
 
 		<link rel="icon" href="/favicon.ico" sizes="32x32" />
 		<link rel="icon" href={faviconSvg.src} type="image/svg+xml" />
@@ -131,14 +161,47 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: 'svg' });
 	<body>
 		<div id="reading-progress" class="reading-progress" aria-hidden="true">
 		</div>
-		<a class="skip-link" href="#main-content">Skip to content</a>
+		<a class="skip-link" href="#main-content">{t.common.skip}</a>
 		<header>
-			<Navbar />
+			<Navbar locale={locale} translations={translations} />
 		</header>
 		<slot />
-		<Footer />
+		<Footer locale={locale} />
 
 		<script>
+			function syncPageSelector() {
+				const nav = document.querySelector<HTMLElement>('[data-page-links]');
+				const list = nav?.querySelector('ul');
+				if (!nav?.dataset.pageLinks || !list) return;
+				const links = JSON.parse(nav.dataset.pageLinks) as {
+					path: string;
+					label: string;
+				}[];
+				const active = links.findIndex((link) =>
+					link.path === '/' || link.path === '/it/'
+						? window.location.pathname === link.path
+						: window.location.pathname.startsWith(link.path),
+				);
+				list.querySelectorAll('a').forEach((anchor, index) => {
+					const link = links[index];
+					if (!link) return;
+					anchor.href = link.path;
+					anchor.textContent = link.label;
+					if (index === active) anchor.setAttribute('aria-current', 'page');
+					else anchor.removeAttribute('aria-current');
+				});
+			}
+			const navWindow = window as Window & {
+				__pageSelectorSyncReady?: boolean;
+			};
+			if (!navWindow.__pageSelectorSyncReady) {
+				navWindow.__pageSelectorSyncReady = true;
+				document.addEventListener('astro:page-load', () =>
+					requestAnimationFrame(syncPageSelector),
+				);
+			}
+			requestAnimationFrame(syncPageSelector);
+
 			type ReadingProgressWindow = Window & {
 				__readingProgressControllerReady?: boolean;
 			};

@@ -1,25 +1,27 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
-import { getPublishedPosts } from '../lib/blog';
+import { getPublishedPosts, publicSlug } from '../lib/blog';
+import { copy, postPath, type Locale } from '../i18n';
 
-export async function GET(context: APIContext) {
+export async function feed(context: APIContext, locale: Locale) {
 	const posts = (await getPublishedPosts()).filter(
-		(post) => !post.data.noindex,
+		(post) => post.data.lang === locale && !post.data.noindex,
 	);
 
 	return rss({
-		title: "Simone Ferretti's Blog",
-		description:
-			'Notes on web development, tooling, side projects, and things I am learning.',
+		title: copy[locale].blog.name,
+		description: copy[locale].blog.description,
 		site: context.site!,
-		customData: '<language>en-us</language>',
+		customData: `<language>${locale === 'it' ? 'it-IT' : 'en-US'}</language>`,
 		items: posts.map((post) => ({
 			title: post.data.title,
 			pubDate: post.data.pubDate,
 			description: post.data.description,
-			link: `/blog/${post.id}/`,
+			link: postPath(locale, publicSlug(post)),
 			author: 'Simone Ferretti',
 			categories: post.data.tags,
 		})),
 	});
 }
+
+export const GET = (context: APIContext) => feed(context, 'en');

@@ -1,4 +1,6 @@
 ---
+lang: en
+translationKey: when-apps-become-too-present
 title: 'When apps become too present'
 description: 'A reflection on defaults, product presence, and why useful software can still ask for too much attention.'
 pubDate: 2026-06-27

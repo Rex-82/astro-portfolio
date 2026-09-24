@@ -1,5 +1,6 @@
 ---
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { type Locale } from '../i18n';
 
 type Variant = 'bio' | 'link' | 'text' | 'tags';
 
@@ -19,6 +20,7 @@ interface Props {
 	bgSvg?: string;
 	iconOnly?: boolean;
 	trackEvent?: string;
+	locale?: Locale;
 }
 
 const {
@@ -36,6 +38,7 @@ const {
 	bgSvg,
 	iconOnly = false,
 	trackEvent,
+	locale = 'en',
 } = Astro.props;
 
 const onclickHandler =
@@ -71,7 +74,7 @@ const metaLabel =
 					<span class="text-[var(--color-text-secondary)]">
 						{index ?? '00'}
 					</span>
-					<span>intro</span>
+					<span>{locale === 'it' ? 'presentazione' : 'intro'}</span>
 				</span>
 				{heading && (
 					<h1 class="hub-name">

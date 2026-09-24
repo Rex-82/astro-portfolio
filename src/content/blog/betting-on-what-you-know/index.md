@@ -1,4 +1,6 @@
 ---
+lang: en
+translationKey: betting-on-what-you-know
 title: 'Betting on what you know: lessons from landing in a new market'
 description: 'Going into a new market, we bet on the channel we knew best. It turned out not to be the one that market used. A reflection on making decisions under uncertainty and why a good bet still needs field research after you land.'
 pubDate: 2026-04-20

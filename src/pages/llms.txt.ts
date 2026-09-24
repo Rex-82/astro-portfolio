@@ -14,9 +14,12 @@ Simone Ferretti is a Product Engineer building agentic systems and the infrastru
 - [Contacts](https://simoneferretti.dev/contacts/): Professional contact links (GitHub, LinkedIn, email).
 - [Hub](https://simoneferretti.dev/hub/): Personal hub with bio, social links, stack, and highlights.
 
+The main pages are also available in Italian at [/it/](https://simoneferretti.dev/it/), including the [blog index](https://simoneferretti.dev/it/blog/), [contacts](https://simoneferretti.dev/it/contacts/), and [personal index](https://simoneferretti.dev/it/hub/). Blog articles have Italian URLs only when translated.
+
 ## Feeds
 
 - [RSS feed](https://simoneferretti.dev/rss.xml): Full blog feed in RSS 2.0.
+- [Italian RSS feed](https://simoneferretti.dev/it/rss.xml): Published Italian translations only.
 - [Sitemap](https://simoneferretti.dev/sitemap.xml): XML sitemap for all indexable pages.
 
 ## Social

@@ -1,40 +1,59 @@
 import type { APIRoute } from 'astro';
-import { getPublishedPosts } from '../lib/blog';
+import { getPublishedPosts, publicSlug, translationFor } from '../lib/blog';
+import { pathFor, postPath, type Locale } from '../i18n';
 
-const STATIC_ROUTES = ['/', '/blog/', '/contacts/', '/hub/'] as const;
-
-const toIsoDate = (date?: Date) => date?.toISOString().split('T')[0];
-
-const buildUrlEntry = (loc: string, lastmod?: string) => {
-	const lastmodTag = lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : '';
-	return `  <url>\n    <loc>${loc}</loc>${lastmodTag}\n  </url>`;
-};
+const staticPaths = ['', 'blog', 'contacts', 'hub'];
+const locales: Locale[] = ['en', 'it'];
+const isoDate = (date?: Date) => date?.toISOString().split('T')[0];
+const escapeXml = (value: string) =>
+	value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 
 export const GET: APIRoute = async ({ site }) => {
-	const siteOrigin = site?.origin ?? 'https://simoneferretti.dev';
+	const origin = site?.origin ?? 'https://simoneferretti.dev';
 	const posts = (await getPublishedPosts()).filter(
 		(post) => !post.data.noindex,
 	);
-	const latestPostDate = posts[0]?.data.pubDate;
-
-	const staticEntries = STATIC_ROUTES.map((path) =>
-		buildUrlEntry(
-			`${siteOrigin}${path}`,
-			path === '/' || path === '/blog/' ? toIsoDate(latestPostDate) : undefined,
-		),
-	);
-	const postEntries = posts.map((post) =>
-		buildUrlEntry(
-			`${siteOrigin}/blog/${post.id}/`,
-			toIsoDate(post.data.updatedDate ?? post.data.pubDate),
-		),
-	);
-
+	const latest = posts[0]?.data.pubDate;
+	const entries: {
+		path: string;
+		lastmod?: string;
+		alternatives: Partial<Record<Locale, string>>;
+	}[] = [];
+	for (const path of staticPaths)
+		for (const locale of locales)
+			entries.push({
+				path: pathFor(locale, path),
+				lastmod: !path || path === 'blog' ? isoDate(latest) : undefined,
+				alternatives: { en: pathFor('en', path), it: pathFor('it', path) },
+			});
+	for (const post of posts) {
+		const en = translationFor(posts, post, 'en');
+		const it = translationFor(posts, post, 'it');
+		entries.push({
+			path: postPath(post.data.lang, publicSlug(post)),
+			lastmod: isoDate(post.data.updatedDate ?? post.data.pubDate),
+			alternatives: {
+				...(en && { en: postPath('en', publicSlug(en)) }),
+				...(it && { it: postPath('it', publicSlug(it)) }),
+			},
+		});
+	}
 	const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${[...staticEntries, ...postEntries].join('\n')}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${entries
+	.map(
+		({ path, lastmod, alternatives }) =>
+			`  <url><loc>${escapeXml(origin + path)}</loc>${lastmod ? `<lastmod>${lastmod}</lastmod>` : ''}${Object.entries(
+				alternatives,
+			)
+				.map(
+					([lang, url]) =>
+						`<xhtml:link rel="alternate" hreflang="${lang}" href="${escapeXml(origin + url)}"/>`,
+				)
+				.join('')}</url>`,
+	)
+	.join('\n')}
 </urlset>`;
-
 	return new Response(xml, {
 		headers: {
 			'Content-Type': 'application/xml',

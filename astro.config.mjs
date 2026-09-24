@@ -14,6 +14,11 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [react(), compress()],
   output: 'server',
+  i18n: {
+    locales: ['en', 'it'],
+    defaultLocale: 'en',
+    routing: { prefixDefaultLocale: false },
+  },
 
   adapter: node({
     mode: 'standalone',

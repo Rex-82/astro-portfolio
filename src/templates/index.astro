@@ -1,0 +1,269 @@
+---
+import { ArrowUpRight } from 'lucide-react';
+import Layout from '../layouts/Layout.astro';
+import PostCard from '../components/PostCard.astro';
+import { getPublishedPosts, postsForLocale, publicSlug } from '../lib/blog';
+import { copy, pathFor, type Locale } from '../i18n';
+interface Props {
+	locale: Locale;
+}
+const { locale } = Astro.props;
+const t = copy[locale].home;
+import { GITHUB_USERNAME } from 'astro:env/client';
+
+const [latestPost, ...recentPosts] = postsForLocale(
+	await getPublishedPosts(),
+	locale,
+).slice(0, 3);
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@graph': [
+		{
+			'@type': 'Person',
+			'@id': 'https://simoneferretti.dev/#person',
+			name: 'Simone Ferretti',
+			url: 'https://simoneferretti.dev',
+			jobTitle: 'Product Engineer',
+			sameAs: [
+				`https://github.com/${GITHUB_USERNAME}`,
+				'https://www.linkedin.com/in/simoneferretti',
+			],
+			knowsAbout: [
+				'TypeScript',
+				'Next.js',
+				'NestJS',
+				'PostgreSQL',
+				'Docker',
+				'GCP',
+				'Linux',
+			],
+		},
+		{
+			'@type': 'WebSite',
+			'@id': 'https://simoneferretti.dev/#website',
+			url: 'https://simoneferretti.dev',
+			name: 'Simone Ferretti',
+			publisher: { '@id': 'https://simoneferretti.dev/#person' },
+			inLanguage: locale,
+		},
+	],
+};
+---
+
+<Layout
+	title={t.title}
+	description={t.description}
+	jsonLd={jsonLd}
+	locale={locale}
+>
+	<main id="main-content" class="home page-main">
+		<header class="identity">
+			<p class="eyebrow">{t.eyebrow}</p>
+			<h1>Simone Ferretti</h1>
+			<p class="role">{copy[locale].common.role}</p>
+			<p class="intro">
+				{t.intro}
+			</p>
+		</header>
+		<section class="now" aria-labelledby="now-heading">
+			<h2 id="now-heading" class="section-label">
+				<span>01</span>
+				{t.now}
+			</h2>
+			<dl>
+				<dt>{t.building}</dt><dd>
+					{t.buildingText}
+				</dd>
+				<dt>{t.learning}</dt><dd>
+					{t.learningText}
+				</dd>
+				<dt>{t.outside}</dt><dd>{t.outsideText}</dd>
+			</dl>
+		</section>
+		{
+			latestPost && (
+				<section class="writing" aria-labelledby="writing-heading">
+					<h2 id="writing-heading" class="section-label">
+						<span>02</span> {t.writing}
+					</h2>
+					<ul class="writing-list">
+						{[latestPost, ...recentPosts].map((post) => (
+							<PostCard
+								id={publicSlug(post)}
+								locale={locale}
+								postLocale={post.data.lang}
+								coverKey={post.data.translationKey}
+								title={post.data.title}
+								description={post.data.description}
+								pubDate={post.data.pubDate}
+								tags={post.data.tags}
+								coverImage={post.data.coverImage}
+							/>
+						))}
+					</ul>
+					<a class="archive-link" href={pathFor(locale, 'blog')}>
+						{t.allWriting}{' '}
+						<ArrowUpRight size="1em" strokeWidth={1.5} aria-hidden="true" />
+					</a>
+				</section>
+			)
+		}
+		<section class="connect" aria-labelledby="connect-heading">
+			<h2 id="connect-heading" class="section-label">
+				<span>03</span>
+				{t.find}
+			</h2>
+			<div>
+				<a href="https://www.linkedin.com/in/simoneferretti"
+					>LinkedIn <ArrowUpRight
+						size="1em"
+						strokeWidth={1.5}
+						aria-hidden="true"
+					/></a
+				><a href="mailto:simoneferretti99@pm.me"
+					>Email <ArrowUpRight
+						size="1em"
+						strokeWidth={1.5}
+						aria-hidden="true"
+					/></a
+				><a href={`https://github.com/${GITHUB_USERNAME}`}
+					>GitHub <ArrowUpRight
+						size="1em"
+						strokeWidth={1.5}
+						aria-hidden="true"
+					/></a
+				>
+			</div>
+		</section>
+		<span class="margin-note" aria-hidden="true">{t.note}</span>
+	</main>
+</Layout>
+<style>
+	.home {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		column-gap: 12%;
+		row-gap: 108px;
+		position: relative;
+	}
+	.identity {
+		grid-column: 1;
+	}
+	.identity .eyebrow {
+		margin: 0 0 32px;
+	}
+	h1 {
+		margin: 0;
+		font-size: clamp(26px, 2.5vw, 36px);
+		font-weight: 500;
+		letter-spacing: -0.055em;
+		line-height: 1.15;
+	}
+	.role {
+		margin: 8px 0 0;
+		font-size: 15px;
+	}
+	.intro {
+		font-size: 14px;
+		line-height: 1.6;
+		margin: 40px 0 0;
+		color: var(--color-text-secondary);
+	}
+	.now {
+		grid-column: 1;
+		grid-row: 2;
+		max-width: 340px;
+	}
+	dl {
+		display: grid;
+		grid-template-columns: 65px 1fr;
+		gap: 18px 20px;
+		margin: 0;
+		font-size: 13px;
+		line-height: 1.6;
+	}
+	dt {
+		color: var(--color-text-secondary);
+		font-size: 11px;
+		padding-top: 2px;
+	}
+	dd {
+		margin: 0;
+	}
+	.writing {
+		grid-column: 2;
+		grid-row: 1 / 4;
+		padding-top: 124px;
+	}
+	.writing-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 34px;
+	}
+	.archive-link {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		margin-top: 36px;
+		font-size: 12px;
+		text-decoration: none;
+	}
+	.connect {
+		grid-column: 1;
+	}
+	.connect div {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 24px;
+		font-size: 12px;
+	}
+	.connect a {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		text-decoration: none;
+	}
+	a:hover {
+		text-decoration: underline;
+	}
+	.margin-note {
+		position: absolute;
+		right: -34px;
+		top: 110px;
+		writing-mode: vertical-rl;
+		font-size: 9px;
+		letter-spacing: 0.08em;
+		color: var(--color-text-secondary);
+	}
+	@media (max-width: 900px) {
+		.home {
+			column-gap: 7%;
+		}
+		.desktop-break {
+			display: none;
+		}
+	}
+	@media (max-width: 900px) {
+		.home {
+			grid-template-columns: 1fr;
+			gap: 72px;
+		}
+		.writing {
+			grid-column: 1;
+			grid-row: 3;
+			padding: 0;
+		}
+		.now {
+			grid-row: 2;
+		}
+		.margin-note {
+			display: none;
+		}
+		.intro {
+			max-width: 280px;
+		}
+	}
+</style>

@@ -1,0 +1,146 @@
+---
+import { generateCover } from '../lib/generate-cover';
+import Layout from '../layouts/Layout.astro';
+import HubBlock from '../components/HubBlock.astro';
+import GithubIcon from '../components/icons/GithubIcon.astro';
+import LinkedinIcon from '../components/icons/LinkedinIcon.astro';
+import EmailIcon from '../components/icons/EmailIcon.astro';
+import PortfolioIcon from '../components/icons/PortfolioIcon.astro';
+import BlogIcon from '../components/icons/BlogIcon.astro';
+import { GITHUB_USERNAME } from 'astro:env/client';
+import { copy, pathFor, type Locale } from '../i18n';
+interface Props {
+	locale: Locale;
+}
+const { locale } = Astro.props;
+const t = copy[locale].hub;
+
+const siteOrigin = 'https://simoneferretti.dev';
+const pageUrl = `${siteOrigin}${pathFor(locale, 'hub')}`;
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'ProfilePage',
+	'@id': `${pageUrl}#profilepage`,
+	url: pageUrl,
+	inLanguage: locale,
+	name: t.title,
+	description: t.shortDescription,
+	mainEntity: {
+		'@type': 'Person',
+		'@id': `${siteOrigin}/#person`,
+	},
+};
+---
+
+<Layout
+	title={t.title}
+	description={t.description}
+	jsonLd={jsonLd}
+	locale={locale}
+>
+	<main
+		id="main-content"
+		class="page-main text-[16px] text-text-primary leading-[1.6] flex flex-col items-center"
+	>
+		<section class="w-full flex flex-col gap-12" aria-label={t.blocks}>
+			<HubBlock
+				variant="bio"
+				locale={locale}
+				bgSvg={generateCover('simoneferretti')}
+				index="00"
+				heading="Simone Ferretti"
+				body={t.intro}
+			/>
+
+			<div class="grid grid-cols-3 gap-3">
+				<HubBlock
+					variant="link"
+					index="01"
+					title={t.connect}
+					body="LinkedIn"
+					href="https://www.linkedin.com/in/simoneferretti"
+					icon={LinkedinIcon}
+					external
+					iconOnly
+					trackEvent="hub_click_linkedin"
+				/>
+				<HubBlock
+					variant="link"
+					index="02"
+					title={t.code}
+					body={`@${GITHUB_USERNAME}`}
+					href={`https://github.com/${GITHUB_USERNAME}`}
+					icon={GithubIcon}
+					external
+					iconOnly
+					trackEvent="hub_click_github"
+				/>
+				<HubBlock
+					variant="link"
+					index="03"
+					title={t.write}
+					body="Email"
+					href="mailto:simoneferretti99@pm.me"
+					icon={EmailIcon}
+					iconOnly
+					trackEvent="hub_click_email"
+				/>
+			</div>
+
+			<div
+				class="grid grid-cols-1 gap-3 min-[480px]:grid-cols-2 md:grid-cols-3"
+			>
+				<HubBlock
+					variant="link"
+					index="04"
+					title="Portfolio"
+					body="simoneferretti.dev"
+					href={pathFor(locale)}
+					icon={PortfolioIcon}
+					external
+					spanClass="col-span-full md:col-span-2"
+					trackEvent="hub_click_portfolio"
+				/>
+				<HubBlock
+					variant="link"
+					index="05"
+					title={t.read}
+					body="Blog"
+					href={pathFor(locale, 'blog')}
+					icon={BlogIcon}
+					spanClass="max-md:col-span-full"
+					trackEvent="hub_click_blog"
+				/>
+				<HubBlock
+					variant="text"
+					index="06"
+					title={t.desk}
+					items={t.deskItems}
+					spanClass="md:col-span-2"
+				/>
+				<HubBlock
+					variant="text"
+					index="07"
+					title={t.elsewhere}
+					items={t.elsewhereItems}
+				/>
+				<HubBlock
+					variant="tags"
+					index="08"
+					title={t.stack}
+					items={[
+						'TypeScript',
+						'NestJS',
+						'Next.js 15',
+						'PostgreSQL',
+						'GCP',
+						'Stripe',
+						'Twilio',
+					]}
+					spanClass="col-span-full md:col-span-3"
+				/>
+			</div>
+		</section>
+	</main>
+</Layout>

@@ -5,6 +5,7 @@ import type { ImageMetadata } from 'astro';
 import { ArrowLeft } from 'lucide-react';
 import RssSubscribe from '../components/RssSubscribe.astro';
 import ReadingProgress from '../components/ReadingProgress.astro';
+import { copy, formatDate, pathFor, postPath, type Locale } from '../i18n';
 
 interface Props {
 	title: string;
@@ -18,6 +19,9 @@ interface Props {
 	noindex?: boolean;
 	tldr?: string;
 	wordCount?: number;
+	locale: Locale;
+	coverKey: string;
+	translations: Partial<Record<Locale, string>>;
 }
 
 const {
@@ -32,10 +36,15 @@ const {
 	noindex,
 	tldr,
 	wordCount,
+	locale,
+	coverKey,
+	translations,
 } = Astro.props;
 
+const t = copy[locale].blog;
+
 const siteOrigin = Astro.site?.origin ?? Astro.url.origin;
-const canonicalUrl = `${siteOrigin}/blog/${id}/`;
+const canonicalUrl = `${siteOrigin}${postPath(locale, id)}`;
 const ogImage = coverImage
 	? `${siteOrigin}${coverImage.src}`
 	: `${siteOrigin}/api/og?title=${encodeURIComponent(title)}`;
@@ -66,11 +75,11 @@ const jsonLd = {
 	},
 	isPartOf: {
 		'@type': 'Blog',
-		'@id': `${siteOrigin}/blog/#blog`,
-		name: "Simone Ferretti's Blog",
-		url: `${siteOrigin}/blog/`,
+		'@id': `${siteOrigin}${pathFor(locale, 'blog')}#blog`,
+		name: t.name,
+		url: `${siteOrigin}${pathFor(locale, 'blog')}`,
 	},
-	inLanguage: 'en',
+	inLanguage: locale,
 	image: ogImage,
 	url: canonicalUrl,
 	keywords: tags.join(', '),
@@ -84,17 +93,10 @@ const articleMeta = {
 	author: 'Simone Ferretti',
 };
 
-const formattedDate = pubDate.toLocaleDateString('en-US', {
-	year: 'numeric',
-	month: 'long',
-	day: 'numeric',
-});
+const formattedDate = formatDate(pubDate, locale, 'long');
 
-const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
-	year: 'numeric',
-	month: 'long',
-	day: 'numeric',
-});
+const formattedUpdatedDate =
+	updatedDate && formatDate(updatedDate, locale, 'long');
 ---
 
 <Layout
@@ -107,12 +109,14 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 	jsonLd={jsonLd}
 	noindex={noindex}
 	articleMeta={articleMeta}
+	locale={locale}
+	translations={translations}
 >
 	<main id="main-content">
 		<ReadingProgress />
 		<nav class="mb-6">
 			<a
-				href="/blog/"
+				href={pathFor(locale, 'blog')}
 				class="group inline-flex items-center gap-1.5 select-none no-underline
 				       text-[var(--color-text-secondary)] text-[0.75rem] uppercase tracking-[0.1em]
 				       transition-colors duration-300 ease-[var(--ease-out-expo)]
@@ -124,7 +128,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 					aria-hidden="true"
 					className="transition-transform duration-300 ease-[var(--ease-out-expo)] group-hover:-translate-x-[3px]"
 				/>
-				Blog
+				{t.back}
 			</a>
 		</nav>
 		<article>
@@ -134,14 +138,14 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 						coverImage ? (
 							<Image
 								src={coverImage}
-								alt={`Cover image for ${title}`}
+								alt={t.cover(title)}
 								class="cover-image"
 								widths={[400, 800, 1200]}
 								sizes="(max-width: 800px) 100vw, 800px"
 							/>
 						) : (
 							<img
-								src={`/covers/${id}/`}
+								src={`/covers/${coverKey}/`}
 								alt=""
 								loading="lazy"
 								decoding="async"
@@ -168,13 +172,13 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 								readingTime && (
 									<>
 										<span aria-hidden="true"> · </span>
-										<span>{readingTime} min read</span>
+										<span>{t.reading(readingTime)}</span>
 									</>
 								)
 							}
 							{
 								formattedUpdatedDate && (
-									<span class="updated">(updated {formattedUpdatedDate})</span>
+									<span class="updated">{t.updated(formattedUpdatedDate)}</span>
 								)
 							}
 						</div>
@@ -183,7 +187,7 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 			</header>
 			{
 				tldr && (
-					<aside class="tldr" aria-label="Summary">
+					<aside class="tldr" aria-label={t.summary}>
 						<strong>TL;DR:</strong> {tldr}
 					</aside>
 				)
@@ -191,14 +195,13 @@ const formattedUpdatedDate = updatedDate?.toLocaleDateString('en-US', {
 			<div class="prose">
 				<slot />
 			</div>
-			<footer class="post-footer" aria-label="Article footer">
+			<footer class="post-footer" aria-label={t.footerLabel}>
 				<p>
-					Enjoyed this post? Subscribe to the RSS feed to get future notes from
-					Simone Ferretti.
+					{t.footer}
 				</p>
 				<div class="post-footer-actions">
-					<RssSubscribe />
-					<a href="/blog/">More posts</a>
+					<RssSubscribe locale={locale} />
+					<a href={pathFor(locale, 'blog')}>{t.more}</a>
 				</div>
 			</footer>
 		</article>

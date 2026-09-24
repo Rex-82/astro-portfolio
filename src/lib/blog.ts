@@ -1,11 +1,19 @@
 import { getCollection } from 'astro:content';
 
+import { publishedPosts, validatePosts } from './blog-model';
 const WORDS_PER_MINUTE = 200;
+export {
+	publicSlug,
+	postsForLocale,
+	translationFor,
+	validatePosts,
+} from './blog-model';
+export type { Post } from './blog-model';
 
 export async function getPublishedPosts() {
-	return (await getCollection('blog'))
-		.filter((post) => !post.data.draft)
-		.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+	const posts = publishedPosts(await getCollection('blog'));
+	validatePosts(posts);
+	return posts;
 }
 
 export function getReadingStats(markdown: string) {
