@@ -188,7 +188,7 @@ const formattedUpdatedDate =
 			{
 				tldr && (
 					<aside class="tldr" aria-label={t.summary}>
-						<strong>TL;DR:</strong> {tldr}
+						<strong>{locale === 'it' ? 'In breve:' : 'TL;DR:'}</strong> {tldr}
 					</aside>
 				)
 			}
