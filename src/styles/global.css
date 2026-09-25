@@ -89,11 +89,6 @@
 		height: 100%;
 		display: block;
 	}
-
-	.tag-pill {
-		font-size: 0.75rem;
-		color: var(--color-text-secondary);
-	}
 }
 
 .eyebrow {

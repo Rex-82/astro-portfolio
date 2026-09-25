@@ -2,7 +2,7 @@
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { type Locale } from '../i18n';
 
-type Variant = 'bio' | 'link' | 'text' | 'tags';
+type Variant = 'bio' | 'link' | 'text';
 
 interface Props {
 	variant: Variant;
@@ -152,28 +152,6 @@ const metaLabel =
 							class="text-[0.9375rem] leading-[1.5] text-[var(--color-text-secondary)] md:text-[1rem]"
 							set:html={item}
 						/>
-					))}
-				</ul>
-			</div>
-		</div>
-	)
-}
-
-{
-	variant === 'tags' && (
-		<div class={`${outerFrame} ${spanClass}`}>
-			<div class={`${innerBase} ${innerPadding}`}>
-				<span class={metaLabel}>
-					<span class="text-[var(--color-text-secondary)]">
-						{index ?? '00'}
-					</span>
-					<span>{title}</span>
-				</span>
-				<ul class="m-0 flex list-none flex-wrap gap-2 p-0">
-					{items?.map((item) => (
-						<li>
-							<span class="tag-pill">{item}</span>
-						</li>
 					))}
 				</ul>
 			</div>

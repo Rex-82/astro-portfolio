@@ -5,14 +5,14 @@ const HEADER = `# Simone Ferretti
 
 > Product Engineer building agentic systems and the infrastructure they need to not fall over. Personal portfolio and blog at simoneferretti.dev.
 
-Simone Ferretti is a Product Engineer building agentic systems and the infrastructure behind them. His stack includes TypeScript, Next.js, NestJS, PostgreSQL, Docker, GCP, and Linux. This site hosts his portfolio, contact links, and a blog with notes on web development, tooling, side projects, and things he is currently learning.
+Simone Ferretti is a Product Engineer building digital products, agentic systems, and the infrastructure behind them. This site hosts his portfolio, contact links, and a blog with notes on web development, tooling, side projects, and things he is currently learning.
 
 ## Site
 
 - [Home](https://simoneferretti.dev/): Simone's profile and latest writing.
 - [Blog](https://simoneferretti.dev/blog/): Articles on web development, tools, side projects, and language learning notes.
 - [Contacts](https://simoneferretti.dev/contacts/): Professional contact links (GitHub, LinkedIn, email).
-- [Hub](https://simoneferretti.dev/hub/): Personal hub with bio, social links, stack, and highlights.
+- [Hub](https://simoneferretti.dev/hub/): Personal index with bio, links, projects, and interests.
 
 The main pages are also available in Italian at [/it/](https://simoneferretti.dev/it/), including the [blog index](https://simoneferretti.dev/it/blog/), [contacts](https://simoneferretti.dev/it/contacts/), and [personal index](https://simoneferretti.dev/it/hub/). Blog articles have Italian URLs only when translated.
 
