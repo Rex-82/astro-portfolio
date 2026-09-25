@@ -31,7 +31,7 @@ const {
 ---
 
 <li class="post-entry">
-	<a href={postPath(postLocale, id)}>
+	<a class="link-block" href={postPath(postLocale, id)}>
 		<div class="post-media">
 			{
 				coverImage ? (
@@ -61,7 +61,7 @@ const {
 					<span class="post-tags">{copy.it.common.inEnglish}</span>
 				)
 			}
-			<h2 lang={postLocale}>{title}</h2>
+			<h2 class="link-title" lang={postLocale}>{title}</h2>
 			<p lang={postLocale}>{description}</p>
 			{
 				tags.length > 0 && (
@@ -90,7 +90,6 @@ const {
 		gap: 20px;
 		position: relative;
 		color: inherit;
-		text-decoration: none;
 	}
 	.post-media {
 		aspect-ratio: 4 / 5;
@@ -140,10 +139,6 @@ const {
 		right: 0;
 		bottom: 0;
 		font-size: 13px;
-	}
-	a:hover h2 {
-		text-decoration: underline;
-		text-underline-offset: 3px;
 	}
 	@media (max-width: 900px) {
 		a {

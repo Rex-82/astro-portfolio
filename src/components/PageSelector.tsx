@@ -88,7 +88,7 @@ export default function PageSelector({
 					<a
 						href={link.path}
 						aria-current={index === activeIndex ? 'page' : undefined}
-						className="relative z-10 flex items-center justify-center h-full px-3 text-xs no-underline text-[var(--color-text-secondary)] transition-colors duration-600 hover:text-[var(--color-accent)]"
+						className="relative z-10 flex items-center justify-center h-full px-3 text-xs no-underline text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]"
 					>
 						{link.label}
 					</a>

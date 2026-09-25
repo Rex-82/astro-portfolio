@@ -119,14 +119,12 @@ const formattedUpdatedDate =
 				href={pathFor(locale, 'blog')}
 				class="group inline-flex items-center gap-1.5 select-none no-underline
 				       text-[var(--color-text-secondary)] text-[0.75rem] uppercase tracking-[0.1em]
-				       transition-colors duration-300 ease-[var(--ease-out-expo)]
 				       hover:text-[var(--color-accent-light)]"
 			>
 				<ArrowLeft
 					size={14}
 					strokeWidth={2}
 					aria-hidden="true"
-					className="transition-transform duration-300 ease-[var(--ease-out-expo)] group-hover:-translate-x-[3px]"
 				/>
 				{t.back}
 			</a>
@@ -360,13 +358,8 @@ const formattedUpdatedDate =
 		font-size: 0.75rem;
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
-		text-decoration: none;
-		transition: color 0.3s var(--ease-out-expo);
 	}
 
-	.post-footer-actions a:hover {
-		color: var(--color-accent-light);
-	}
 
 	.prose :global(h2) {
 		font-size: 1.375rem;
@@ -389,17 +382,7 @@ const formattedUpdatedDate =
 		margin-bottom: 1.25rem;
 	}
 
-	.prose :global(a) {
-		color: var(--color-accent-light);
-		text-decoration-line: underline;
-		text-decoration-thickness: 1px;
-		text-underline-offset: 0.18em;
-		transition: color 0.3s var(--ease-out-expo);
-	}
 
-	.prose :global(a:hover) {
-		color: var(--color-text-bright);
-	}
 
 	.prose :global(strong) {
 		color: var(--color-text-bright);

@@ -97,7 +97,6 @@ const links = [
 	.site-nav :global(ul a) {
 		color: var(--color-text-secondary);
 	}
-	.site-nav :global(ul a:hover),
 	.site-nav :global(ul a[aria-current='page']) {
 		color: var(--color-accent);
 	}
@@ -114,14 +113,10 @@ const links = [
 	}
 	.language-switch a {
 		color: inherit;
-		text-decoration: none;
 	}
 	.language-switch [aria-current='page'] {
 		color: var(--color-accent);
 		font-weight: 600;
-	}
-	.language-switch a:hover {
-		text-decoration: underline;
 	}
 	.language-note {
 		font-size: 9px;
@@ -135,7 +130,6 @@ const links = [
 	.wordmark {
 		order: -1;
 		font-size: 12px;
-		text-decoration: none;
 		color: var(--color-text-primary);
 	}
 	.wordmark span {

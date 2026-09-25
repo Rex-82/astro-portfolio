@@ -102,3 +102,17 @@ decide whether a design is good.
 - [OpenAI: project instructions](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
 - [Michael Nygard: decision records and rationale](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions)
 - [Playwright: visual comparisons and environment constraints](https://playwright.dev/docs/test-snapshots)
+
+## Link behaviour (2026-09-25)
+
+Links inherit the surrounding text colour without an underline at rest. Hover
+and keyboard focus use the shared warm accent and a 1 px underline, offset
+3 px. Keyboard focus also retains the visible 2 px accent outline. Visited
+links keep the same appearance. Colour transitions last 150 ms and respect
+reduced motion; text and arrow icons do not move on hover.
+
+In article prose, links are always warm and underlined; hover and focus increase
+the underline to 2 px. For linked content blocks, only the title changes colour
+and gains an underline, keeping descriptions, dates and artwork stable.
+Navigation preserves its active-page accent and existing animated indicator.
+Shared rules live in src/styles/global.css; avoid component-specific hover effects.

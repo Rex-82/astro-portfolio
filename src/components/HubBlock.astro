@@ -95,7 +95,7 @@ const metaLabel =
 				aria-label={`${title}: ${body}`}
 				{...linkAttrs}
 				onclick={onclickHandler}
-				class={`${innerBase} ${innerHover} ${innerPaddingCompact} no-underline [color:inherit] ${featured ? 'md:p-7' : ''}`}
+				class={`link-block ${innerBase} ${innerHover} ${innerPaddingCompact} no-underline [color:inherit] ${featured ? 'md:p-7' : ''}`}
 			>
 				<div class="flex items-center justify-between">
 					<span class={metaLabel}>
@@ -106,7 +106,7 @@ const metaLabel =
 					</span>
 					<span
 						aria-hidden="true"
-						class={`inline-flex h-[14px] w-[14px] items-center justify-center text-[var(--color-text-secondary)] transition-[transform,color] duration-[600ms] ease-[var(--ease-out-expo)] md:group-hover:translate-x-0.5 md:group-hover:-translate-y-0.5 md:group-hover:text-[var(--color-accent-light)] ${iconOnly ? 'max-md:hidden' : ''}`}
+						class={`inline-flex h-[14px] w-[14px] items-center justify-center text-[var(--color-text-secondary)] ${iconOnly ? 'max-md:hidden' : ''}`}
 					>
 						{external ? (
 							<ArrowUpRight size={14} strokeWidth={2} aria-hidden="true" />
@@ -119,13 +119,13 @@ const metaLabel =
 					class={`mt-auto flex items-end justify-between gap-3 ${iconOnly ? 'max-md:mt-0 max-md:flex-1 max-md:items-center max-md:justify-center' : ''}`}
 				>
 					<h3
-						class={`m-0 min-w-0 truncate leading-[1.1] text-[var(--color-text-primary)] transition-colors duration-[600ms] ease-[var(--ease-out-expo)] md:group-hover:text-[var(--color-accent-light)] ${iconOnly ? 'max-md:hidden' : ''} ${featured ? 'text-[1.75rem] md:text-[2rem]' : 'text-[1.25rem] md:text-[1.375rem]'}`}
+						class={`link-title m-0 min-w-0 truncate leading-[1.1] text-[var(--color-text-primary)] ${iconOnly ? 'max-md:hidden' : ''} ${featured ? 'text-[1.75rem] md:text-[2rem]' : 'text-[1.25rem] md:text-[1.375rem]'}`}
 					>
 						{body}
 					</h3>
 					{Icon && (
 						<span
-							class={`flex shrink-0 items-center justify-center text-[var(--color-text-secondary)] transition-colors duration-[600ms] ease-[var(--ease-out-expo)] md:group-hover:text-[var(--color-accent-light)] ${iconOnly ? 'max-md:h-8 max-md:w-8' : ''} ${featured ? 'h-8 w-8' : 'h-6 w-6'}`}
+							class={`flex shrink-0 items-center justify-center text-[var(--color-text-secondary)] ${iconOnly ? 'max-md:h-8 max-md:w-8' : ''} ${featured ? 'h-8 w-8' : 'h-6 w-6'}`}
 						>
 							<Icon />
 						</span>
