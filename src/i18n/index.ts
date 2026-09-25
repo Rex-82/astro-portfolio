@@ -88,7 +88,7 @@ const en = {
 			'<strong>Cockatiel</strong> with strong opinions.',
 		],
 	},
-	footer: { built: 'Built with intent.', hub: 'Personal index' },
+	footer: { built: '4 8 15 16 23 42', hub: 'Personal index' },
 };
 
 const it: typeof en = {
@@ -176,7 +176,7 @@ const it: typeof en = {
 			'Una <strong>calopsitta</strong> dalle idee molto chiare.',
 		],
 	},
-	footer: { built: 'Fatto con cura.', hub: 'Su di me' },
+	footer: { built: '4 8 15 16 23 42', hub: 'Su di me' },
 };
 
 export const copy = { en, it };
