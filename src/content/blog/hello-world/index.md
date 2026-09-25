@@ -14,7 +14,7 @@ tldr: 'A short intro post kicking off the blog. Expect web development notes, si
 
 This is the first post on my blog. I've been meaning to start writing for a while, and here we are.
 
-I'll be sharing thoughts on **web development**, side projects, tools I find interesting, and whatever else comes to mind.
+I'll be sharing thoughts on web development, side projects, tools I find interesting, and whatever else comes to mind.
 
 ## What to expect
 
