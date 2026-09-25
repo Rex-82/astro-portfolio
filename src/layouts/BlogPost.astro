@@ -309,7 +309,7 @@ const formattedUpdatedDate =
 		font-size: 0.75rem;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
-		color: var(--color-accent);
+		color: var(--color-text-secondary);
 	}
 
 	/* ===== TL;DR BLOCK ===== */
@@ -395,32 +395,17 @@ const formattedUpdatedDate =
 		font-size: 0.875em;
 	}
 
-	/* Code blocks with gradient top accent bar */
+	/* Neutral code surface */
 	.prose :global(pre) {
 		position: relative;
 		background: var(--color-surface);
-		padding: 1.75rem 1.25rem 1.25rem;
+		padding: 1.25rem;
 		border-radius: 2px;
 		overflow-x: auto;
 		margin-bottom: 1.5rem;
-		border: 1px solid var(--color-surface-tag);
+		border: 1px solid var(--color-border-subtle);
 	}
 
-	.prose :global(pre::before) {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		height: 2px;
-		background: linear-gradient(
-			to right,
-			var(--color-accent),
-			var(--color-accent-light),
-			transparent
-		);
-		border-radius: 8px 8px 0 0;
-	}
 
 	.prose :global(pre code) {
 		background: none;
@@ -429,11 +414,10 @@ const formattedUpdatedDate =
 		font-size: 0.875rem;
 	}
 
-	/* Blockquotes with decorative quotation mark */
+	/* Quiet editorial quote */
 	.prose :global(blockquote) {
 		position: relative;
-		border-left: 3px solid
-			color-mix(in srgb, var(--color-accent) 50%, transparent);
+		border-left: 3px solid var(--color-border);
 		padding: 1rem 1.25rem;
 		margin-left: 0;
 		margin-bottom: 1.5rem;
@@ -443,17 +427,6 @@ const formattedUpdatedDate =
 		border-radius: 0;
 	}
 
-	.prose :global(blockquote::before) {
-		content: '\201C';
-		position: absolute;
-		top: -0.5rem;
-		left: 0.75rem;
-		font-size: 3rem;
-		color: color-mix(in srgb, var(--color-accent) 15%, transparent);
-		font-style: normal;
-		line-height: 1;
-		font-family: Georgia, 'Times New Roman', serif;
-	}
 
 	.prose :global(ul),
 	.prose :global(ol) {
@@ -466,19 +439,14 @@ const formattedUpdatedDate =
 	}
 
 	.prose :global(li::marker) {
-		color: color-mix(in srgb, var(--color-accent-light) 50%, transparent);
+		color: var(--color-text-secondary);
 	}
 
-	/* Gradient HR matching header separator */
+	/* Neutral section divider */
 	.prose :global(hr) {
 		border: none;
 		height: 1px;
-		background: linear-gradient(
-			to right,
-			transparent,
-			color-mix(in srgb, var(--color-accent) 30%, transparent),
-			transparent
-		);
+		background: var(--color-border-subtle);
 		margin: 2.5rem auto;
 		max-width: 200px;
 	}

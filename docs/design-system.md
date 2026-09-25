@@ -115,4 +115,13 @@ In article prose, links are always warm and underlined; hover and focus increase
 the underline to 2 px. For linked content blocks, only the title changes colour
 and gains an underline, keeping descriptions, dates and artwork stable.
 Navigation preserves its active-page accent and existing animated indicator.
+Navbar links do not underline their text on hover, tap or keyboard focus;
+use the warm colour and focus outline, keeping the active-page indicator separate.
 Shared rules live in src/styles/global.css; avoid component-specific hover effects.
+
+Accent restraint (2026-09-25): reserve persistent UI accents for active navigation,
+article links, reading progress and the TL;DR border/tint. Language controls and
+article tags are neutral at rest. List markers, quote borders, code borders and
+section dividers use neutral tokens; omit decorative quote glyphs and gradient
+accent bars. Media remains the primary source of colour. Shared link hover and
+keyboard-focus feedback retain the warm accent.

@@ -118,6 +118,9 @@ body a[href]:is(:hover, :focus-visible) {
 	color: var(--color-accent);
 	text-decoration-line: underline;
 }
+body .site-nav a[href]:is(:hover, :focus-visible) {
+	text-decoration: none;
+}
 body .prose a[href] {
 	color: var(--color-accent);
 	text-decoration-line: underline;
