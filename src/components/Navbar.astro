@@ -10,6 +10,9 @@ const { locale, translations } = Astro.props;
 const t = copy[locale];
 
 const currentPath = Astro.url.pathname;
+const otherLocale = locale === 'en' ? 'it' : 'en';
+const otherTranslation = translations[otherLocale];
+const localeLabel = locale.toUpperCase();
 
 const links = [
 	{ path: pathFor(locale), label: t.nav.home },
@@ -33,32 +36,17 @@ const links = [
 		<div class="nav-right">
 			<div class="language-switch" aria-label={t.nav.language}>
 				{
-					translations.en ? (
+					otherTranslation ? (
 						<a
-							href={translations.en}
-							lang="en"
-							aria-current={locale === 'en' ? 'page' : undefined}
-							aria-label="English"
+							href={otherTranslation}
+							lang={locale}
+							aria-label={`${localeLabel}. ${t.nav.switchLanguage}`}
+							title={t.nav.switchLanguage}
 						>
-							EN
+							{localeLabel}
 						</a>
 					) : (
-						<span aria-current={locale === 'en' ? 'page' : undefined}>EN</span>
-					)
-				}
-				<span aria-hidden="true">/</span>
-				{
-					translations.it ? (
-						<a
-							href={translations.it}
-							lang="it"
-							aria-current={locale === 'it' ? 'page' : undefined}
-							aria-label="Italiano"
-						>
-							IT
-						</a>
-					) : (
-						<span aria-current={locale === 'it' ? 'page' : undefined}>IT</span>
+						<span>{localeLabel}</span>
 					)
 				}
 			</div>
@@ -106,17 +94,13 @@ const links = [
 	.language-switch {
 		display: flex;
 		align-items: center;
-		gap: 7px;
 		font-size: 10px;
 		letter-spacing: 0.08em;
 		color: var(--color-text-secondary);
+		font-weight: 600;
 	}
 	.language-switch a {
 		color: inherit;
-	}
-	.language-switch [aria-current='page'] {
-		color: var(--color-accent);
-		font-weight: 600;
 	}
 	.language-note {
 		font-size: 9px;
@@ -140,8 +124,43 @@ const links = [
 		.site-nav {
 			padding: 20px;
 		}
+		.nav-inner :global(ul) {
+			flex: 0 1 70%;
+			min-width: 0;
+			margin: 0;
+		}
+		.nav-inner :global(ul li:not([aria-hidden])) {
+			flex: 1 1 0;
+			min-width: 0;
+			height: 44px;
+		}
+		.nav-inner :global(ul a) {
+			width: 100%;
+			padding-inline: 4px;
+			white-space: nowrap;
+		}
+		.nav-right {
+			flex: 0 0 auto;
+			min-width: 0;
+			align-items: flex-end;
+		}
+		.language-switch a {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			min-width: 44px;
+			min-height: 44px;
+		}
 		.wordmark span {
 			display: none;
+		}
+		.wordmark {
+			flex: 0 0 auto;
+			min-width: 0;
+			min-height: 44px;
+			display: inline-flex;
+			align-items: center;
+			justify-content: flex-start;
 		}
 		.language-note {
 			max-width: 140px;
