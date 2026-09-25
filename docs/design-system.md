@@ -46,15 +46,21 @@ thumbnail, presented as an independent image rather than a background hero.
 - **Interaction:** keep focus visible, links identifiable and motion restrained.
   Respect reduced motion. Preserve working navigation and persisted page
   transitions while changing their appearance.
-- **Language switcher:** keep EN / IT as quiet text in the navigation, with the
-  active language using the shared warm accent and a visible keyboard focus.
+- **Language switcher:** show only the current language code as quiet text in
+  the navigation, using neutral text at rest and the shared warm accent on hover
+  and keyboard focus.
+  When a translation exists, the code switches to it; otherwise it is static.
   Allow translated labels to wrap naturally at narrow widths.
+- **Mobile navigation:** keep one row. Place the initials and language near the
+  outer page edges, with the three page links spaced between them.
 
 Article layout refinement (2026-09-23): the summary, body and article footer
 share the full width of the article header, including its image column. Separate
 the header from the reading content with whitespace, without a divider line.
 
 ## Implementation anchors
+
+### Runtime tokens
 
 Runtime values are defined in `src/styles/global.css`:
 
@@ -102,6 +108,17 @@ decide whether a design is good.
 - [OpenAI: project instructions](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
 - [Michael Nygard: decision records and rationale](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions)
 - [Playwright: visual comparisons and environment constraints](https://playwright.dev/docs/test-snapshots)
+
+Logo refinement (2026-09-24): retain the existing cube silhouette. Its three
+faces use warm terracotta tones: the shared accent (#9c411d), a darker face
+(#632b18), and a lighter top (#d88b52). Generate PNG and ICO variants from
+the SVG so browser and installed-site icons retain the same identity.
+
+Header logo refinement (2026-09-24): retain the warm cube at 24 px alongside
+the existing role label, linking to the localized home. Keep it as a small
+identity marker; the name remains the primary identity in the page content.
+On the English and Italian home pages, use the text initials SF instead of
+the cube in the header (2026-09-24).
 
 ## Link behaviour (2026-09-25)
 
