@@ -72,6 +72,35 @@ const faviconSvg = await getImage({ src: faviconSvgSrc, format: 'svg' });
 		<link rel="icon" type="image/svg+xml" href={faviconSvg.src} />
 		<meta name="generator" content={Astro.generator} />
 
+		<script is:inline>
+			(() => {
+				if (window.__portfolioTheme) { window.__portfolioTheme(); return; }
+				const media = window.matchMedia('(prefers-color-scheme: dark)');
+				let preference = 'system';
+				try { preference = localStorage.getItem('portfolio-theme') || 'system'; } catch {}
+				if (!['system', 'light', 'dark'].includes(preference)) preference = 'system';
+				const apply = (root = document.documentElement, doc = document) => {
+					const theme = preference === 'system' ? (media.matches ? 'dark' : 'light') : preference;
+					root.dataset.theme = theme;
+					doc.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#111111' : '#f2f1ef');
+					doc.querySelectorAll('[data-theme-select]').forEach(select => { select.value = preference; });
+				};
+				window.__portfolioTheme = () => apply();
+				apply();
+				media.addEventListener('change', () => apply());
+				document.addEventListener('astro:before-swap', event => apply(event.newDocument.documentElement, event.newDocument));
+				document.addEventListener('astro:page-load', () => apply());
+				document.addEventListener('change', event => {
+					if (!event.target.matches?.('[data-theme-select]')) return;
+					preference = event.target.value;
+					try {
+						if (preference === 'system') localStorage.removeItem('portfolio-theme');
+						else localStorage.setItem('portfolio-theme', preference);
+					} catch {}
+					apply();
+				});
+			})();
+		</script>
 		<ClientRouter />
 
 		<link rel="sitemap" href="/sitemap.xml" />

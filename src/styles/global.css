@@ -23,6 +23,21 @@
 	--radius-full: 2px;
 }
 
+html { color-scheme: light; }
+html[data-theme='dark'] {
+	color-scheme: dark;
+	--color-bg: #111111;
+	--color-surface: #1c1c1c;
+	--color-text-primary: #e8e2db;
+	--color-text-secondary: #b4aaa0;
+	--color-text-muted: #b4aaa0;
+	--color-text-bright: #f5f0ea;
+	--color-accent: #df9568;
+	--color-border: #595959;
+	--color-border-subtle: #383838;
+	--color-border-mid: #484848;
+}
+
 @layer base {
 	html {
 		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -141,13 +156,14 @@ body a.link-block:is(:hover, :focus-visible) .link-title {
 	color: var(--color-accent);
 	text-decoration-line: underline;
 }
-a:focus-visible {
+a:focus-visible,
+select:focus-visible {
 	outline: 2px solid var(--color-accent);
 	outline-offset: 6px;
 }
 ::selection {
 	background: color-mix(in srgb, var(--color-accent) 20%, var(--color-bg));
-	color: #111;
+	color: var(--color-text-bright);
 }
 .skip-link {
 	position: fixed;

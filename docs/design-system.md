@@ -142,3 +142,12 @@ article tags are neutral at rest. List markers, quote borders, code borders and
 section dividers use neutral tokens; omit decorative quote glyphs and gradient
 accent bars. Media remains the primary source of colour. Shared link hover and
 keyboard-focus feedback retain the warm accent.
+
+## Dark mode (2026-09-25)
+
+Follow the system appearance by default; the localized footer selector offers
+System, Light and Dark and remembers explicit choices. Apply the theme before
+paint and preserve it through client navigation. Dark mode uses neutral charcoal
+(#111111) with neutral surfaces and borders, off-white ink (#e8e2db), muted warm grey (#b4aaa0), and a lighter
+terracotta accent (#df9568) for readable links. Keep composition, accent restraint
+and original artwork unchanged. All interface colours use the shared tokens.

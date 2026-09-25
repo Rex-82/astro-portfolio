@@ -14,6 +14,10 @@ const en = {
 		otherIndex: 'Browse the Italian blog',
 	},
 	common: {
+		theme: 'Theme',
+		system: 'System',
+		light: 'Light',
+		dark: 'Dark',
 		skip: 'Skip to content',
 		role: 'Product Engineer',
 		rss: "Simone Ferretti's Blog",
@@ -104,6 +108,10 @@ const it: typeof en = {
 		otherIndex: 'Vai al blog in italiano',
 	},
 	common: {
+		theme: 'Tema',
+		system: 'Sistema',
+		light: 'Chiaro',
+		dark: 'Scuro',
 		skip: 'Vai al contenuto',
 		role: 'Product Engineer',
 		rss: 'Blog di Simone Ferretti',

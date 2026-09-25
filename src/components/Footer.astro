@@ -1,6 +1,5 @@
 ---
-import { ArrowUpRight } from 'lucide-react';
-import { copy, pathFor, type Locale } from '../i18n';
+import { copy, type Locale } from '../i18n';
 interface Props {
 	locale: Locale;
 }
@@ -9,28 +8,29 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
-	<span>Simone Ferretti &copy; {year}</span><span
-		>{copy[locale].footer.built}</span
-	><a href={pathFor(locale, 'hub')}
-		>{copy[locale].footer.hub}
-		<ArrowUpRight size="1em" strokeWidth={1.5} aria-hidden="true" /></a
-	>
+	<span>Simone Ferretti &copy; {year}</span>
+	<span>{copy[locale].footer.built}</span>
+	<label class="theme-control">
+		<select data-theme-select aria-label={copy[locale].common.theme}>
+			<option value="system">{copy[locale].common.system}</option>
+			<option value="light">{copy[locale].common.light}</option>
+			<option value="dark">{copy[locale].common.dark}</option>
+		</select>
+	</label>
 </footer>
 <style>
+	.theme-control { display: inline-flex; align-items: center; gap: 8px; }
+	select { color: inherit; background: var(--color-bg); border: 0; font: inherit; min-height: 44px; cursor: pointer; }
+
 	.site-footer {
 		width: 100%;
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 		gap: 20px;
 		padding: 32px 48px;
 		font-size: 10px;
 		color: var(--color-text-secondary);
-	}
-	a {
-		display: inline-flex;
-		align-items: center;
-		gap: 4px;
-		color: inherit;
 	}
 	@media (max-width: 640px) {
 		.site-footer {
