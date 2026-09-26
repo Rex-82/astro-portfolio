@@ -41,11 +41,6 @@ const {
 	locale = 'en',
 } = Astro.props;
 
-const onclickHandler =
-	variant === 'link' && trackEvent
-		? `window.rybbit?.trackEvent('${trackEvent}', { label: '${body?.replace(/'/g, "\\'")}', href: '${href?.replace(/'/g, "\\'")}' })`
-		: undefined;
-
 const linkAttrs = external
 	? { target: '_blank', rel: 'noopener noreferrer' }
 	: {};
@@ -94,7 +89,9 @@ const metaLabel =
 				href={href}
 				aria-label={`${title}: ${body}`}
 				{...linkAttrs}
-				onclick={onclickHandler}
+				data-rybbit-event={trackEvent}
+				data-rybbit-prop-label={trackEvent ? body : undefined}
+				data-rybbit-prop-href={trackEvent ? href : undefined}
 				class={`link-block ${innerBase} ${innerHover} ${innerPaddingCompact} no-underline [color:inherit] ${featured ? 'md:p-7' : ''}`}
 			>
 				<div class="flex items-center justify-between">
